@@ -13,6 +13,8 @@ navbar:
       href: 04_visualizacoes-em-R.html
     - text: "Manipulação com dplyr"
       href: 05_manipulacao-dplyr.html
+    - text: "Reformatando com tidyr"
+      href: 06_tidy_data.html
 output:
   html_document:
     theme: cosmo
