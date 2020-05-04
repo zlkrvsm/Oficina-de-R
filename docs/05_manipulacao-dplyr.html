@@ -1,0 +1,1609 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+
+<title>Transformando dados com dplyr</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; } /* Alert */
+code span.an { color: #008000; } /* Annotation */
+code span.at { } /* Attribute */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #0000ff; } /* ControlFlow */
+code span.ch { color: #008080; } /* Char */
+code span.cn { } /* Constant */
+code span.co { color: #008000; } /* Comment */
+code span.cv { color: #008000; } /* CommentVar */
+code span.do { color: #008000; } /* Documentation */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.im { } /* Import */
+code span.in { color: #008000; } /* Information */
+code span.kw { color: #0000ff; } /* Keyword */
+code span.op { } /* Operator */
+code span.ot { color: #ff4000; } /* Other */
+code span.pp { color: #ff4000; } /* Preprocessor */
+code span.sc { color: #008080; } /* SpecialChar */
+code span.ss { color: #008080; } /* SpecialString */
+code span.st { color: #008080; } /* String */
+code span.va { } /* Variable */
+code span.vs { color: #008080; } /* VerbatimString */
+code span.wa { color: #008000; font-weight: bold; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Oficina de R</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html"></a>
+</li>
+<li>
+  <a href="02_bancos-de-dados-em-r.html"></a>
+</li>
+<li>
+  <a href="03_controle-de-fluxo.html"></a>
+</li>
+<li>
+  <a href="04_visualizacoes-em-R.html"></a>
+</li>
+<li>
+  <a href="05_manipulacao-dplyr.html"></a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Transformando dados com dplyr</h1>
+<h4 class="date">27/04/2020</h4>
+
+</div>
+
+
+<div id="introdução" class="section level1">
+<h1>Introdução</h1>
+<p>O dplyr é um pacote de manipulação de dados. Foi criado para encarar alguns problemas existentes na forma como o R base trabalha com as operações básicas de seleção das variáveis e casos, e também com uma preocupação com a “ergonomia”.</p>
+<p>A ideia é utilizar nomes de funções e argumentos que são fáceis de lembrar e também fáceis de concatenar em cadeias de operações semelhantes a uma “linha de montagem”.</p>
+<div id="pré-requisitos" class="section level2">
+<h2>Pré Requisitos</h2>
+<p>Vamos precisar de um banco de dados de treino chamado <code>nycflights13</code>, que contém registros administrativos da operação dos aeroportos da cidade de Nova Iorque em 2013. Caso você ainda não tenha, aproveite e faça a instalação do dplyr.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">install.packages</span>(<span class="kw">c</span>(<span class="st">&quot;nycflights13&quot;</span>, <span class="st">&quot;dplyr&quot;</span>))</a></code></pre></div>
+<p>Agora carregue os dois pacotes e vamos dar uma olhada no formato do banco de dados <code>flights</code>.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">library</span>(nycflights13)</a>
+<a class="sourceLine" id="cb2-2" title="2"><span class="kw">library</span>(dplyr)</a></code></pre></div>
+<p>Note que o dplyr informa uma mensagem de aviso ao ser carregado, de que as funções filter(), lag(), etc, estão “mascaradas” pelo pacote. Isto significa que se você quiser usar estas funções a partir desse momento, você vai ter que passar o “nome completo” delas, <code>stats::filter()</code>, <code>stats::lag()</code>, etc.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">flights</a></code></pre></div>
+<pre><code>## # A tibble: 336,776 x 19
+##     year month   day dep_time sched_dep_time dep_delay arr_time
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;
+##  1  2013     1     1      517            515         2      830
+##  2  2013     1     1      533            529         4      850
+##  3  2013     1     1      542            540         2      923
+##  4  2013     1     1      544            545        -1     1004
+##  5  2013     1     1      554            600        -6      812
+##  6  2013     1     1      554            558        -4      740
+##  7  2013     1     1      555            600        -5      913
+##  8  2013     1     1      557            600        -3      709
+##  9  2013     1     1      557            600        -3      838
+## 10  2013     1     1      558            600        -2      753
+## # ... with 336,766 more rows, and 12 more variables: sched_arr_time &lt;int&gt;,
+## #   arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;,
+## #   origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;,
+## #   minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
+<p>Vejam que a impressão do banco de dados é um pouco diferente do <code>data.frame</code> original do R. Aqui, a tabela por padrão imprime apenas as primeiras 10 observações e já informa qual o tipo de coluna.</p>
+<pre><code>- `int` para números interiores
+- `dbl` para números reais
+- `chr` para caracteres (strings)
+- `dttm` para data e hora
+- `lgl` para lógico booleano (TRUE/FALSE)
+- `fctr` para variáveis categóricas
+- `date` para datas (sem hora)</code></pre>
+</div>
+<div id="dplyr-em-perspectiva" class="section level2">
+<h2>dplyr em perspectiva</h2>
+<p>O que o pacote dplyr tem a nos oferecer, então? Suas funções pré programadas para as operações mais comuns no trabalho cotidiano com um banco de dados.</p>
+<pre><code>- Escolher observações/casos de acordo com os valores de uma variável
+(`filter()`)
+- Reordenar o banco de acordo com alguma variável (`arrange()`)
+- Selecionar variáveis de acordo com seus nomes (`select()`)
+- Criar novas variáveis derivadas das existentes (`mutate()`)
+- Criar medidas resumo (`summarise()`)</code></pre>
+<p>Todas estas operações podem ser realizadas em conjunto com a função <code>group_by</code>, que muda a forma de cálculo: se o comportamento padrão é aplicar a mesma operação para todo o data.frame, ao usar <code>group_by</code> a operação será realizada uma vez para grupo de observações dado pelo valor de alguma variável categórica. Isto também é chamado de “mudança de escopo”.</p>
+<p>Outra característica útil do dplyr, é sua consistência interna: todos os “verbos” funcionam da mesma forma:</p>
+<pre><code>1. O Primeiro argumento é um data.frame
+2. Os argumentos seguintes descrevem o que deve ser feito com este
+data.frame
+3. O resultado é sempre um data.frame modificado</code></pre>
+<p>Isto permite que você crie cadeias complexas de operações utilizando poucos passos.</p>
+</div>
+</div>
+<div id="filtros-de-observações-com-filter" class="section level1">
+<h1>“Filtros” de observações com <code>filter()</code></h1>
+<p><code>filter()</code> realiza corte “horizontais” no banco de dados, selecionando os casos de acordo com testes lógicos nas variáveis do banco. Digamos, por exemplo, que queiramos ver apenas os voos realizados no dia 01/01/2013.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="kw">filter</span>(flights, month <span class="op">==</span><span class="st"> </span><span class="dv">1</span>, day <span class="op">==</span><span class="st"> </span><span class="dv">1</span>)</a></code></pre></div>
+<pre><code>## # A tibble: 842 x 19
+##     year month   day dep_time sched_dep_time dep_delay arr_time
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;
+##  1  2013     1     1      517            515         2      830
+##  2  2013     1     1      533            529         4      850
+##  3  2013     1     1      542            540         2      923
+##  4  2013     1     1      544            545        -1     1004
+##  5  2013     1     1      554            600        -6      812
+##  6  2013     1     1      554            558        -4      740
+##  7  2013     1     1      555            600        -5      913
+##  8  2013     1     1      557            600        -3      709
+##  9  2013     1     1      557            600        -3      838
+## 10  2013     1     1      558            600        -2      753
+## # ... with 832 more rows, and 12 more variables: sched_arr_time &lt;int&gt;,
+## #   arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;,
+## #   origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;,
+## #   minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
+<p>Ao realizar o filtro, dplyr gera um novo data.frame que contém apenas as observações filtradas. O novo data.frame não modifica o anterior, se você quiser salvar o resultado, é necessário fazê-lo separadamente:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1">jan1 &lt;-<span class="st"> </span><span class="kw">filter</span>(flights, month <span class="op">==</span><span class="st"> </span><span class="dv">1</span>, day <span class="op">==</span><span class="st"> </span><span class="dv">1</span>)</a></code></pre></div>
+<p>Uma dica para o caso de você querer tanto salvar um resultado numa variável quanto imprimí-lo no console, é colocar parenteses em torno de toda a operação. Veja este segundo exemplo para os voos no dia do Natal.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1">(dec25 &lt;-<span class="st"> </span><span class="kw">filter</span>(flights, month <span class="op">==</span><span class="st"> </span><span class="dv">12</span>, day <span class="op">==</span><span class="st"> </span><span class="dv">25</span>))</a></code></pre></div>
+<pre><code>## # A tibble: 719 x 19
+##     year month   day dep_time sched_dep_time dep_delay arr_time
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;
+##  1  2013    12    25      456            500        -4      649
+##  2  2013    12    25      524            515         9      805
+##  3  2013    12    25      542            540         2      832
+##  4  2013    12    25      546            550        -4     1022
+##  5  2013    12    25      556            600        -4      730
+##  6  2013    12    25      557            600        -3      743
+##  7  2013    12    25      557            600        -3      818
+##  8  2013    12    25      559            600        -1      855
+##  9  2013    12    25      559            600        -1      849
+## 10  2013    12    25      600            600         0      850
+## # ... with 709 more rows, and 12 more variables: sched_arr_time &lt;int&gt;,
+## #   arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;,
+## #   origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;,
+## #   minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
+<p>Para usar bem o <code>filter()</code> é importante saber selecionar suas observações com os operadores lógicos <code>&gt;</code>, <code>&gt;=</code>, <code>&lt;</code>, <code>&lt;=</code>, <code>!=</code> (diferente), <code>==</code> (igual). Cuidado pra não confundir <code>=</code> (atribuição) com <code>==</code> (comparação). A mensagem de erro informa justamente isso.</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1"><span class="kw">filter</span>(flights, <span class="dt">month =</span> <span class="dv">1</span>)</a></code></pre></div>
+<p>Outro problema pode acontecer quando você usa números quebrados. Os valores abaixo tecnicamente seriam verdadeiros…</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1"><span class="kw">sqrt</span>(<span class="dv">2</span>) <span class="op">^</span><span class="st"> </span><span class="dv">2</span> <span class="op">==</span><span class="st"> </span><span class="dv">2</span></a></code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1"><span class="dv">1</span> <span class="op">/</span><span class="st"> </span><span class="dv">49</span> <span class="op">*</span><span class="st"> </span><span class="dv">49</span> <span class="op">==</span><span class="st"> </span><span class="dv">1</span></a></code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+<p>Mas computadores usam aritmética com precisão finita, e portanto, reconhecem diferenças entre os dois valores. Nestes casos, use <code>near()</code>.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1"><span class="kw">near</span>(<span class="kw">sqrt</span>(<span class="dv">2</span>) <span class="op">^</span><span class="st"> </span><span class="dv">2</span>, <span class="co"># Lado esquerdo</span></a>
+<a class="sourceLine" id="cb18-2" title="2">     <span class="dv">2</span>) <span class="co"># Lado direito</span></a></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1"><span class="kw">near</span>(<span class="dv">1</span> <span class="op">/</span><span class="st"> </span><span class="dv">49</span> <span class="op">*</span><span class="st"> </span><span class="dv">49</span>, <span class="co"># Lado esquerdo</span></a>
+<a class="sourceLine" id="cb20-2" title="2">     <span class="dv">1</span>) <span class="co"># Lado direito</span></a></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<p>O comportamento padrão de <code>filter()</code> quando você passa mais um teste é tratá-lo como TESTE1 “E” TESTE2, em que as duas tem que retornar verdadeiro para o caso ser selecionado. Se você quiser criar outros tipos de testes, terá que recorrer a operações lógicas mais complexas. Veja a figura acima.</p>
+<div class="figure">
+<img src="transform-logical.png" alt="Operações Lógicas" />
+<p class="caption">Operações Lógicas</p>
+</div>
+<p>Veja por exemplo os voos que saem em novembro OU dezembro.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1"><span class="kw">filter</span>(flights, month <span class="op">==</span><span class="st"> </span><span class="dv">11</span> <span class="op">|</span><span class="st"> </span>month <span class="op">==</span><span class="st"> </span><span class="dv">12</span>)</a></code></pre></div>
+<pre><code>## # A tibble: 55,403 x 19
+##     year month   day dep_time sched_dep_time dep_delay arr_time
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;
+##  1  2013    11     1        5           2359         6      352
+##  2  2013    11     1       35           2250       105      123
+##  3  2013    11     1      455            500        -5      641
+##  4  2013    11     1      539            545        -6      856
+##  5  2013    11     1      542            545        -3      831
+##  6  2013    11     1      549            600       -11      912
+##  7  2013    11     1      550            600       -10      705
+##  8  2013    11     1      554            600        -6      659
+##  9  2013    11     1      554            600        -6      826
+## 10  2013    11     1      554            600        -6      749
+## # ... with 55,393 more rows, and 12 more variables: sched_arr_time &lt;int&gt;,
+## #   arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;,
+## #   origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;,
+## #   minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
+<p>Você não pode escrever <code>filter(flights, month == (11 | 12))</code>, pois o R vai interpretar isso incorretamente. Se você precisar utilizar múltiplos valores, prefira <code>x %in% y</code>.</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" title="1">nov_dez &lt;-<span class="st"> </span><span class="kw">filter</span>(flights, month <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="dv">11</span>, <span class="dv">12</span>))</a></code></pre></div>
+<p>Se você dominar bem este tipo de lógica booleana, você pode simplificar alguns tipos de operações. As duas operações abaixo são equivalentes.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" title="1"><span class="kw">filter</span>(flights, <span class="op">!</span>(arr_delay <span class="op">&gt;</span><span class="st"> </span><span class="dv">120</span> <span class="op">|</span><span class="st"> </span>dep_delay <span class="op">&gt;</span><span class="st"> </span><span class="dv">120</span>))</a></code></pre></div>
+<pre><code>## # A tibble: 316,050 x 19
+##     year month   day dep_time sched_dep_time dep_delay arr_time
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;
+##  1  2013     1     1      517            515         2      830
+##  2  2013     1     1      533            529         4      850
+##  3  2013     1     1      542            540         2      923
+##  4  2013     1     1      544            545        -1     1004
+##  5  2013     1     1      554            600        -6      812
+##  6  2013     1     1      554            558        -4      740
+##  7  2013     1     1      555            600        -5      913
+##  8  2013     1     1      557            600        -3      709
+##  9  2013     1     1      557            600        -3      838
+## 10  2013     1     1      558            600        -2      753
+## # ... with 316,040 more rows, and 12 more variables: sched_arr_time &lt;int&gt;,
+## #   arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;,
+## #   origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;,
+## #   minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" title="1"><span class="kw">filter</span>(flights, arr_delay <span class="op">&lt;=</span><span class="st"> </span><span class="dv">120</span>, dep_delay <span class="op">&lt;=</span><span class="st"> </span><span class="dv">120</span>)</a></code></pre></div>
+<pre><code>## # A tibble: 316,050 x 19
+##     year month   day dep_time sched_dep_time dep_delay arr_time
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;
+##  1  2013     1     1      517            515         2      830
+##  2  2013     1     1      533            529         4      850
+##  3  2013     1     1      542            540         2      923
+##  4  2013     1     1      544            545        -1     1004
+##  5  2013     1     1      554            600        -6      812
+##  6  2013     1     1      554            558        -4      740
+##  7  2013     1     1      555            600        -5      913
+##  8  2013     1     1      557            600        -3      709
+##  9  2013     1     1      557            600        -3      838
+## 10  2013     1     1      558            600        -2      753
+## # ... with 316,040 more rows, and 12 more variables: sched_arr_time &lt;int&gt;,
+## #   arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;,
+## #   origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;,
+## #   minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
+<p>Tome cuidado com valores missing, representados em R por <code>NA</code>. Eles complicam vários tipos de teste lógico.</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" title="1"><span class="ot">NA</span> <span class="op">&gt;</span><span class="st"> </span><span class="dv">5</span></a></code></pre></div>
+<pre><code>## [1] NA</code></pre>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" title="1"><span class="dv">10</span> <span class="op">==</span><span class="st"> </span><span class="ot">NA</span></a></code></pre></div>
+<pre><code>## [1] NA</code></pre>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" title="1"><span class="ot">NA</span> <span class="op">+</span><span class="st"> </span><span class="dv">10</span></a></code></pre></div>
+<pre><code>## [1] NA</code></pre>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" title="1"><span class="ot">NA</span> <span class="op">/</span><span class="st"> </span><span class="dv">2</span></a></code></pre></div>
+<pre><code>## [1] NA</code></pre>
+<p>Resultado confuso:</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" title="1"><span class="ot">NA</span> <span class="op">==</span><span class="st"> </span><span class="ot">NA</span></a></code></pre></div>
+<pre><code>## [1] NA</code></pre>
+<p>Fica mais fácil se você entender isso com um exemplo:</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" title="1"><span class="co"># X é a data de aniversário de Mário, que é desconhecida</span></a>
+<a class="sourceLine" id="cb39-2" title="2">x &lt;-<span class="st"> </span><span class="ot">NA</span></a>
+<a class="sourceLine" id="cb39-3" title="3"></a>
+<a class="sourceLine" id="cb39-4" title="4"><span class="co"># Y é o aniversário de João, que também é desconhecido</span></a>
+<a class="sourceLine" id="cb39-5" title="5">y &lt;-<span class="st"> </span><span class="ot">NA</span></a>
+<a class="sourceLine" id="cb39-6" title="6"></a>
+<a class="sourceLine" id="cb39-7" title="7"><span class="co"># João e Màrio tem a mesma idade?</span></a>
+<a class="sourceLine" id="cb39-8" title="8">x <span class="op">==</span><span class="st"> </span>y</a></code></pre></div>
+<pre><code>## [1] NA</code></pre>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" title="1"><span class="co">#&gt; [1] NA</span></a>
+<a class="sourceLine" id="cb41-2" title="2"><span class="co"># Não sabemos!</span></a></code></pre></div>
+<p>Se você quiser testar se um valor é missing, use <code>is.na()</code></p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" title="1"><span class="kw">is.na</span>(x)</a></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<p><code>filter()</code> seleciona apenas casos onde o valor do teste lógico é <code>TRUE</code>, excluindo tanto <code>FALSE</code> quanto <code>NA</code>.</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" title="1">df &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="ot">NA</span>, <span class="dv">3</span>))</a>
+<a class="sourceLine" id="cb44-2" title="2"><span class="kw">filter</span>(df, x <span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span>)</a></code></pre></div>
+<pre><code>## # A tibble: 1 x 1
+##       x
+##   &lt;dbl&gt;
+## 1     3</code></pre>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" title="1"><span class="kw">filter</span>(df, <span class="kw">is.na</span>(x) <span class="op">|</span><span class="st"> </span>x <span class="op">&gt;</span><span class="st"> </span><span class="dv">1</span>)</a></code></pre></div>
+<pre><code>## # A tibble: 2 x 1
+##       x
+##   &lt;dbl&gt;
+## 1    NA
+## 2     3</code></pre>
+</div>
+<div id="ordene-os-dados-com-arrange" class="section level1">
+<h1>Ordene os dados com <code>arrange()</code></h1>
+<p>Arrange funciona de forma parecida com <code>filter()</code>, só que ao invés de selecionar casos, ele ordena o banco de acordo com as variáveis selecionadas. Você pode informar várias variáveis, e ele vai ordenar o banco de acordo com a primeira, usando as variáveis subsequentes para ir “desempatando” os casos.</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" title="1"><span class="kw">arrange</span>(flights, year, month, day)</a></code></pre></div>
+<pre><code>## # A tibble: 336,776 x 19
+##     year month   day dep_time sched_dep_time dep_delay arr_time
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;
+##  1  2013     1     1      517            515         2      830
+##  2  2013     1     1      533            529         4      850
+##  3  2013     1     1      542            540         2      923
+##  4  2013     1     1      544            545        -1     1004
+##  5  2013     1     1      554            600        -6      812
+##  6  2013     1     1      554            558        -4      740
+##  7  2013     1     1      555            600        -5      913
+##  8  2013     1     1      557            600        -3      709
+##  9  2013     1     1      557            600        -3      838
+## 10  2013     1     1      558            600        -2      753
+## # ... with 336,766 more rows, and 12 more variables: sched_arr_time &lt;int&gt;,
+## #   arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;,
+## #   origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;,
+## #   minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
+<p>O padrão é ordem ascendente. Se você quiser organizar em ordem descendente, use a função <code>desc()</code></p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb50-1" title="1"><span class="kw">arrange</span>(flights, <span class="kw">desc</span>(dep_delay))</a></code></pre></div>
+<pre><code>## # A tibble: 336,776 x 19
+##     year month   day dep_time sched_dep_time dep_delay arr_time
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;
+##  1  2013     1     9      641            900      1301     1242
+##  2  2013     6    15     1432           1935      1137     1607
+##  3  2013     1    10     1121           1635      1126     1239
+##  4  2013     9    20     1139           1845      1014     1457
+##  5  2013     7    22      845           1600      1005     1044
+##  6  2013     4    10     1100           1900       960     1342
+##  7  2013     3    17     2321            810       911      135
+##  8  2013     6    27      959           1900       899     1236
+##  9  2013     7    22     2257            759       898      121
+## 10  2013    12     5      756           1700       896     1058
+## # ... with 336,766 more rows, and 12 more variables: sched_arr_time &lt;int&gt;,
+## #   arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;,
+## #   origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;,
+## #   minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
+<p>Valores missings são sempre mandados pro final do banco, independente se a ordem é ascendente ou descendente.</p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb52-1" title="1">df &lt;-<span class="st"> </span><span class="kw">tibble</span>(<span class="dt">x =</span> <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">2</span>, <span class="ot">NA</span>))</a>
+<a class="sourceLine" id="cb52-2" title="2"><span class="kw">arrange</span>(df, x)</a></code></pre></div>
+<pre><code>## # A tibble: 3 x 1
+##       x
+##   &lt;dbl&gt;
+## 1     2
+## 2     5
+## 3    NA</code></pre>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb54-1" title="1"><span class="kw">arrange</span>(df, <span class="kw">desc</span>(x))</a></code></pre></div>
+<pre><code>## # A tibble: 3 x 1
+##       x
+##   &lt;dbl&gt;
+## 1     5
+## 2     2
+## 3    NA</code></pre>
+</div>
+<div id="selecione-variáveis-com-select" class="section level1">
+<h1>Selecione variáveis com <code>select()</code></h1>
+<p>Outra operação cotidiana é a seleção de algumas variáveis de um banco maior, o que podemos fazer com <code>select()</code>. Como de costume, primeiro, especificamos o banco, depois, escolhemos as variáveis pelo nome.</p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb56-1" title="1"><span class="kw">select</span>(flights, year, month, day)</a></code></pre></div>
+<pre><code>## # A tibble: 336,776 x 3
+##     year month   day
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt;
+##  1  2013     1     1
+##  2  2013     1     1
+##  3  2013     1     1
+##  4  2013     1     1
+##  5  2013     1     1
+##  6  2013     1     1
+##  7  2013     1     1
+##  8  2013     1     1
+##  9  2013     1     1
+## 10  2013     1     1
+## # ... with 336,766 more rows</code></pre>
+<p>O resultado é um banco que contém apenas as variáveis selecionadas. <code>select()</code> aceita uma série de abreviações que facilitam a seleção de variáveis. Como x:y (x até y) e -(x:y) (exclusão das variáveis de x até y).</p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb58-1" title="1"><span class="kw">select</span>(flights, year<span class="op">:</span>day)</a></code></pre></div>
+<pre><code>## # A tibble: 336,776 x 3
+##     year month   day
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt;
+##  1  2013     1     1
+##  2  2013     1     1
+##  3  2013     1     1
+##  4  2013     1     1
+##  5  2013     1     1
+##  6  2013     1     1
+##  7  2013     1     1
+##  8  2013     1     1
+##  9  2013     1     1
+## 10  2013     1     1
+## # ... with 336,766 more rows</code></pre>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb60-1" title="1"><span class="kw">select</span>(flights, <span class="op">-</span>(year<span class="op">:</span>day))</a></code></pre></div>
+<pre><code>## # A tibble: 336,776 x 16
+##    dep_time sched_dep_time dep_delay arr_time sched_arr_time arr_delay
+##       &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;
+##  1      517            515         2      830            819        11
+##  2      533            529         4      850            830        20
+##  3      542            540         2      923            850        33
+##  4      544            545        -1     1004           1022       -18
+##  5      554            600        -6      812            837       -25
+##  6      554            558        -4      740            728        12
+##  7      555            600        -5      913            854        19
+##  8      557            600        -3      709            723       -14
+##  9      557            600        -3      838            846        -8
+## 10      558            600        -2      753            745         8
+## # ... with 336,766 more rows, and 10 more variables: carrier &lt;chr&gt;,
+## #   flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;,
+## #   distance &lt;dbl&gt;, hour &lt;dbl&gt;, minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
+<p><code>select()</code> vem com várias funções auxiliares para facilitar operações comuns:</p>
+<pre><code>- `starts_with(&quot;abc&quot;)` seleciona variáveis que começam com &quot;abc&quot;
+- `ends_with(&quot;xyz&quot;)` termina em &quot;xyz&quot;
+- `contains(&quot;ijk&quot;)` contém &quot;ijk&quot; no nome.
+- `matches(&quot;(.)\\1&quot;)` casos que correspondem a uma &quot;expressão regular&quot;, um
+tópico um pouco mais avançado de strings.
+- `num_range(&quot;x&quot;, 1:3)` seleciona variáveis com o nome `x1`, `x2` ou `x3`</code></pre>
+<p>Você pode utilizar <code>select()</code> pra renomear as variáveis do banco, mas é meio ruim, porque select exclui todas as variáveis que você não mencionar explicitamente. Por isso, existe <code>rename()</code>.</p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb63-1" title="1"><span class="kw">select</span>(flights, <span class="dt">tail_num =</span> tailnum)</a></code></pre></div>
+<pre><code>## # A tibble: 336,776 x 1
+##    tail_num
+##    &lt;chr&gt;   
+##  1 N14228  
+##  2 N24211  
+##  3 N619AA  
+##  4 N804JB  
+##  5 N668DN  
+##  6 N39463  
+##  7 N516JB  
+##  8 N829AS  
+##  9 N593JB  
+## 10 N3ALAA  
+## # ... with 336,766 more rows</code></pre>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb65-1" title="1"><span class="kw">rename</span>(flights, <span class="dt">tail_num =</span> tailnum)</a></code></pre></div>
+<pre><code>## # A tibble: 336,776 x 19
+##     year month   day dep_time sched_dep_time dep_delay arr_time
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;
+##  1  2013     1     1      517            515         2      830
+##  2  2013     1     1      533            529         4      850
+##  3  2013     1     1      542            540         2      923
+##  4  2013     1     1      544            545        -1     1004
+##  5  2013     1     1      554            600        -6      812
+##  6  2013     1     1      554            558        -4      740
+##  7  2013     1     1      555            600        -5      913
+##  8  2013     1     1      557            600        -3      709
+##  9  2013     1     1      557            600        -3      838
+## 10  2013     1     1      558            600        -2      753
+## # ... with 336,766 more rows, and 12 more variables: sched_arr_time &lt;int&gt;,
+## #   arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;, tail_num &lt;chr&gt;,
+## #   origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;,
+## #   minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
+<p>Dá pra mexer na ordem em que as variáveis aparecem usando <code>select()</code> e o helper <code>everything()</code>. Isto é útil quando você quer mudar a ordem em que as variáveis aparecem no banco sem excluir nada.</p>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb67-1" title="1"><span class="kw">select</span>(flights, time_hour, air_time, <span class="kw">everything</span>())</a></code></pre></div>
+<pre><code>## # A tibble: 336,776 x 19
+##    time_hour           air_time  year month   day dep_time sched_dep_time
+##    &lt;dttm&gt;                 &lt;dbl&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;
+##  1 2013-01-01 05:00:00      227  2013     1     1      517            515
+##  2 2013-01-01 05:00:00      227  2013     1     1      533            529
+##  3 2013-01-01 05:00:00      160  2013     1     1      542            540
+##  4 2013-01-01 05:00:00      183  2013     1     1      544            545
+##  5 2013-01-01 06:00:00      116  2013     1     1      554            600
+##  6 2013-01-01 05:00:00      150  2013     1     1      554            558
+##  7 2013-01-01 06:00:00      158  2013     1     1      555            600
+##  8 2013-01-01 06:00:00       53  2013     1     1      557            600
+##  9 2013-01-01 06:00:00      140  2013     1     1      557            600
+## 10 2013-01-01 06:00:00      138  2013     1     1      558            600
+## # ... with 336,766 more rows, and 12 more variables: dep_delay &lt;dbl&gt;,
+## #   arr_time &lt;int&gt;, sched_arr_time &lt;int&gt;, arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;,
+## #   flight &lt;int&gt;, tailnum &lt;chr&gt;, origin &lt;chr&gt;, dest &lt;chr&gt;, distance &lt;dbl&gt;,
+## #   hour &lt;dbl&gt;, minute &lt;dbl&gt;</code></pre>
+</div>
+<div id="crie-variáveis-derivadas-com-mutate" class="section level1">
+<h1>Crie variáveis derivadas com <code>mutate()</code></h1>
+<p>Nossos bancos de dados frequentemente vem organizados de tal forma que se faz necessário trabalhar com variáveis derivadas, como no caso da criação de grupos etários quinquenais a partir de uma variável contínua de idade, ou no caso da criação de uma classificação regional de variáveis geográficas, como nos estudos migratórios.</p>
+<p>Para esses casos, utilizamos <code>mutate()</code>. Como sempre, esta função recebe como argumentos o banco de dados e depois as variáveis derivadas a serem calculadas, e devolve um banco de dados com as novas variáveis adicionadas. Para começar, vamos escolher algumas variáveis do <code>flights</code> para que a gente possa ver as novas variáveis sendo criadas.</p>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb69-1" title="1">flights_sml &lt;-<span class="st"> </span><span class="kw">select</span>(flights, </a>
+<a class="sourceLine" id="cb69-2" title="2">  year<span class="op">:</span>day, </a>
+<a class="sourceLine" id="cb69-3" title="3">  <span class="kw">ends_with</span>(<span class="st">&quot;delay&quot;</span>), </a>
+<a class="sourceLine" id="cb69-4" title="4">  distance, </a>
+<a class="sourceLine" id="cb69-5" title="5">  air_time</a>
+<a class="sourceLine" id="cb69-6" title="6">)</a>
+<a class="sourceLine" id="cb69-7" title="7"></a>
+<a class="sourceLine" id="cb69-8" title="8"><span class="kw">mutate</span>(flights_sml,</a>
+<a class="sourceLine" id="cb69-9" title="9">  <span class="dt">gain =</span> dep_delay <span class="op">-</span><span class="st"> </span>arr_delay,</a>
+<a class="sourceLine" id="cb69-10" title="10">  <span class="dt">speed =</span> distance <span class="op">/</span><span class="st"> </span>air_time <span class="op">*</span><span class="st"> </span><span class="dv">60</span></a>
+<a class="sourceLine" id="cb69-11" title="11">)</a></code></pre></div>
+<pre><code>## # A tibble: 336,776 x 9
+##     year month   day dep_delay arr_delay distance air_time  gain speed
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1  2013     1     1         2        11     1400      227    -9  370.
+##  2  2013     1     1         4        20     1416      227   -16  374.
+##  3  2013     1     1         2        33     1089      160   -31  408.
+##  4  2013     1     1        -1       -18     1576      183    17  517.
+##  5  2013     1     1        -6       -25      762      116    19  394.
+##  6  2013     1     1        -4        12      719      150   -16  288.
+##  7  2013     1     1        -5        19     1065      158   -24  404.
+##  8  2013     1     1        -3       -14      229       53    11  259.
+##  9  2013     1     1        -3        -8      944      140     5  405.
+## 10  2013     1     1        -2         8      733      138   -10  319.
+## # ... with 336,766 more rows</code></pre>
+<p>Veja como foram criadas a variável <code>gain</code> para medir o tempo recuperado durante o voo após a ocorrência de atrasos e a variável <code>speed</code> para calcular a velocidade de cada voo a partir da distancia percorrida e do tempo decorrido. Se não me engano, está em milhas por hora.</p>
+<p>Você pode usar as colunas que você acabou de criar, veja como <code>gain_per_hour</code> usa <code>gain</code> calculada anteriormente.</p>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb71-1" title="1"><span class="kw">mutate</span>(flights_sml,</a>
+<a class="sourceLine" id="cb71-2" title="2">  <span class="dt">gain =</span> dep_delay <span class="op">-</span><span class="st"> </span>arr_delay,</a>
+<a class="sourceLine" id="cb71-3" title="3">  <span class="dt">hours =</span> air_time <span class="op">/</span><span class="st"> </span><span class="dv">60</span>,</a>
+<a class="sourceLine" id="cb71-4" title="4">  <span class="dt">gain_per_hour =</span> gain <span class="op">/</span><span class="st"> </span>hours</a>
+<a class="sourceLine" id="cb71-5" title="5">)</a></code></pre></div>
+<pre><code>## # A tibble: 336,776 x 10
+##     year month   day dep_delay arr_delay distance air_time  gain hours
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+##  1  2013     1     1         2        11     1400      227    -9 3.78 
+##  2  2013     1     1         4        20     1416      227   -16 3.78 
+##  3  2013     1     1         2        33     1089      160   -31 2.67 
+##  4  2013     1     1        -1       -18     1576      183    17 3.05 
+##  5  2013     1     1        -6       -25      762      116    19 1.93 
+##  6  2013     1     1        -4        12      719      150   -16 2.5  
+##  7  2013     1     1        -5        19     1065      158   -24 2.63 
+##  8  2013     1     1        -3       -14      229       53    11 0.883
+##  9  2013     1     1        -3        -8      944      140     5 2.33 
+## 10  2013     1     1        -2         8      733      138   -10 2.3  
+## # ... with 336,766 more rows, and 1 more variable: gain_per_hour &lt;dbl&gt;</code></pre>
+<p>Se você quiser ficar apenas com as novas variáveis no banco e descartar as originais, use <code>transmute()</code>.</p>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb73-1" title="1"><span class="kw">transmute</span>(flights,</a>
+<a class="sourceLine" id="cb73-2" title="2">  <span class="dt">gain =</span> dep_delay <span class="op">-</span><span class="st"> </span>arr_delay,</a>
+<a class="sourceLine" id="cb73-3" title="3">  <span class="dt">hours =</span> air_time <span class="op">/</span><span class="st"> </span><span class="dv">60</span>,</a>
+<a class="sourceLine" id="cb73-4" title="4">  <span class="dt">gain_per_hour =</span> gain <span class="op">/</span><span class="st"> </span>hours</a>
+<a class="sourceLine" id="cb73-5" title="5">)</a></code></pre></div>
+<pre><code>## # A tibble: 336,776 x 3
+##     gain hours gain_per_hour
+##    &lt;dbl&gt; &lt;dbl&gt;         &lt;dbl&gt;
+##  1    -9 3.78          -2.38
+##  2   -16 3.78          -4.23
+##  3   -31 2.67         -11.6 
+##  4    17 3.05           5.57
+##  5    19 1.93           9.83
+##  6   -16 2.5           -6.4 
+##  7   -24 2.63          -9.11
+##  8    11 0.883         12.5 
+##  9     5 2.33           2.14
+## 10   -10 2.3           -4.35
+## # ... with 336,766 more rows</code></pre>
+<p>A criação de variáveis com <code>mutate()</code> pode partir de muitas formas de cálculo diferentes. A única restrição é que a função tem que ser “vetorizada”, ou seja, calcular os valores de tal forma que cada caso receba seu próprio valor. Vejamos alguns exemplos de funções úteis para criar novas variáveis:</p>
+<pre><code>- Operadores aritméticos `+`, `-`, `*`, `/`, `^`. Estes são vetorizados e
+seguem a &quot;regra da reciclagem&quot;, se um dos lados for menor que o outro, ele
+será repetido para que os dois fiquem do mesmo tamanho. Isso é especialmente
+útil quando você multiplica uma variável por um número: `air_time / 60`,
+`hours * 60 + minute`.
+Estes operadores também são úteis quando junta eles com funções agregadoras
+(média, soma). Exemplo: x / sum(x) calcula a proporção do total, y - mean(x)
+calcula a diferença da média.
+- Aritmética modular `%/%` (divisão de inteiro) e `%%` (resto). Assim você
+pode separar o resultado de uma divisão em sua parte inteira (%/%) e seu
+resto (%%). `38 %/% 7 == 5, 38 %% 7 == 3`.</code></pre>
+<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb76-1" title="1"><span class="kw">transmute</span>(flights,</a>
+<a class="sourceLine" id="cb76-2" title="2">  dep_time,</a>
+<a class="sourceLine" id="cb76-3" title="3">  <span class="dt">hour =</span> dep_time <span class="op">%/%</span><span class="st"> </span><span class="dv">100</span>,</a>
+<a class="sourceLine" id="cb76-4" title="4">  <span class="dt">minute =</span> dep_time <span class="op">%%</span><span class="st"> </span><span class="dv">100</span></a>
+<a class="sourceLine" id="cb76-5" title="5">)</a></code></pre></div>
+<pre><code>## # A tibble: 336,776 x 3
+##    dep_time  hour minute
+##       &lt;int&gt; &lt;dbl&gt;  &lt;dbl&gt;
+##  1      517     5     17
+##  2      533     5     33
+##  3      542     5     42
+##  4      544     5     44
+##  5      554     5     54
+##  6      554     5     54
+##  7      555     5     55
+##  8      557     5     57
+##  9      557     5     57
+## 10      558     5     58
+## # ... with 336,766 more rows</code></pre>
+<pre><code>- Logaritmos: `log()`, `log2()`, `log10()`, para trabalhar com dados cujo
+valor varia muito.
+- Offsets: `lead()` e `lag()` permitem trabalhar com os valores anteriores
+e próximos. Exemplo: diferença do atual pro anterior `x - lag(x)` e saber
+quando uma variável muda de valor `x != lag(x)`.</code></pre>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb79-1" title="1">(x &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">10</span>)</a></code></pre></div>
+<pre><code>##  [1]  1  2  3  4  5  6  7  8  9 10</code></pre>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb81-1" title="1"><span class="kw">lag</span>(x)</a></code></pre></div>
+<pre><code>##  [1] NA  1  2  3  4  5  6  7  8  9</code></pre>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb83-1" title="1"><span class="kw">lead</span>(x)</a></code></pre></div>
+<pre><code>##  [1]  2  3  4  5  6  7  8  9 10 NA</code></pre>
+<pre><code>- Funções de agregação e valores acumulados: `cumsum()`, `cumprod()`, 
+`cummin()`, `cummax()`, `cummean()`.</code></pre>
+<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb86-1" title="1">x</a></code></pre></div>
+<pre><code>##  [1]  1  2  3  4  5  6  7  8  9 10</code></pre>
+<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb88-1" title="1"><span class="kw">cumsum</span>(x)</a></code></pre></div>
+<pre><code>##  [1]  1  3  6 10 15 21 28 36 45 55</code></pre>
+<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb90-1" title="1"><span class="kw">cummean</span>(x)</a></code></pre></div>
+<pre><code>##  [1] 1.0 1.5 2.0 2.5 3.0 3.5 4.0 4.5 5.0 5.5</code></pre>
+<pre><code>- Operadores lógicos: `&lt;`, `&lt;=`, `&gt;`, `&gt;=`, `!=` e `==`.
+- Ranqueamento das informações: há muitas opções, a principal é
+`min_rank()`.</code></pre>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb93-1" title="1">y &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="ot">NA</span>, <span class="dv">3</span>, <span class="dv">4</span>)</a>
+<a class="sourceLine" id="cb93-2" title="2"><span class="kw">min_rank</span>(y)</a></code></pre></div>
+<pre><code>## [1]  1  2  2 NA  4  5</code></pre>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb95-1" title="1"><span class="kw">min_rank</span>(<span class="kw">desc</span>(y))</a></code></pre></div>
+<pre><code>## [1]  5  3  3 NA  2  1</code></pre>
+<pre><code>- Se ela não servir, tente `row_number()`, `dense_rank()`, 
+`percent_rank()`, `cume_dist()` ou `ntile()`.</code></pre>
+<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb98-1" title="1"><span class="kw">row_number</span>(y)</a></code></pre></div>
+<pre><code>## [1]  1  2  3 NA  4  5</code></pre>
+<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb100-1" title="1"><span class="kw">dense_rank</span>(y)</a></code></pre></div>
+<pre><code>## [1]  1  2  2 NA  3  4</code></pre>
+<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb102-1" title="1"><span class="kw">percent_rank</span>(y)</a></code></pre></div>
+<pre><code>## [1] 0.00 0.25 0.25   NA 0.75 1.00</code></pre>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb104-1" title="1"><span class="kw">cume_dist</span>(y)</a></code></pre></div>
+<pre><code>## [1] 0.2 0.6 0.6  NA 0.8 1.0</code></pre>
+</div>
+<div id="crie-medidas-resumo-por-grupos-com-summarise" class="section level1">
+<h1>Crie medidas resumo por grupos com <code>summarise()</code></h1>
+<p>Já vimos anteriormente que é possível criar medidas resumo de variáveis a partir de funções como média (<code>mean()</code>). Mas, a partir de um banco de dados do Brasil, por exemplo, como poderíamos calcular uma media por UF, ou por município? Obviamente, sempre existe o método força bruta, de calcular uma por uma. Mas dplyr oferece uma solução mais elegante. Vamos ver.</p>
+<p>Se eu chamar <code>summarise()</code> pura e simplesmente, ele vai reduzir o banco de dados a única linha, que conterá as medidas resumo que você pedir para calcular.</p>
+<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb106-1" title="1"><span class="kw">summarise</span>(flights, <span class="dt">delay =</span> (<span class="kw">mean</span>(dep_delay, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)))</a></code></pre></div>
+<pre><code>## # A tibble: 1 x 1
+##   delay
+##   &lt;dbl&gt;
+## 1  12.6</code></pre>
+<p>Isso não nos ajuda muito, nós já podíamos fazer isso sem usar <code>summarise()</code>. Mas quando juntamos os poderes dela com <code>group_by()</code>, ela se torna muito interessante. Primeiro, define-se quais variáveis serão usadas para agrupar o cálculo (<code>by_day</code>). Depois, se chama <code>summarise()</code> no banco de dados agrupado.</p>
+<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb108-1" title="1">by_day &lt;-<span class="st"> </span><span class="kw">group_by</span>(flights, year, month, day)</a>
+<a class="sourceLine" id="cb108-2" title="2"><span class="kw">summarise</span>(by_day, <span class="dt">delay =</span> <span class="kw">mean</span>(dep_delay, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</a></code></pre></div>
+<pre><code>## # A tibble: 365 x 4
+## # Groups:   year, month [12]
+##     year month   day delay
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;dbl&gt;
+##  1  2013     1     1 11.5 
+##  2  2013     1     2 13.9 
+##  3  2013     1     3 11.0 
+##  4  2013     1     4  8.95
+##  5  2013     1     5  5.73
+##  6  2013     1     6  7.15
+##  7  2013     1     7  5.42
+##  8  2013     1     8  2.55
+##  9  2013     1     9  2.28
+## 10  2013     1    10  2.84
+## # ... with 355 more rows</code></pre>
+<p>O banco de dados <code>by_day</code> é idêntico ao flights, mas ele tem um atributo que diz como os dados devem ser agrupados em caso de cálculos. Veja o resultado: foi calculada uma média de atrasos para cada dia do ano.</p>
+<div id="entrando-pelo-cano-o-operador-pipe" class="section level2">
+<h2>Entrando pelo cano: o operador pipe ( <code>%&gt;%</code> )</h2>
+<p>É extremamente comum realizar operações sequenciais num banco de dados, coisas como selecionar alguns casos, algumas variáveis, reordenar os dados, agrupá-los segundo alguma categoria e então calcular medidas resumo. O problema é que isso nos leva a repetir muito código e criar vários objetos intermediários que só servem para realizar o cálculo e posteriormente são inúteis.</p>
+<p>No exemplo abaixo, o autor está tentando entender a relação entre a distância dos voos e os atrasos. Voos mais curtos ou mais longos atrasam mais ou menos?</p>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb110-1" title="1">by_dest &lt;-<span class="st"> </span><span class="kw">group_by</span>(flights, dest)</a>
+<a class="sourceLine" id="cb110-2" title="2">delay &lt;-<span class="st"> </span><span class="kw">summarise</span>(by_dest,</a>
+<a class="sourceLine" id="cb110-3" title="3">  <span class="dt">count =</span> <span class="kw">n</span>(),</a>
+<a class="sourceLine" id="cb110-4" title="4">  <span class="dt">dist =</span> <span class="kw">mean</span>(distance, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>),</a>
+<a class="sourceLine" id="cb110-5" title="5">  <span class="dt">delay =</span> <span class="kw">mean</span>(arr_delay, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb110-6" title="6">)</a>
+<a class="sourceLine" id="cb110-7" title="7">delay &lt;-<span class="st"> </span><span class="kw">filter</span>(delay, count <span class="op">&gt;</span><span class="st"> </span><span class="dv">20</span>, dest <span class="op">!=</span><span class="st"> &quot;HNL&quot;</span>)</a>
+<a class="sourceLine" id="cb110-8" title="8"></a>
+<a class="sourceLine" id="cb110-9" title="9"><span class="co"># Parece que os atrasos aumentam até uma distância de ~ 750 milhas</span></a>
+<a class="sourceLine" id="cb110-10" title="10"><span class="co"># e depois caem. É possível que em voos mais longos exista tempo para</span></a>
+<a class="sourceLine" id="cb110-11" title="11"><span class="co"># recuperar parte desses atrasos aumentando a velocidade dos aviões</span></a>
+<a class="sourceLine" id="cb110-12" title="12"><span class="kw">library</span>(ggplot2)</a>
+<a class="sourceLine" id="cb110-13" title="13"><span class="kw">ggplot</span>(<span class="dt">data =</span> delay, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> dist, <span class="dt">y =</span> delay)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb110-14" title="14"><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">size =</span> count), <span class="dt">alpha =</span> <span class="dv">1</span><span class="op">/</span><span class="dv">3</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb110-15" title="15"><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">se =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<pre><code>## `geom_smooth()` using method = &#39;loess&#39; and formula &#39;y ~ x&#39;</code></pre>
+<p><img src="05_manipulacao-dplyr_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<p>Para chegar a essa conclusão, o autor executou 3 passos:</p>
+<pre><code>1. Agrupou os voos por destino
+2. Resumiu o banco para calcular médias das distâncias, 
+atrasos e número de voos
+3. Filtrou outliers</code></pre>
+<p>O código é ineficiente porque você precisa dar a cada passo um nome separado, mesmo que você não vá utilizá-lo em seguida. Existe uma solução elegante para este problema, que é colocar o banco de dados no cano <code>%&gt;%</code>.</p>
+<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb113-1" title="1">delays &lt;-<span class="st"> </span>flights <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb113-2" title="2"><span class="st">  </span><span class="kw">group_by</span>(dest) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb113-3" title="3"><span class="st">  </span><span class="kw">summarise</span>(</a>
+<a class="sourceLine" id="cb113-4" title="4">    <span class="dt">count =</span> <span class="kw">n</span>(),</a>
+<a class="sourceLine" id="cb113-5" title="5">    <span class="dt">dist =</span> <span class="kw">mean</span>(distance, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>),</a>
+<a class="sourceLine" id="cb113-6" title="6">    <span class="dt">delay =</span> <span class="kw">mean</span>(arr_delay, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb113-7" title="7">  ) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb113-8" title="8"><span class="st">  </span><span class="kw">filter</span>(count <span class="op">&gt;</span><span class="st"> </span><span class="dv">20</span>, dest <span class="op">!=</span><span class="st"> &quot;HNL&quot;</span>)</a></code></pre></div>
+<p>Assim, você se concentra na transformação e não no que está sendo transformado. Você pode ler esse código como uma série de ordens que estão sendo dadas: primeiro, agrupe os dados por destino, então, resuma-os e então filtre os casos extremos. Cada <code>%&gt;%</code> é um “então”.</p>
+<p>Por trás da cortina, <code>%&gt;%</code> faz com que <code>x %&gt;% f(y)</code> se torne <code>f(x, y)</code> e se forem dois <code>%&gt;%</code>, <code>x %&gt;% f(y) %&gt;% g(z)</code> vira <code>g(f(x, y))</code>. Se esta explicação não fizer muito sentido pra você, pense no <code>%&gt;%</code> como <strong>pegue o resultado do que está a esquerda do <code>%&gt;%</code> e passe-o para a função do lado direito na posição do primeiro argumento</strong>. Assim, <code>flights %&gt;% group_by(dest)</code> é equivalente a <code>group_by(flights, dest)</code>.</p>
+<p>Isso facilita bastante escrever operações em sequência, em que a próxima função pega um data.frame modificado e emite um data.frame modificado para a função logo em seguida. Formando uma espécie de “pipeline” ou duto ou linha de montagem.</p>
+</div>
+<div id="cuidados-com-os-missings" class="section level2">
+<h2>Cuidados com os missings</h2>
+<p>Note que no código anterior, o autor usou <code>na.rm = TRUE</code> quando calculou as médias. Veja o que acontece se ele não usar.</p>
+<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb114-1" title="1">flights <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb114-2" title="2"><span class="st">  </span><span class="kw">group_by</span>(year, month, day) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb114-3" title="3"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">media =</span> <span class="kw">mean</span>(dep_delay))</a></code></pre></div>
+<pre><code>## # A tibble: 365 x 4
+## # Groups:   year, month [12]
+##     year month   day media
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;dbl&gt;
+##  1  2013     1     1    NA
+##  2  2013     1     2    NA
+##  3  2013     1     3    NA
+##  4  2013     1     4    NA
+##  5  2013     1     5    NA
+##  6  2013     1     6    NA
+##  7  2013     1     7    NA
+##  8  2013     1     8    NA
+##  9  2013     1     9    NA
+## 10  2013     1    10    NA
+## # ... with 355 more rows</code></pre>
+<p>Recebemos um monte de missings porque funções de agregação seguem uma regra simples: se houver valores missing durante o cálculo, o resultado final é missing. Por isso o argumento <code>na.rm</code> é uma opção em todas elas.</p>
+<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb116-1" title="1">flights <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb116-2" title="2"><span class="st">  </span><span class="kw">group_by</span>(year, month, day) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb116-3" title="3"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">media =</span> <span class="kw">mean</span>(dep_delay, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</a></code></pre></div>
+<pre><code>## # A tibble: 365 x 4
+## # Groups:   year, month [12]
+##     year month   day media
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;dbl&gt;
+##  1  2013     1     1 11.5 
+##  2  2013     1     2 13.9 
+##  3  2013     1     3 11.0 
+##  4  2013     1     4  8.95
+##  5  2013     1     5  5.73
+##  6  2013     1     6  7.15
+##  7  2013     1     7  5.42
+##  8  2013     1     8  2.55
+##  9  2013     1     9  2.28
+## 10  2013     1    10  2.84
+## # ... with 355 more rows</code></pre>
+<p>Você pode, por exemplo, querer excluir os missings logo de cara, algo que agora você pode fazer usando um <code>filter()</code>.</p>
+<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb118-1" title="1">not_cancelled &lt;-<span class="st"> </span>flights <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb118-2" title="2"><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(dep_delay), <span class="op">!</span><span class="kw">is.na</span>(arr_delay))</a>
+<a class="sourceLine" id="cb118-3" title="3"></a>
+<a class="sourceLine" id="cb118-4" title="4"><span class="co"># Aí, você não precisar especificar na.rm = TRUE...</span></a>
+<a class="sourceLine" id="cb118-5" title="5">not_cancelled <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb118-6" title="6"><span class="st">  </span><span class="kw">group_by</span>(year, month, day) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb118-7" title="7"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">mean =</span> <span class="kw">mean</span>(dep_delay))</a></code></pre></div>
+<pre><code>## # A tibble: 365 x 4
+## # Groups:   year, month [12]
+##     year month   day  mean
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;dbl&gt;
+##  1  2013     1     1 11.4 
+##  2  2013     1     2 13.7 
+##  3  2013     1     3 10.9 
+##  4  2013     1     4  8.97
+##  5  2013     1     5  5.73
+##  6  2013     1     6  7.15
+##  7  2013     1     7  5.42
+##  8  2013     1     8  2.56
+##  9  2013     1     9  2.30
+## 10  2013     1    10  2.84
+## # ... with 355 more rows</code></pre>
+</div>
+<div id="contagens" class="section level2">
+<h2>Contagens</h2>
+<p>Quando você agrega valores, é boa prática você inspecionar as contagens de casos válidos e inválidos, pra você se certificar de que não está calculando algo a partir de um pequeno número de informações. No caso do Censo, é sempre bom ver se a variável sofreu imputação, por exemplo.</p>
+<p>No caso, o autor quer ver os aviões (pela variável tailnum) que mais frequentemente sofrem atrasos.</p>
+<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb120-1" title="1">delays &lt;-<span class="st"> </span>not_cancelled <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb120-2" title="2"><span class="st">  </span><span class="kw">group_by</span>(tailnum) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb120-3" title="3"><span class="st">  </span><span class="kw">summarise</span>(</a>
+<a class="sourceLine" id="cb120-4" title="4">    <span class="dt">delay =</span> <span class="kw">mean</span>(arr_delay)</a>
+<a class="sourceLine" id="cb120-5" title="5">  )</a>
+<a class="sourceLine" id="cb120-6" title="6"></a>
+<a class="sourceLine" id="cb120-7" title="7"><span class="kw">ggplot</span>(<span class="dt">data =</span> delays, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> delay)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb120-8" title="8"><span class="st">  </span><span class="kw">geom_freqpoly</span>(<span class="dt">binwidth =</span> <span class="dv">10</span>)</a></code></pre></div>
+<p><img src="05_manipulacao-dplyr_files/figure-html/unnamed-chunk-23-1.png" width="672" /></p>
+<p>A maioria dos aviões tem pequenos atrasos, perto de 30 minutos. Mas alguns deles sofrem atrasos médios de mais de 5 horas (300 minutos). Porque?</p>
+<p>A gente pode entender melhor esse fenômeno se analisarmos a distribuição do número de voos pelo atraso médio.</p>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb121-1" title="1">delays &lt;-<span class="st"> </span>not_cancelled <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb121-2" title="2"><span class="st">  </span><span class="kw">group_by</span>(tailnum) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb121-3" title="3"><span class="st">  </span><span class="kw">summarise</span>(</a>
+<a class="sourceLine" id="cb121-4" title="4">    <span class="dt">delay =</span> <span class="kw">mean</span>(arr_delay, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>),</a>
+<a class="sourceLine" id="cb121-5" title="5">    <span class="dt">n =</span> <span class="kw">n</span>()</a>
+<a class="sourceLine" id="cb121-6" title="6">  )</a>
+<a class="sourceLine" id="cb121-7" title="7"></a>
+<a class="sourceLine" id="cb121-8" title="8"><span class="kw">ggplot</span>(<span class="dt">data =</span> delays, <span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> n, <span class="dt">y =</span> delay)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb121-9" title="9"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">alpha =</span> <span class="dv">1</span><span class="op">/</span><span class="dv">10</span>)</a></code></pre></div>
+<p><img src="05_manipulacao-dplyr_files/figure-html/unnamed-chunk-24-1.png" width="672" /></p>
+<p>O que ocorre é que há uma variação enorme no valor da média de atrasos quando há poucos voos! Essa variação diminui bastante a medida que o número de voos aumenta.</p>
+<p>Em geral, para que o gráfico nos informe melhor, é útil você filtrar as observações para os grupos que tem poucas observações, para que você possa observar melhor o padrão geral da relação e não ser tão afetado por poucas observações com valores extremos. Assim, ele filtra os aviões que realizaram pelo menos 25 voos.</p>
+<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb122-1" title="1">delays <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb122-2" title="2"><span class="st">  </span><span class="kw">filter</span>(n <span class="op">&gt;</span><span class="st"> </span><span class="dv">25</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb122-3" title="3"><span class="st">  </span><span class="kw">ggplot</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> n, <span class="dt">y =</span> delay)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb122-4" title="4"><span class="st">    </span><span class="kw">geom_point</span>(<span class="dt">alpha =</span> <span class="dv">1</span><span class="op">/</span><span class="dv">10</span>)</a></code></pre></div>
+<p><img src="05_manipulacao-dplyr_files/figure-html/unnamed-chunk-25-1.png" width="672" /></p>
+<hr />
+<p>Dica: um atalho extremamente útil do RStudio é o Ctrl + Shift + P. Ele reenvia o último pedaço de código que você rodou. No caso, você pode modificar o valor de n (aqui = 25) até encontrar o valor que você quiser e rapidamente ir rodando novamente o mesmo pedaço de código até você chegar no valor ideal.</p>
+<hr />
+<p>Outro exemplo do mesmo problema é ilustrado por esse banco de dados de beisebol do pacote Lahman. O banco contém uma variável para a habilidade do jogador em rebater bolas (<code>ba</code>) e outra que mede o número de chances que o jogador teve de fazê-lo (<code>ab</code>). Veja o gráfico.</p>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb123-1" title="1"><span class="co">#install.packages(&quot;Lahman&quot;)</span></a>
+<a class="sourceLine" id="cb123-2" title="2">batting &lt;-<span class="st"> </span><span class="kw">as_tibble</span>(Lahman<span class="op">::</span>Batting)</a>
+<a class="sourceLine" id="cb123-3" title="3"></a>
+<a class="sourceLine" id="cb123-4" title="4">batters &lt;-<span class="st"> </span>batting <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb123-5" title="5"><span class="st">  </span><span class="kw">group_by</span>(playerID) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb123-6" title="6"><span class="st">  </span><span class="kw">summarise</span>(</a>
+<a class="sourceLine" id="cb123-7" title="7">    <span class="dt">ba =</span> <span class="kw">sum</span>(H, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>) <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(AB, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>),</a>
+<a class="sourceLine" id="cb123-8" title="8">    <span class="dt">ab =</span> <span class="kw">sum</span>(AB, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb123-9" title="9">  )</a>
+<a class="sourceLine" id="cb123-10" title="10"></a>
+<a class="sourceLine" id="cb123-11" title="11">batters <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb123-12" title="12"><span class="st">  </span><span class="kw">filter</span>(ab <span class="op">&gt;</span><span class="st"> </span><span class="dv">100</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb123-13" title="13"><span class="st">  </span><span class="kw">ggplot</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> ab, <span class="dt">y =</span> ba)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb123-14" title="14"><span class="st">    </span><span class="kw">geom_point</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb123-15" title="15"><span class="st">    </span><span class="kw">geom_smooth</span>(<span class="dt">se =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<pre><code>## `geom_smooth()` using method = &#39;gam&#39; and formula &#39;y ~ s(x, bs = &quot;cs&quot;)&#39;</code></pre>
+<p><img src="05_manipulacao-dplyr_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
+<p>Quando você plota as duas variáveis, acontece algo similar:</p>
+<pre><code>1. A variação no agregado diminui bastante a medida que o número de chances
+de rebater aumenta.
+2. Existe uma correlação positiva entre a habilidade do rebatedor e a
+quantidade de chances que ele tem de rebater. Isto não é concidência, 
+é que os times escolhem que rebate e portanto tendem a colocar seus 
+melhores jogadores em campo com mais frequência.
+3. Assim, as pessoas com o maior valor da variável &quot;habilidade&quot; não são 
+necessariamente os melhores jogadores, são apenas &quot;sortudos&quot;.</code></pre>
+<p>Isso tem implicações inclusive pra quando você quer colocar essas variáveis em ordem. Por exemplo, como você criaria um ranking dos melhores jogadores? Você poderia simplesmente ranquear pela variável “habilidade(<code>ba</code>)”, por exemplo.</p>
+<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb126-1" title="1">batters <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb126-2" title="2"><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(ba))</a></code></pre></div>
+<pre><code>## # A tibble: 19,428 x 3
+##    playerID     ba    ab
+##    &lt;chr&gt;     &lt;dbl&gt; &lt;int&gt;
+##  1 abramge01     1     1
+##  2 alberan01     1     1
+##  3 allarko01     1     1
+##  4 banisje01     1     1
+##  5 bartocl01     1     1
+##  6 bassdo01      1     1
+##  7 birasst01     1     2
+##  8 bruneju01     1     1
+##  9 burnscb01     1     1
+## 10 cammaer01     1     1
+## # ... with 19,418 more rows</code></pre>
+<p>O problema é que, como você pode ver, essas pessoas só jogaram 1 ou 2 vezes, e elas provavelmente foram mais sortudas que, de fato, habilidosas.</p>
+</div>
+<div id="funções-úteis-para-usar-junto-com-summarise" class="section level2">
+<h2>Funções úteis para usar junto com <code>summarise()</code></h2>
+<p>Já falamos de contagens (<code>n()</code>) e médias (<code>mean()</code>), que são extremamente úteis, mas há outras funções para medidas resumo que são interessantes.</p>
+<pre><code>- Medidas de &quot;localização&quot;: `median()` para mediana, ou o valor
+correspondente a probabilidade de 50%. Neste exemplo, o autor calcula a
+média e também calcula a média apenas dos valores positivos. Ou seja, é 
+uma agregação e um filtro ao mesmo tempo.</code></pre>
+<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb129-1" title="1">not_cancelled <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb129-2" title="2"><span class="st">  </span><span class="kw">group_by</span>(year, month, day) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb129-3" title="3"><span class="st">  </span><span class="kw">summarise</span>(</a>
+<a class="sourceLine" id="cb129-4" title="4">    <span class="dt">avg_delay1 =</span> <span class="kw">mean</span>(arr_delay),</a>
+<a class="sourceLine" id="cb129-5" title="5">    <span class="dt">avg_delay2 =</span> <span class="kw">mean</span>(arr_delay[arr_delay <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>]) <span class="co"># filtro</span></a>
+<a class="sourceLine" id="cb129-6" title="6">  )</a></code></pre></div>
+<pre><code>## # A tibble: 365 x 5
+## # Groups:   year, month [12]
+##     year month   day avg_delay1 avg_delay2
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt;      &lt;dbl&gt;      &lt;dbl&gt;
+##  1  2013     1     1     12.7         32.5
+##  2  2013     1     2     12.7         32.0
+##  3  2013     1     3      5.73        27.7
+##  4  2013     1     4     -1.93        28.3
+##  5  2013     1     5     -1.53        22.6
+##  6  2013     1     6      4.24        24.4
+##  7  2013     1     7     -4.95        27.8
+##  8  2013     1     8     -3.23        20.8
+##  9  2013     1     9     -0.264       25.6
+## 10  2013     1    10     -5.90        27.3
+## # ... with 355 more rows</code></pre>
+<pre><code>- Medidas de dispersão: `sd()`, `IQR()`, `mad()`. A primeira é o desvio
+padrão, ou a raíz da média do desvio ao quadrado. A segunda é a distância
+interquartis e a terceira é desvio absoluto da mediana. Essas medidas são
+úteis quando você tem dados com valores muito discrepantes (outliers).</code></pre>
+<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb132-1" title="1"><span class="co"># Porque a distância para alguns destinos é mais variável que para outros?</span></a>
+<a class="sourceLine" id="cb132-2" title="2">not_cancelled <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb132-3" title="3"><span class="st">  </span><span class="kw">group_by</span>(dest) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb132-4" title="4"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">distance_sd =</span> <span class="kw">sd</span>(distance)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb132-5" title="5"><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(distance_sd))</a></code></pre></div>
+<pre><code>## # A tibble: 104 x 2
+##    dest  distance_sd
+##    &lt;chr&gt;       &lt;dbl&gt;
+##  1 EGE         10.5 
+##  2 SAN         10.4 
+##  3 SFO         10.2 
+##  4 HNL         10.0 
+##  5 SEA          9.98
+##  6 LAS          9.91
+##  7 PDX          9.87
+##  8 PHX          9.86
+##  9 LAX          9.66
+## 10 IND          9.46
+## # ... with 94 more rows</code></pre>
+<pre><code>- Medidas de ranking: `min()`, `quantile()`, `max()`. Quantile é uma
+generalização da mediana. `quantile(x, 0.25)` encontra x que são maiores
+que 25% e menores que 75% dos valores.</code></pre>
+<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb135-1" title="1"><span class="co"># Quando saem os primeiros e últimos voos de cada dia?</span></a>
+<a class="sourceLine" id="cb135-2" title="2">not_cancelled <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb135-3" title="3"><span class="st">  </span><span class="kw">group_by</span>(year, month, day) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb135-4" title="4"><span class="st">  </span><span class="kw">summarise</span>(</a>
+<a class="sourceLine" id="cb135-5" title="5">    <span class="dt">first =</span> <span class="kw">min</span>(dep_time),</a>
+<a class="sourceLine" id="cb135-6" title="6">    <span class="dt">last =</span> <span class="kw">max</span>(dep_time)</a>
+<a class="sourceLine" id="cb135-7" title="7">  )</a></code></pre></div>
+<pre><code>## # A tibble: 365 x 5
+## # Groups:   year, month [12]
+##     year month   day first  last
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;int&gt;
+##  1  2013     1     1   517  2356
+##  2  2013     1     2    42  2354
+##  3  2013     1     3    32  2349
+##  4  2013     1     4    25  2358
+##  5  2013     1     5    14  2357
+##  6  2013     1     6    16  2355
+##  7  2013     1     7    49  2359
+##  8  2013     1     8   454  2351
+##  9  2013     1     9     2  2252
+## 10  2013     1    10     3  2320
+## # ... with 355 more rows</code></pre>
+<pre><code>- Medidas de posição: `first()`, `nth()`, `last()`. &quot;Primeiro&quot;, &quot;enésimo&quot;
+e &quot;último&quot; valor. Eles são similares utilizar `x[1]`, `x[n]` ou
+`x[length(x)]`, a vantagem é que você pode colocar um valor padrão caso
+essa posição não exista/esteja vazia. Novamente, podemos ver a primeira
+a última decolagem em cada dia.</code></pre>
+<div class="sourceCode" id="cb138"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb138-1" title="1">not_cancelled <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb138-2" title="2"><span class="st">  </span><span class="kw">group_by</span>(year, month, day) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb138-3" title="3"><span class="st">  </span><span class="kw">summarise</span>(</a>
+<a class="sourceLine" id="cb138-4" title="4">    <span class="dt">first_dep =</span> <span class="kw">first</span>(dep_time), </a>
+<a class="sourceLine" id="cb138-5" title="5">    <span class="dt">last_dep =</span> <span class="kw">last</span>(dep_time)</a>
+<a class="sourceLine" id="cb138-6" title="6">  )</a></code></pre></div>
+<pre><code>## # A tibble: 365 x 5
+## # Groups:   year, month [12]
+##     year month   day first_dep last_dep
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt;     &lt;int&gt;    &lt;int&gt;
+##  1  2013     1     1       517     2356
+##  2  2013     1     2        42     2354
+##  3  2013     1     3        32     2349
+##  4  2013     1     4        25     2358
+##  5  2013     1     5        14     2357
+##  6  2013     1     6        16     2355
+##  7  2013     1     7        49     2359
+##  8  2013     1     8       454     2351
+##  9  2013     1     9         2     2252
+## 10  2013     1    10         3     2320
+## # ... with 355 more rows</code></pre>
+<pre><code>Isso é corresponde a você fazer um filtro a partir de uma variável de
+ranking. A diferença é que no filtro, vão aparecer todas as variáveis do
+banco, com cada observação em uma linha, no `summarise()`, você vai ficar
+só com as variáveis que você criou.</code></pre>
+<div class="sourceCode" id="cb141"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb141-1" title="1">not_cancelled <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb141-2" title="2"><span class="st">  </span><span class="kw">group_by</span>(year, month, day) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb141-3" title="3"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">r =</span> <span class="kw">min_rank</span>(<span class="kw">desc</span>(dep_time))) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb141-4" title="4"><span class="st">  </span><span class="kw">filter</span>(r <span class="op">%in%</span><span class="st"> </span><span class="kw">range</span>(r)) <span class="co"># range(r) retorna o maior e o menor valor de r</span></a></code></pre></div>
+<pre><code>## # A tibble: 770 x 20
+## # Groups:   year, month, day [365]
+##     year month   day dep_time sched_dep_time dep_delay arr_time
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;
+##  1  2013     1     1      517            515         2      830
+##  2  2013     1     1     2356           2359        -3      425
+##  3  2013     1     2       42           2359        43      518
+##  4  2013     1     2     2354           2359        -5      413
+##  5  2013     1     3       32           2359        33      504
+##  6  2013     1     3     2349           2359       -10      434
+##  7  2013     1     4       25           2359        26      505
+##  8  2013     1     4     2358           2359        -1      429
+##  9  2013     1     4     2358           2359        -1      436
+## 10  2013     1     5       14           2359        15      503
+## # ... with 760 more rows, and 13 more variables: sched_arr_time &lt;int&gt;,
+## #   arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;,
+## #   origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;,
+## #   minute &lt;dbl&gt;, time_hour &lt;dttm&gt;, r &lt;int&gt;</code></pre>
+<pre><code>- Contagens: `n()` conta o número de observaçõs no grupo atual, não recebe
+nenhum argumento, se você quiser contar só os missings, use `sum(is.na(x))`,
+para contar o número de valores únicos/distintos, use `n_distinct(x)`.</code></pre>
+<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb144-1" title="1"><span class="co"># Que destinos tem mais companhias aéreas operando?</span></a>
+<a class="sourceLine" id="cb144-2" title="2">not_cancelled <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb144-3" title="3"><span class="st">  </span><span class="kw">group_by</span>(dest) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb144-4" title="4"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">carriers =</span> <span class="kw">n_distinct</span>(carrier)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb144-5" title="5"><span class="st">  </span><span class="kw">arrange</span>(<span class="kw">desc</span>(carriers))</a></code></pre></div>
+<pre><code>## # A tibble: 104 x 2
+##    dest  carriers
+##    &lt;chr&gt;    &lt;int&gt;
+##  1 ATL          7
+##  2 BOS          7
+##  3 CLT          7
+##  4 ORD          7
+##  5 TPA          7
+##  6 AUS          6
+##  7 DCA          6
+##  8 DTW          6
+##  9 IAD          6
+## 10 MSP          6
+## # ... with 94 more rows</code></pre>
+<pre><code>Contagens são tão comuns que tem uma função só pra isso no dplyr...</code></pre>
+<div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb147-1" title="1">not_cancelled <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb147-2" title="2"><span class="st">  </span><span class="kw">count</span>(dest)</a></code></pre></div>
+<pre><code>## # A tibble: 104 x 2
+##    dest      n
+##    &lt;chr&gt; &lt;int&gt;
+##  1 ABQ     254
+##  2 ACK     264
+##  3 ALB     418
+##  4 ANC       8
+##  5 ATL   16837
+##  6 AUS    2411
+##  7 AVL     261
+##  8 BDL     412
+##  9 BGR     358
+## 10 BHM     269
+## # ... with 94 more rows</code></pre>
+<pre><code>`count()` aceita um argumento opcional peso (`wt`), 
+para ponderar as contagens.</code></pre>
+<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb150-1" title="1">not_cancelled <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb150-2" title="2"><span class="st">  </span><span class="kw">count</span>(dest, <span class="dt">wt =</span> distance)</a></code></pre></div>
+<pre><code>## # A tibble: 104 x 2
+##    dest         n
+##    &lt;chr&gt;    &lt;dbl&gt;
+##  1 ABQ     463804
+##  2 ACK      52536
+##  3 ALB      59774
+##  4 ANC      26960
+##  5 ATL   12747938
+##  6 AUS    3650862
+##  7 AVL     152323
+##  8 BDL      47792
+##  9 BGR     135324
+## 10 BHM     232953
+## # ... with 94 more rows</code></pre>
+<pre><code>- Contagens e proporções de valores lógicos: `sum(x &gt; 10)`, `mean(y == 0)`.
+Quando operadores lógicos são passados a funções numéricas, `TRUE` vira `1`
+e `FALSE` vira `0`. Assim, `sum` dá o número de `TRUE`s
+e `mean` dá a proporção.</code></pre>
+<div class="sourceCode" id="cb153"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb153-1" title="1"><span class="co"># Quantos voos sairam antes das 5 da manhã? (estes costumam indicar</span></a>
+<a class="sourceLine" id="cb153-2" title="2"><span class="co"># voos atrasados do dia anterior)</span></a>
+<a class="sourceLine" id="cb153-3" title="3">not_cancelled <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb153-4" title="4"><span class="st">  </span><span class="kw">group_by</span>(year, month, day) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb153-5" title="5"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">n_early =</span> <span class="kw">sum</span>(dep_time <span class="op">&lt;</span><span class="st"> </span><span class="dv">500</span>))</a></code></pre></div>
+<pre><code>## # A tibble: 365 x 4
+## # Groups:   year, month [12]
+##     year month   day n_early
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt;   &lt;int&gt;
+##  1  2013     1     1       0
+##  2  2013     1     2       3
+##  3  2013     1     3       4
+##  4  2013     1     4       3
+##  5  2013     1     5       3
+##  6  2013     1     6       2
+##  7  2013     1     7       2
+##  8  2013     1     8       1
+##  9  2013     1     9       3
+## 10  2013     1    10       3
+## # ... with 355 more rows</code></pre>
+<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb155-1" title="1"><span class="co"># Qual a proporção de voos que atrasaram mais de 1h?</span></a>
+<a class="sourceLine" id="cb155-2" title="2">not_cancelled <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb155-3" title="3"><span class="st">  </span><span class="kw">group_by</span>(year, month, day) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb155-4" title="4"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">hour_prop =</span> <span class="kw">mean</span>(arr_delay <span class="op">&gt;</span><span class="st"> </span><span class="dv">60</span>))</a></code></pre></div>
+<pre><code>## # A tibble: 365 x 4
+## # Groups:   year, month [12]
+##     year month   day hour_prop
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt;     &lt;dbl&gt;
+##  1  2013     1     1    0.0722
+##  2  2013     1     2    0.0851
+##  3  2013     1     3    0.0567
+##  4  2013     1     4    0.0396
+##  5  2013     1     5    0.0349
+##  6  2013     1     6    0.0470
+##  7  2013     1     7    0.0333
+##  8  2013     1     8    0.0213
+##  9  2013     1     9    0.0202
+## 10  2013     1    10    0.0183
+## # ... with 355 more rows</code></pre>
+</div>
+<div id="agrupando-por-várias-variáveis-ao-mesmo-tempo" class="section level2">
+<h2>Agrupando por várias variáveis ao mesmo tempo</h2>
+<p>Quando você agrupa por mais de uma variável, cada <code>summarise()</code> “descasca” uma variável do agrupamento. Veja</p>
+<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb157-1" title="1">daily &lt;-<span class="st"> </span><span class="kw">group_by</span>(flights, year, month, day)</a>
+<a class="sourceLine" id="cb157-2" title="2">(per_day   &lt;-<span class="st"> </span><span class="kw">summarise</span>(daily, <span class="dt">flights =</span> <span class="kw">n</span>()))</a></code></pre></div>
+<pre><code>## # A tibble: 365 x 4
+## # Groups:   year, month [12]
+##     year month   day flights
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt;   &lt;int&gt;
+##  1  2013     1     1     842
+##  2  2013     1     2     943
+##  3  2013     1     3     914
+##  4  2013     1     4     915
+##  5  2013     1     5     720
+##  6  2013     1     6     832
+##  7  2013     1     7     933
+##  8  2013     1     8     899
+##  9  2013     1     9     902
+## 10  2013     1    10     932
+## # ... with 355 more rows</code></pre>
+<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb159-1" title="1">(per_month &lt;-<span class="st"> </span><span class="kw">summarise</span>(per_day, <span class="dt">flights =</span> <span class="kw">sum</span>(flights)))</a></code></pre></div>
+<pre><code>## # A tibble: 12 x 3
+## # Groups:   year [1]
+##     year month flights
+##    &lt;int&gt; &lt;int&gt;   &lt;int&gt;
+##  1  2013     1   27004
+##  2  2013     2   24951
+##  3  2013     3   28834
+##  4  2013     4   28330
+##  5  2013     5   28796
+##  6  2013     6   28243
+##  7  2013     7   29425
+##  8  2013     8   29327
+##  9  2013     9   27574
+## 10  2013    10   28889
+## 11  2013    11   27268
+## 12  2013    12   28135</code></pre>
+<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb161-1" title="1">(per_year  &lt;-<span class="st"> </span><span class="kw">summarise</span>(per_month, <span class="dt">flights =</span> <span class="kw">sum</span>(flights)))</a></code></pre></div>
+<pre><code>## # A tibble: 1 x 2
+##    year flights
+##   &lt;int&gt;   &lt;int&gt;
+## 1  2013  336776</code></pre>
+<p>Geralmente, não há muito motivo para você ir “afunilando” seu dataset de forma progressiva, mas se você precisar fazê-lo, muito cuidado! Contagens e somas de grupos são iguais as contagens e somas do total, mas outras medidas como médias e medianas, não necessariamente!</p>
+</div>
+<div id="desagrupando" class="section level2">
+<h2>Desagrupando</h2>
+<p>Se você quiser desagrupar seu banco de dados para que as operações sejam feitas em todo ele, você pode usar <code>ungroup()</code>.</p>
+<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb163-1" title="1">daily <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb163-2" title="2"><span class="st">  </span><span class="kw">ungroup</span>() <span class="op">%&gt;%</span><span class="st">             </span><span class="co"># Não está mais agrupado</span></a>
+<a class="sourceLine" id="cb163-3" title="3"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">flights =</span> <span class="kw">n</span>())  <span class="co"># todos os voos</span></a></code></pre></div>
+<pre><code>## # A tibble: 1 x 1
+##   flights
+##     &lt;int&gt;
+## 1  336776</code></pre>
+</div>
+</div>
+<div id="variáveis-derivadas-e-filtros-por-grupo" class="section level1">
+<h1>Variáveis derivadas e filtros por grupo</h1>
+<p><code>group_by()</code> geralmente é utilizado com <code>summarise()</code>, mas também pode ser útil com <code>mutate()</code> e <code>filter()</code>.</p>
+<pre><code>- Encontre os piores membros do grupo:</code></pre>
+<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb166-1" title="1">flights_sml <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb166-2" title="2"><span class="st">  </span><span class="kw">group_by</span>(year, month, day) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb166-3" title="3"><span class="st">  </span><span class="kw">filter</span>(<span class="kw">rank</span>(<span class="kw">desc</span>(arr_delay)) <span class="op">&lt;</span><span class="st"> </span><span class="dv">10</span>) <span class="co"># 10 mais atrasados de cada dia</span></a></code></pre></div>
+<pre><code>## # A tibble: 3,306 x 7
+## # Groups:   year, month, day [365]
+##     year month   day dep_delay arr_delay distance air_time
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt;     &lt;dbl&gt;     &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+##  1  2013     1     1       853       851      184       41
+##  2  2013     1     1       290       338     1134      213
+##  3  2013     1     1       260       263      266       46
+##  4  2013     1     1       157       174      213       60
+##  5  2013     1     1       216       222      708      121
+##  6  2013     1     1       255       250      589      115
+##  7  2013     1     1       285       246     1085      146
+##  8  2013     1     1       192       191      199       44
+##  9  2013     1     1       379       456     1092      222
+## 10  2013     1     2       224       207      550       94
+## # ... with 3,296 more rows</code></pre>
+<pre><code>- Encontre os grupos que são maiores que um limite dado</code></pre>
+<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb169-1" title="1">(popular_dests &lt;-<span class="st"> </span>flights <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb169-2" title="2"><span class="st">  </span><span class="kw">group_by</span>(dest) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb169-3" title="3"><span class="st">  </span><span class="kw">filter</span>(<span class="kw">n</span>() <span class="op">&gt;</span><span class="st"> </span><span class="dv">365</span>)) <span class="co"># destinos com mais de 365 voos</span></a></code></pre></div>
+<pre><code>## # A tibble: 332,577 x 19
+## # Groups:   dest [77]
+##     year month   day dep_time sched_dep_time dep_delay arr_time
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt;    &lt;int&gt;          &lt;int&gt;     &lt;dbl&gt;    &lt;int&gt;
+##  1  2013     1     1      517            515         2      830
+##  2  2013     1     1      533            529         4      850
+##  3  2013     1     1      542            540         2      923
+##  4  2013     1     1      544            545        -1     1004
+##  5  2013     1     1      554            600        -6      812
+##  6  2013     1     1      554            558        -4      740
+##  7  2013     1     1      555            600        -5      913
+##  8  2013     1     1      557            600        -3      709
+##  9  2013     1     1      557            600        -3      838
+## 10  2013     1     1      558            600        -2      753
+## # ... with 332,567 more rows, and 12 more variables: sched_arr_time &lt;int&gt;,
+## #   arr_delay &lt;dbl&gt;, carrier &lt;chr&gt;, flight &lt;int&gt;, tailnum &lt;chr&gt;,
+## #   origin &lt;chr&gt;, dest &lt;chr&gt;, air_time &lt;dbl&gt;, distance &lt;dbl&gt;, hour &lt;dbl&gt;,
+## #   minute &lt;dbl&gt;, time_hour &lt;dttm&gt;</code></pre>
+<pre><code>- Padronização para computar uma medida para cada grupo</code></pre>
+<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb172-1" title="1"><span class="co"># Lembre que popular_dests está agrupado por dest!</span></a>
+<a class="sourceLine" id="cb172-2" title="2">popular_dests <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb172-3" title="3"><span class="st">  </span><span class="kw">filter</span>(arr_delay <span class="op">&gt;</span><span class="st"> </span><span class="dv">0</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb172-4" title="4"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">prop_delay =</span> arr_delay <span class="op">/</span><span class="st"> </span><span class="kw">sum</span>(arr_delay)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb172-5" title="5"><span class="st">  </span><span class="kw">select</span>(year<span class="op">:</span>day, dest, arr_delay, prop_delay)</a></code></pre></div>
+<pre><code>## # A tibble: 131,106 x 6
+## # Groups:   dest [77]
+##     year month   day dest  arr_delay prop_delay
+##    &lt;int&gt; &lt;int&gt; &lt;int&gt; &lt;chr&gt;     &lt;dbl&gt;      &lt;dbl&gt;
+##  1  2013     1     1 IAH          11  0.000111 
+##  2  2013     1     1 IAH          20  0.000201 
+##  3  2013     1     1 MIA          33  0.000235 
+##  4  2013     1     1 ORD          12  0.0000424
+##  5  2013     1     1 FLL          19  0.0000938
+##  6  2013     1     1 ORD           8  0.0000283
+##  7  2013     1     1 LAX           7  0.0000344
+##  8  2013     1     1 DFW          31  0.000282 
+##  9  2013     1     1 ATL          12  0.0000400
+## 10  2013     1     1 DTW          16  0.000116 
+## # ... with 131,096 more rows</code></pre>
+<p>Um <code>filter()</code> feito após um <code>group_by()</code> é equivalente a um <code>group_by() %&gt;% mutate()</code> seguido de um <code>filter()</code> sem agrupamento. É melhor evitar esse tipo de operação a menos que você tenha segurança do que está fazendo, porque é muito difícil verificar e testar o resultado.</p>
+<p>Funções que vão bem em <code>mutate()</code> agrupados são chamadas de “janelas” (window functions) enquanto funções que vão bem em <code>summarise()</code> agrupados são chamadas de sumários (summary-functions). Você pode aprofundar seu conhecimento sobre “janelas” em <code>vignette("window-functions")</code>.</p>
+</div>
+<div id="exercícios" class="section level1">
+<h1>Exercícios</h1>
+<pre><code>1. Encontre todos os vôos que:
+    i. Atrasaram mais de duas horas na chegada (arr_delay).
+    ii. Voaram para Houston (IAH ou HOU).
+    iii. Operados pelas companhias United, American ou Delta.
+    iv. Decolaram no verão (Julho a Setembro).
+    v. Chegaram com mais de duas horas de atraso (arr_delay), 
+    mas não saíram tarde (dep_delay).
+    vi. Saíram com mais de 1h de atraso, mas recuperaram 30 minutos
+    ou mais durante o voo.
+    vii. Decolaram entre meia noite e 6 da manhã (intervalo fechado)
+2. Há uma função auxiliar de `filter()` chamada `between()`. 
+O que ela faz? Como você poderia utilizá-la para simplificar
+alguns dos testes feitos anteriormente?
+3. Quantos voos tem valor missing na variável `dep_time`? 
+Que outras variáveis tem missings? O que esses missings significam?
+4. Porque `NA ^ 0` não é `NA`? Porque `NA | TRUE` não é `NA`? 
+Porque `FALSE &amp; NA` não é `NA`? Qual é a &quot;regra geral&quot; para esses casos? 
+(Ignore o caso NA * 0, que é um pouco mais complicado)
+5. Como você poderia reordenar (`arrange()`) o banco para que
+os valores missing viessem primeiro? Dica: `is.na()`.
+6. Reordene `flights` para encontrar os voos mais atrasados. 
+Encontre os voos que saíram mais cedo.
+7. Reordene `flights` para encontrar os voos mais rapidos 
+(velocidade em voo).
+8. Quais voos viajaram para mais longe e para mais perto?
+9. Imagine todas as possibilidades que você pode utilizar com `select()`
+para escolher as variáveis `dep_time`, `dep_delay`, `arr_time` 
+e `arr_delay`.
+10. O que acontece se você colocar o nome de uma mesma variável 
+várias vezes dentro de um chamado da função `select()`.
+11. O que faz o helper `one_of()`? Porque ela poderia ser útil 
+se utilizada com o seguinte vetor?</code></pre>
+<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb175-1" title="1">vars &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;year&quot;</span>, <span class="st">&quot;month&quot;</span>, <span class="st">&quot;day&quot;</span>, <span class="st">&quot;dep_delay&quot;</span>, <span class="st">&quot;arr_delay&quot;</span>)</a></code></pre></div>
+<pre><code>12. Execute o código abaixo. O resultado te surpreendeu? Como os helpers
+de `select()` entendem o uso da maiúsculas por padrão? Como você poderia 
+alterar esse comportamento?
+13. Atualmente, `dep_time` e `sched_dep_time` são convenientes para 
+apresentação, mas são ruins de usar para cálculos, pois não são números
+na forma de variável contínua. Converta-os para uma representação do 
+número de minutos passados desde a meia-noite.
+14. Compare `air_time` com `arr_time - dep_time`. O que você esperaria ver?
+O que você vê? O que você precisa fazer para consertar este problema?
+15. Compare `dep_time`, `sched_dep_time` e `dep_delay`. Como você 
+esperaria que estes três números se relacionassem?
+16. Encontre os 10 voos mais atrasados usando uma função da família 
+`_rank()`. Como você lida com os &quot;empates&quot;. Leia a documentação de
+`min_rank()`.
+17. O que 1:3 + 1:10 retorna? Porque?
+18. Que funções trigonométricas estão disponíveis em R?
+19. Imagine pelo menos 5 formas diferentes de medir as características
+dos atrasos em grupos de voos. Considere os seguintes cenários:
+  * Um voo atrasa 50% das vezes e 50% das vezes não atrasa
+  * Um voo sempre atrasa 10 minutos
+  * Um voo atrasa 30 minutos 50% das vezes e chega 30 minutos mais cedo
+  nas outras 50%
+  * 99% o voo chega no horario e 1% das vezes atrasa duas horas
+Qual variável é mais relevante, atraso na chegada (`arr_delay`) ou 
+atraso na decolagem (`dep_delay`)?
+20. Desenvolva um código que produza o mesmo resultado de 
+`not_cancelled %&gt;% count(dest)` e 
+`not_cancelled %&gt;% count(dest, wt = distance)`, mas sem usar `count()`.
+21. Nossa definição de voos cancelados 
+( is.na(dep_delay) | is.na(arr_delay) ) tem um pequeno problema. 
+Porque? Qual é a coluna mais importante?
+22. Olhe o número de voos cancelados por dia. Há algum padrão? 
+A proporção de voos cancelados tem alguma relação com
+a média do tempo de atraso?
+23. Qual a companhia área que tem os piores atrasos? 
+Desafio: você consegue descobrir se os atrasos são culpa da Cia. Aérea ou
+do Aeroporto? Porque (não)? 
+Dica: reflita sobre `flights %&gt;% group_by(carrier, dest) %&gt;% summarise(n())`
+24. O que argumento `sort` faz em `count()`? Quando você o utilizaria?
+25. Volte para as listas de funções que podem ser utilizadas com `mutate()`
+e `filter()`. Descreve como cada operação muda a partir do momento em que
+você usa um agrupamento (`group_by()`).
+26. Qual avião (`tailnum`) tem a pior pontualidade?
+27. Qual o horário do dia no qual você deveria viajar para minimizar a
+possibilidade de atrasos?
+28. Para cada destino, compute o número total de minutos de atraso. 
+Para cada voo, compute a proporção de atraso total até o seu destino.
+29. Atrasos são geralmente correlacionados temporalmente: mesmo após o
+problema ser resolvido, voos posteriores atrasam para permitir que os voos
+represados decolem. Usando `lag()`, explore como o atraso de um voo 
+se relaciona com o atraso de um voo imediatamente anterior.
+30. Analise os destinos. Você pode encontrar voos que são
+rápidos-demais-pra-ser-verdade (ou seja, podem ter sido registrados
+incorretamente no banco)? Compute o tempo de voo relativo ao tempo de voo
+mais curto registrado para cada destino. Que aviões atrasaram mais durante
+o trajeto?
+31. Encontre todos os destinos operadores por pelo menos duas cias. aéreas.
+Use está informação para ordená-las.
+32. Para cada avião, conte o número de voos antes do primeiro atraso maior
+que 1h.</code></pre>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

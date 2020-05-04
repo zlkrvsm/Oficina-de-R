@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+
+<meta name="date" content="2020-06-04" />
+
+<title>Controle de fluxo em R</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/cosmo.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; } /* Alert */
+code span.an { color: #008000; } /* Annotation */
+code span.at { } /* Attribute */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #0000ff; } /* ControlFlow */
+code span.ch { color: #008080; } /* Char */
+code span.cn { } /* Constant */
+code span.co { color: #008000; } /* Comment */
+code span.cv { color: #008000; } /* CommentVar */
+code span.do { color: #008000; } /* Documentation */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.im { } /* Import */
+code span.in { color: #008000; } /* Information */
+code span.kw { color: #0000ff; } /* Keyword */
+code span.op { } /* Operator */
+code span.ot { color: #ff4000; } /* Other */
+code span.pp { color: #ff4000; } /* Preprocessor */
+code span.sc { color: #008080; } /* SpecialChar */
+code span.ss { color: #008080; } /* SpecialString */
+code span.st { color: #008080; } /* String */
+code span.va { } /* Variable */
+code span.vs { color: #008080; } /* VerbatimString */
+code span.wa { color: #008000; font-weight: bold; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 51px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h2 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h3 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h4 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h5 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.section h6 {
+  padding-top: 56px;
+  margin-top: -56px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Oficina de R</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html"></a>
+</li>
+<li>
+  <a href="02_bancos-de-dados-em-r.html"></a>
+</li>
+<li>
+  <a href="03_controle-de-fluxo.html"></a>
+</li>
+<li>
+  <a href="04_visualizacoes-em-R.html"></a>
+</li>
+<li>
+  <a href="05_manipulacao-dplyr.html"></a>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Controle de fluxo em R</h1>
+<h4 class="date">06/04/2020</h4>
+
+</div>
+
+
+<div id="introdução" class="section level2">
+<h2>Introdução</h2>
+<p>Scripts em R costumam seguir um esquema sequencial.</p>
+<p>Operação 1 -&gt; Operação 2 -&gt; Operação 3 …</p>
+<p>Cada operação realiza um passo na nossa receita, até conseguirmos atingir o resultado esperado no final. Por exemplo:</p>
+<p>Carregar pacotes -&gt; Leitura de um banco de dados -&gt; Correção dos dados -&gt; Criação de variáveis derivadas -&gt; Produção de Tabelas e Gráficos -&gt; Salvar os resultados em disco.</p>
+<p>No entanto, também podemos precisar operações que não seguem um fluxo sequencial, tomando caminhos diferentes dependendo do resultado que procuramos atingir. Considere o seguinte exemplo, no qual temos dados em nível municipal, mas queremos classificar as pessoas segundo regiões de estudo.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">library</span>(readr)</a>
+<a class="sourceLine" id="cb1-2" title="2">dado &lt;-<span class="st"> </span><span class="kw">read_csv2</span>(<span class="st">&quot;exemplo1.gz&quot;</span>)</a>
+<a class="sourceLine" id="cb1-3" title="3"><span class="kw">head</span>(dado)</a></code></pre></div>
+<pre><code>## # A tibble: 6 x 5
+##    MUNIAT  PESO  SEXO IDADE  MUNI05
+##     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt;
+## 1 3500105 16.6      1    23 3550308
+## 2 3500105 16.6      2    26 3500105
+## 3 3500105 10.6      2    69 3550308
+## 4 3500105 10.6      1    71 3550308
+## 5 3500105 11.6      1    54 3501608
+## 6 3500105  3.19     1    51 3500105</code></pre>
+<p>Digamos que queiramos dar nomes para a nossa variável de sexo, podemos fazer o seguinte:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">dado<span class="op">$</span>SEXO_C &lt;-<span class="st"> </span><span class="kw">ifelse</span>(<span class="dt">test =</span> dado<span class="op">$</span>SEXO <span class="op">==</span><span class="st"> </span><span class="dv">1</span>, </a>
+<a class="sourceLine" id="cb3-2" title="2">                      <span class="dt">yes  =</span> <span class="st">&quot;Masculino&quot;</span>,</a>
+<a class="sourceLine" id="cb3-3" title="3">                      <span class="dt">no   =</span> <span class="st">&quot;Feminino&quot;</span>)</a>
+<a class="sourceLine" id="cb3-4" title="4"><span class="kw">head</span>(dado)</a></code></pre></div>
+<pre><code>## # A tibble: 6 x 6
+##    MUNIAT  PESO  SEXO IDADE  MUNI05 SEXO_C   
+##     &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;    
+## 1 3500105 16.6      1    23 3550308 Masculino
+## 2 3500105 16.6      2    26 3500105 Feminino 
+## 3 3500105 10.6      2    69 3550308 Feminino 
+## 4 3500105 10.6      1    71 3550308 Masculino
+## 5 3500105 11.6      1    54 3501608 Masculino
+## 6 3500105  3.19     1    51 3500105 Masculino</code></pre>
+<p>Outro exemplo é prevenir determinados tipos de erro. Por exemplo, podemos verificar se uma variável tem o tipo correto antes de realizar uma operação.</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="co"># Não retorna nada</span></a>
+<a class="sourceLine" id="cb5-2" title="2"><span class="cf">if</span>(<span class="kw">is.character</span>(dado<span class="op">$</span>SEXO)) {</a>
+<a class="sourceLine" id="cb5-3" title="3">  <span class="kw">table</span>(dado<span class="op">$</span>SEXO)</a>
+<a class="sourceLine" id="cb5-4" title="4">} </a>
+<a class="sourceLine" id="cb5-5" title="5"></a>
+<a class="sourceLine" id="cb5-6" title="6"><span class="co"># Retorna a frequência</span></a>
+<a class="sourceLine" id="cb5-7" title="7"><span class="cf">if</span>(<span class="kw">is.character</span>(dado<span class="op">$</span>SEXO)) {</a>
+<a class="sourceLine" id="cb5-8" title="8">  <span class="kw">table</span>(dado<span class="op">$</span>SEXO)</a>
+<a class="sourceLine" id="cb5-9" title="9">} <span class="cf">else</span> {</a>
+<a class="sourceLine" id="cb5-10" title="10">  <span class="kw">table</span>(<span class="kw">as.character</span>(dado<span class="op">$</span>SEXO))</a>
+<a class="sourceLine" id="cb5-11" title="11">}</a></code></pre></div>
+<pre><code>## 
+##      1      2 
+## 148497 135305</code></pre>
+<p>Assim, podemos controlar qual “caminho” segue nosso programa utilizando algum tipo de teste lógico. Testes lógicos são tão importantes em R, que há uma família de funções <code>is.objeto</code>, que retorna verdadeiro/falso para praticamente todo tipo de objeto em R.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="kw">with</span>(dado, <span class="kw">is.double</span>(MUNIAT))</a></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="kw">with</span>(dado, <span class="kw">is.character</span>(SEXO))</a></code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="kw">with</span>(dado, <span class="kw">is.integer</span>(IDADE))</a></code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+<hr />
+<p><code>with</code> e <code>within</code> são funções que ajudam a gente a realizar operações dentro de um objeto sem precisar ficar digitando <code>objeto$variavel</code> o tempo todo. ***</p>
+</div>
+<div id="loops" class="section level2">
+<h2>Loops</h2>
+<p>O outro tipo de controle de fluxo bastante comum é o laço, ou <em>loop</em>. A idéia é repetir uma operação de acordo com algum critério, por ser um número finito de vezes ou segundo algum tipo de teste. Hoje vamos ver o tipo mais simples e comum, o <code>for</code>.</p>
+<p>Este loop realiza uma operação um determinado número de vezes especificado pelo usuário. Um <code>for</code> loop tem a seguinte estrutura básica:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1"><span class="co">## Não roda</span></a>
+<a class="sourceLine" id="cb13-2" title="2"><span class="cf">for</span> (contador <span class="cf">in</span> valores_a_serem_contados) {</a>
+<a class="sourceLine" id="cb13-3" title="3">  [operaçao_a_ser_repetida]</a>
+<a class="sourceLine" id="cb13-4" title="4">  [resultado_da_operação]</a>
+<a class="sourceLine" id="cb13-5" title="5">  [contador_incrementa]</a>
+<a class="sourceLine" id="cb13-6" title="6">}</a></code></pre></div>
+<p>Muitas vezes em R está estrutura está escondida e nem todos estes passos aparecem. Vejamos o loop a seguir:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1">df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">mes =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">12</span>,</a>
+<a class="sourceLine" id="cb14-2" title="2">                 <span class="dt">salario =</span> <span class="dv">1000</span>)</a>
+<a class="sourceLine" id="cb14-3" title="3"><span class="kw">head</span>(df)</a></code></pre></div>
+<pre><code>##   mes salario
+## 1   1    1000
+## 2   2    1000
+## 3   3    1000
+## 4   4    1000
+## 5   5    1000
+## 6   6    1000</code></pre>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1"><span class="kw">within</span>(df, {</a>
+<a class="sourceLine" id="cb16-2" title="2">  salario_acumulado &lt;-<span class="st"> </span><span class="dv">1000</span></a>
+<a class="sourceLine" id="cb16-3" title="3">  <span class="co"># Realizada uma operação para cada mês</span></a>
+<a class="sourceLine" id="cb16-4" title="4">  <span class="cf">for</span>(contador <span class="cf">in</span> mes) { </a>
+<a class="sourceLine" id="cb16-5" title="5">    <span class="co"># A posição onde o valor será salvo muda a cada incremento</span></a>
+<a class="sourceLine" id="cb16-6" title="6">    salario_acumulado[contador<span class="op">+</span><span class="dv">1</span>] &lt;-<span class="st"> </span></a>
+<a class="sourceLine" id="cb16-7" title="7"><span class="st">      </span><span class="co"># A posição do vetor salário também vai mudando a cada passagem</span></a>
+<a class="sourceLine" id="cb16-8" title="8"><span class="st">      </span>salario[contador] <span class="op">+</span><span class="st"> </span>salario_acumulado[contador]</a>
+<a class="sourceLine" id="cb16-9" title="9">    <span class="co"># O valor de contador é automaticamente incrementado no final</span></a>
+<a class="sourceLine" id="cb16-10" title="10">  }</a>
+<a class="sourceLine" id="cb16-11" title="11">}</a>
+<a class="sourceLine" id="cb16-12" title="12">)</a></code></pre></div>
+<pre><code>## Warning in `[&lt;-.data.frame`(`*tmp*`, nl, value = list(contador = 12L,
+## salario_acumulado = c(1000, : replacement element 2 has 13 rows to replace
+## 12 rows</code></pre>
+<pre><code>##    mes salario contador salario_acumulado
+## 1    1    1000       12              1000
+## 2    2    1000       12              2000
+## 3    3    1000       12              3000
+## 4    4    1000       12              4000
+## 5    5    1000       12              5000
+## 6    6    1000       12              6000
+## 7    7    1000       12              7000
+## 8    8    1000       12              8000
+## 9    9    1000       12              9000
+## 10  10    1000       12             10000
+## 11  11    1000       12             11000
+## 12  12    1000       12             12000</code></pre>
+<p>Podemos usar esse comportamento padrão do <code>for</code> loop de passar pra próxima posição automaticamente para repetir operações em que não existe uma <strong>contagem</strong> propriamente dita.</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" title="1">df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">estado =</span> <span class="kw">c</span>(<span class="st">&quot;RN&quot;</span>, <span class="st">&quot;CE&quot;</span>, <span class="st">&quot;BA&quot;</span>, <span class="st">&quot;PE&quot;</span>, <span class="st">&quot;PB&quot;</span>),</a>
+<a class="sourceLine" id="cb19-2" title="2">                 <span class="dt">pessoas_pistola =</span> <span class="kw">c</span>(<span class="dv">100</span>, <span class="dv">200</span>, <span class="dv">300</span>, <span class="dv">400</span>, <span class="dv">500</span>))</a>
+<a class="sourceLine" id="cb19-3" title="3"></a>
+<a class="sourceLine" id="cb19-4" title="4"><span class="cf">for</span> (i <span class="cf">in</span> df<span class="op">$</span>estado) <span class="kw">print</span>(df[df<span class="op">$</span>estado <span class="op">==</span><span class="st"> </span>i, ])</a></code></pre></div>
+<pre><code>##   estado pessoas_pistola
+## 1     RN             100
+##   estado pessoas_pistola
+## 2     CE             200
+##   estado pessoas_pistola
+## 3     BA             300
+##   estado pessoas_pistola
+## 4     PE             400
+##   estado pessoas_pistola
+## 5     PB             500</code></pre>
+<p>Vejam que mesmo não se tratando de um número, o <code>for</code> loop realizou uma repetição para cada valor do vetor <code>estado</code>.</p>
+<p>Além do <code>for</code>, existe também o <code>while</code>, que repete enquanto um teste lógico retornar verdadeiro, mas não vamos examiná-lo hoje.</p>
+</div>
+<div id="loops-implícitos" class="section level2">
+<h2>Loops implícitos</h2>
+<p>Quando utilizamos um <code>for</code>, estamos explicitando no nosso código que uma sequência de repetições será feita e especificamos que repetições serão. Este é um loop explícito. Por outro lado, já devemos estar familiarizados com outro tipo de loop. Veja:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" title="1">dado &lt;-<span class="st"> </span><span class="kw">read_csv2</span>(<span class="st">&quot;data-fixa-censo-2010-sp.gz&quot;</span>)</a></code></pre></div>
+<pre><code>## Using &#39;,&#39; as decimal and &#39;.&#39; as grouping mark. Use read_delim() for more control.</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   UF = col_double(),
+##   MUNIC = col_character(),
+##   PESO = col_double(),
+##   SEXO = col_double(),
+##   IDADE = col_double(),
+##   MUNI05 = col_double()
+## )</code></pre>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" title="1">dado<span class="op">$</span>UF100000 &lt;-<span class="st"> </span>dado<span class="op">$</span>UF <span class="op">*</span><span class="st"> </span><span class="dv">100000</span></a>
+<a class="sourceLine" id="cb24-2" title="2"><span class="kw">head</span>(dado)</a></code></pre></div>
+<pre><code>## # A tibble: 6 x 7
+##      UF MUNIC  PESO  SEXO IDADE MUNI05 UF100000
+##   &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt;    &lt;dbl&gt;
+## 1    35 00105  9.04     2    86     NA  3500000
+## 2    35 00105 13.1      1    53     NA  3500000
+## 3    35 00105 13.1      2    20     NA  3500000
+## 4    35 00105  8.79     2    51     NA  3500000
+## 5    35 00105  8.79     1    58     NA  3500000
+## 6    35 00105  2.22     2    35     NA  3500000</code></pre>
+<p>Note que ao pedir para multiplicar o vetor <code>UF</code>, ele multiplicou todas as suas posições. Funções “vetorizadas” em R são uma forma de loop <strong>implícito</strong>, porque implicam na repetição de alguma atividade.</p>
+</div>
+<div id="outras-repetições-úteis-em-r" class="section level2">
+<h2>Outras repetições úteis em R</h2>
+<p>A função <code>rep()</code> pode criar repetições simples em R.</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" title="1">vetor &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">4</span>)</a>
+<a class="sourceLine" id="cb26-2" title="2"></a>
+<a class="sourceLine" id="cb26-3" title="3"><span class="co"># padrão &quot;vezes&quot;</span></a>
+<a class="sourceLine" id="cb26-4" title="4"><span class="kw">rep</span>(vetor, <span class="dv">4</span>) </a></code></pre></div>
+<pre><code>##  [1] 1 2 3 4 1 2 3 4 1 2 3 4 1 2 3 4</code></pre>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" title="1"><span class="co"># ou</span></a>
+<a class="sourceLine" id="cb28-2" title="2"><span class="kw">rep.int</span>(vetor, <span class="dv">4</span>)</a></code></pre></div>
+<pre><code>##  [1] 1 2 3 4 1 2 3 4 1 2 3 4 1 2 3 4</code></pre>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" title="1"><span class="co"># Tamanho do vetor final</span></a>
+<a class="sourceLine" id="cb30-2" title="2"><span class="kw">rep</span>(vetor, <span class="dt">length.out =</span> <span class="dv">10</span>)</a></code></pre></div>
+<pre><code>##  [1] 1 2 3 4 1 2 3 4 1 2</code></pre>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" title="1"><span class="co"># ou</span></a>
+<a class="sourceLine" id="cb32-2" title="2"><span class="kw">rep_len</span>(vetor, <span class="dv">10</span>)</a></code></pre></div>
+<pre><code>##  [1] 1 2 3 4 1 2 3 4 1 2</code></pre>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" title="1"><span class="co"># Repetir cada elemento n vezes</span></a>
+<a class="sourceLine" id="cb34-2" title="2"><span class="kw">rep</span>(vetor, <span class="dt">each =</span> <span class="dv">4</span>)</a></code></pre></div>
+<pre><code>##  [1] 1 1 1 1 2 2 2 2 3 3 3 3 4 4 4 4</code></pre>
+<p>Enquanto a função <code>seq</code> pode criar sequências de números</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" title="1"><span class="co"># Padrão</span></a>
+<a class="sourceLine" id="cb36-2" title="2"><span class="kw">seq</span>(<span class="dt">from =</span> <span class="dv">1</span>, <span class="dt">to =</span> <span class="dv">10</span>, <span class="dt">by =</span> <span class="dv">1</span>)</a></code></pre></div>
+<pre><code>##  [1]  1  2  3  4  5  6  7  8  9 10</code></pre>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" title="1"><span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">100</span>, <span class="dv">5</span>)</a></code></pre></div>
+<pre><code>##  [1]   0   5  10  15  20  25  30  35  40  45  50  55  60  65  70  75  80
+## [18]  85  90  95 100</code></pre>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" title="1"><span class="co"># Determinando o tamanho final</span></a>
+<a class="sourceLine" id="cb40-2" title="2"><span class="kw">seq</span>(<span class="dv">10</span>, <span class="dv">100</span>, <span class="dt">length.out =</span> <span class="dv">10</span>)</a></code></pre></div>
+<pre><code>##  [1]  10  20  30  40  50  60  70  80  90 100</code></pre>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" title="1"><span class="co"># Criar uma sequência a partir do tamanho de um vetor</span></a>
+<a class="sourceLine" id="cb42-2" title="2">vetor &lt;-<span class="st"> </span><span class="dv">101</span><span class="op">:</span><span class="dv">110</span></a>
+<a class="sourceLine" id="cb42-3" title="3"><span class="kw">seq_along</span>(vetor)</a></code></pre></div>
+<pre><code>##  [1]  1  2  3  4  5  6  7  8  9 10</code></pre>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" title="1"><span class="co"># Criar uma sequência de tamanho pré-definido</span></a>
+<a class="sourceLine" id="cb44-2" title="2"><span class="kw">seq_len</span>(<span class="dv">25</span>)</a></code></pre></div>
+<pre><code>##  [1]  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23
+## [24] 24 25</code></pre>
+<p>Uma função bem legal pra agrupar variáveis numéricas é <code>cut</code>. Veja que podemos transformar a variável de idade em grupos etários facilmente.</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" title="1">dado &lt;-<span class="st"> </span><span class="kw">read_csv2</span>(<span class="st">&quot;data-fixa-censo-2010-sp.gz&quot;</span>)</a></code></pre></div>
+<pre><code>## Using &#39;,&#39; as decimal and &#39;.&#39; as grouping mark. Use read_delim() for more control.</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   UF = col_double(),
+##   MUNIC = col_character(),
+##   PESO = col_double(),
+##   SEXO = col_double(),
+##   IDADE = col_double(),
+##   MUNI05 = col_double()
+## )</code></pre>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" title="1">dado<span class="op">$</span>GRUPO_ET &lt;-<span class="st"> </span><span class="kw">cut</span>(<span class="dt">x =</span> dado<span class="op">$</span>IDADE,</a>
+<a class="sourceLine" id="cb49-2" title="2">                     <span class="dt">breaks =</span> <span class="kw">seq</span>(<span class="dv">0</span>, <span class="dv">120</span>, <span class="dv">5</span>),</a>
+<a class="sourceLine" id="cb49-3" title="3">                     <span class="dt">right =</span> <span class="ot">FALSE</span>) <span class="co"># Intervalo fechado à esquerda</span></a>
+<a class="sourceLine" id="cb49-4" title="4">                     </a>
+<a class="sourceLine" id="cb49-5" title="5"></a>
+<a class="sourceLine" id="cb49-6" title="6"><span class="kw">table</span>(dado<span class="op">$</span>GRUPO_ET)</a></code></pre></div>
+<pre><code>## 
+##     [0,5)    [5,10)   [10,15)   [15,20)   [20,25)   [25,30)   [30,35) 
+##    155426    167072    196616    198907    209687    211868    199774 
+##   [35,40)   [40,45)   [45,50)   [50,55)   [55,60)   [60,65)   [65,70) 
+##    181780    173413    164254    145115    120783     96402     72893 
+##   [70,75)   [75,80)   [80,85)   [85,90)   [90,95)  [95,100) [100,105) 
+##     57061     40345     25757     12048      4108      1084       145 
+## [105,110) [110,115) [115,120) 
+##        17         5         1</code></pre>
+</div>
+<div id="exercícios" class="section level2">
+<h2>Exercícios</h2>
+<p>Você vai precisar dos pacotes <code>questionr</code>, <code>tidyr</code>.</p>
+<ol style="list-style-type: decimal">
+<li><p>Junte as colunas de UF e MUNIC em uma só coluna chamada MUNIAT. Dica: utilize a função <code>unite</code> do pacote <code>tidyr</code>.</p></li>
+<li><p>Modifique a coluna SEXO para que ao invés de 1 e 2, ela apresente os valores “Homens” e “Mulheres”. Dica: <code>ifelse</code>.</p></li>
+<li><p>Crie uma coluna de grupo etário. Dica: utilize <code>cut</code>.</p></li>
+<li><p>Crie duas colunas: uma para região atual (REGAT) e uma para região em 2005 (REG05) a partir das colunas MUNIAT e MUNI05. As colunas devem registrar as pessoas residentes em um dos municípios da Região Metropolitana de Campinas como “RMC”, as pessoas residentes em outros municípios do estado como “ESP” e em outras UFs como “BRA”.</p>
+<ul>
+<li>Dicas:
+<ul>
+<li>Os códigos dos municípios da RMC são os seguintes: 3501608,3503802,3509502,3512803,3515152,3519055, 3519071,3520509,3523404,3524709,3531803,3532009, 3533403,3536505,3537107,3545803,3548005,3552403, 3556206,3556701</li>
+<li>Os habitantes do estado devem ter código iniciado em 35.</li>
+<li>Os habitantes das outras UFs são todos os outros.</li>
+<li>Crie as variáveis vazias mesmo <code>dado$REGAT &lt;- NA</code></li>
+<li>Utilize a forma <code>dado[&lt;&lt;Teste&gt;&gt;, "REGAT/REG05"] &lt;- valor</code></li>
+</ul></li>
+</ul></li>
+<li><p>Tabule a matriz migratória da REGIÃO ANTERIOR x REGIÃO ATUAL. Dica: <code>wtd.table</code> do <code>questionr</code>.</p></li>
+<li><p>Crie uma coluna que separe migrantes de não migrantes. Dica: Não migrantes tem valor <code>NA</code>.</p></li>
+<li><p>Compare as tabulações cruzadas de migrantes e não migrantes por idade e sexo.</p></li>
+<li><p>Dado o vetor 1, 2, 3, 4, crie um <code>for</code> loop que multiplique o elemento seguinte pelo anterior e guarde o valor em outro vetor.</p></li>
+</ol>
+</div>
+
+
+
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
