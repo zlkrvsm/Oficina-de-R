@@ -3,15 +3,15 @@ output_dir: "docs"
 navbar:
   title: "Oficina de R"
   left:
-    - title: "Home"
+    - text: "Home"
       href: index.html
-    - title: "Banco de dados"
+    - text: "Banco de dados"
       href: 02_bancos-de-dados-em-r.html
-    - title: "Controle de fluxo"
+    - text: "Controle de fluxo"
       href: 03_controle-de-fluxo.html
-    - title: "Visualizações"
+    - text: "Visualizações"
       href: 04_visualizacoes-em-R.html
-    - title: "Manipulação com dplyr"
+    - text: "Manipulação com dplyr"
       href: 05_manipulacao-dplyr.html
 output:
   html_document:
