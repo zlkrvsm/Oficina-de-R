@@ -344,6 +344,9 @@ $(document).ready(function () {
   <a href="index.html">Home</a>
 </li>
 <li>
+  <a href="01_lingua-r.html">Falando a língua do R</a>
+</li>
+<li>
   <a href="02_bancos-de-dados-em-r.html">Banco de dados</a>
 </li>
 <li>
@@ -1465,102 +1468,70 @@ e `mean` dá a proporção.</code></pre>
 ## # ... with 131,096 more rows</code></pre>
 <p>Um <code>filter()</code> feito após um <code>group_by()</code> é equivalente a um <code>group_by() %&gt;% mutate()</code> seguido de um <code>filter()</code> sem agrupamento. É melhor evitar esse tipo de operação a menos que você tenha segurança do que está fazendo, porque é muito difícil verificar e testar o resultado.</p>
 <p>Funções que vão bem em <code>mutate()</code> agrupados são chamadas de “janelas” (window functions) enquanto funções que vão bem em <code>summarise()</code> agrupados são chamadas de sumários (summary-functions). Você pode aprofundar seu conhecimento sobre “janelas” em <code>vignette("window-functions")</code>.</p>
+<div id="resumão" class="section level2">
+<h2>Resumão</h2>
+<p>Expandir e esclarecer o que foi apresentado e o que o participante deveria ser capaz de fazer a partir de agora. Também reiterar que atividades devem ser realizadas, exercícios, tarefas…</p>
+</div>
 </div>
 <div id="exercícios" class="section level1">
 <h1>Exercícios</h1>
-<pre><code>1. Encontre todos os vôos que:
-    i. Atrasaram mais de duas horas na chegada (arr_delay).
-    ii. Voaram para Houston (IAH ou HOU).
-    iii. Operados pelas companhias United, American ou Delta.
-    iv. Decolaram no verão (Julho a Setembro).
-    v. Chegaram com mais de duas horas de atraso (arr_delay), 
-    mas não saíram tarde (dep_delay).
-    vi. Saíram com mais de 1h de atraso, mas recuperaram 30 minutos
-    ou mais durante o voo.
-    vii. Decolaram entre meia noite e 6 da manhã (intervalo fechado)
-2. Há uma função auxiliar de `filter()` chamada `between()`. 
-O que ela faz? Como você poderia utilizá-la para simplificar
-alguns dos testes feitos anteriormente?
-3. Quantos voos tem valor missing na variável `dep_time`? 
-Que outras variáveis tem missings? O que esses missings significam?
-4. Porque `NA ^ 0` não é `NA`? Porque `NA | TRUE` não é `NA`? 
-Porque `FALSE &amp; NA` não é `NA`? Qual é a &quot;regra geral&quot; para esses casos? 
-(Ignore o caso NA * 0, que é um pouco mais complicado)
-5. Como você poderia reordenar (`arrange()`) o banco para que
-os valores missing viessem primeiro? Dica: `is.na()`.
-6. Reordene `flights` para encontrar os voos mais atrasados. 
-Encontre os voos que saíram mais cedo.
-7. Reordene `flights` para encontrar os voos mais rapidos 
-(velocidade em voo).
-8. Quais voos viajaram para mais longe e para mais perto?
-9. Imagine todas as possibilidades que você pode utilizar com `select()`
-para escolher as variáveis `dep_time`, `dep_delay`, `arr_time` 
-e `arr_delay`.
-10. O que acontece se você colocar o nome de uma mesma variável 
-várias vezes dentro de um chamado da função `select()`.
-11. O que faz o helper `one_of()`? Porque ela poderia ser útil 
-se utilizada com o seguinte vetor?</code></pre>
-<div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb175-1" title="1">vars &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;year&quot;</span>, <span class="st">&quot;month&quot;</span>, <span class="st">&quot;day&quot;</span>, <span class="st">&quot;dep_delay&quot;</span>, <span class="st">&quot;arr_delay&quot;</span>)</a></code></pre></div>
-<pre><code>12. Execute o código abaixo. O resultado te surpreendeu? Como os helpers
-de `select()` entendem o uso da maiúsculas por padrão? Como você poderia 
-alterar esse comportamento?
-13. Atualmente, `dep_time` e `sched_dep_time` são convenientes para 
-apresentação, mas são ruins de usar para cálculos, pois não são números
-na forma de variável contínua. Converta-os para uma representação do 
-número de minutos passados desde a meia-noite.
-14. Compare `air_time` com `arr_time - dep_time`. O que você esperaria ver?
-O que você vê? O que você precisa fazer para consertar este problema?
-15. Compare `dep_time`, `sched_dep_time` e `dep_delay`. Como você 
-esperaria que estes três números se relacionassem?
-16. Encontre os 10 voos mais atrasados usando uma função da família 
-`_rank()`. Como você lida com os &quot;empates&quot;. Leia a documentação de
-`min_rank()`.
-17. O que 1:3 + 1:10 retorna? Porque?
-18. Que funções trigonométricas estão disponíveis em R?
-19. Imagine pelo menos 5 formas diferentes de medir as características
-dos atrasos em grupos de voos. Considere os seguintes cenários:
-  * Um voo atrasa 50% das vezes e 50% das vezes não atrasa
-  * Um voo sempre atrasa 10 minutos
-  * Um voo atrasa 30 minutos 50% das vezes e chega 30 minutos mais cedo
-  nas outras 50%
-  * 99% o voo chega no horario e 1% das vezes atrasa duas horas
-Qual variável é mais relevante, atraso na chegada (`arr_delay`) ou 
-atraso na decolagem (`dep_delay`)?
-20. Desenvolva um código que produza o mesmo resultado de 
-`not_cancelled %&gt;% count(dest)` e 
-`not_cancelled %&gt;% count(dest, wt = distance)`, mas sem usar `count()`.
-21. Nossa definição de voos cancelados 
-( is.na(dep_delay) | is.na(arr_delay) ) tem um pequeno problema. 
-Porque? Qual é a coluna mais importante?
-22. Olhe o número de voos cancelados por dia. Há algum padrão? 
-A proporção de voos cancelados tem alguma relação com
-a média do tempo de atraso?
-23. Qual a companhia área que tem os piores atrasos? 
-Desafio: você consegue descobrir se os atrasos são culpa da Cia. Aérea ou
-do Aeroporto? Porque (não)? 
-Dica: reflita sobre `flights %&gt;% group_by(carrier, dest) %&gt;% summarise(n())`
-24. O que argumento `sort` faz em `count()`? Quando você o utilizaria?
-25. Volte para as listas de funções que podem ser utilizadas com `mutate()`
-e `filter()`. Descreve como cada operação muda a partir do momento em que
-você usa um agrupamento (`group_by()`).
-26. Qual avião (`tailnum`) tem a pior pontualidade?
-27. Qual o horário do dia no qual você deveria viajar para minimizar a
-possibilidade de atrasos?
-28. Para cada destino, compute o número total de minutos de atraso. 
-Para cada voo, compute a proporção de atraso total até o seu destino.
-29. Atrasos são geralmente correlacionados temporalmente: mesmo após o
-problema ser resolvido, voos posteriores atrasam para permitir que os voos
-represados decolem. Usando `lag()`, explore como o atraso de um voo 
-se relaciona com o atraso de um voo imediatamente anterior.
-30. Analise os destinos. Você pode encontrar voos que são
-rápidos-demais-pra-ser-verdade (ou seja, podem ter sido registrados
-incorretamente no banco)? Compute o tempo de voo relativo ao tempo de voo
-mais curto registrado para cada destino. Que aviões atrasaram mais durante
-o trajeto?
-31. Encontre todos os destinos operadores por pelo menos duas cias. aéreas.
-Use está informação para ordená-las.
-32. Para cada avião, conte o número de voos antes do primeiro atraso maior
-que 1h.</code></pre>
+<ol style="list-style-type: decimal">
+<li>Encontre todos os vôos que:</li>
+</ol>
+<ol style="list-style-type: lower-roman">
+<li>Atrasaram mais de duas horas na chegada (arr_delay).</li>
+<li>Voaram para Houston (IAH ou HOU).</li>
+<li>Operados pelas companhias United, American ou Delta.</li>
+<li>Decolaram no verão (Julho a Setembro).</li>
+<li>Chegaram com mais de duas horas de atraso (arr_delay), mas não saíram tarde (dep_delay).</li>
+<li>Saíram com mais de 1h de atraso, mas recuperaram 30 minutos ou mais durante o voo.</li>
+<li>Decolaram entre meia noite e 6 da manhã (intervalo fechado)</li>
+</ol>
+<ol start="2" style="list-style-type: decimal">
+<li>Há uma função auxiliar de <code>filter()</code> chamada <code>between()</code>. O que ela faz? Como você poderia utilizá-la para simplificar alguns dos testes feitos anteriormente?</li>
+<li>Quantos voos tem valor missing na variável <code>dep_time</code>? Que outras variáveis tem missings? O que esses missings significam?</li>
+<li>Porque <code>NA ^ 0</code> não é <code>NA</code>? Porque <code>NA | TRUE</code> não é <code>NA</code>? Porque <code>FALSE &amp; NA</code> não é <code>NA</code>? Qual é a “regra geral” para esses casos? (Ignore o caso NA * 0, que é um pouco mais complicado)</li>
+<li>Como você poderia reordenar (<code>arrange()</code>) o banco para que os valores missing viessem primeiro? Dica: <code>is.na()</code>.</li>
+<li>Reordene <code>flights</code> para encontrar os voos mais atrasados. Encontre os voos que saíram mais cedo.</li>
+<li>Reordene <code>flights</code> para encontrar os voos mais rapidos (velocidade em voo).</li>
+<li>Quais voos viajaram para mais longe e para mais perto?</li>
+<li>Imagine todas as possibilidades que você pode utilizar com <code>select()</code> para escolher as variáveis <code>dep_time</code>, <code>dep_delay</code>, <code>arr_time</code> e <code>arr_delay</code>.</li>
+<li>O que acontece se você colocar o nome de uma mesma variável várias vezes dentro de um chamado da função <code>select()</code>.</li>
+<li>O que faz o helper <code>one_of()</code>? Porque ela poderia ser útil se utilizada com o seguinte vetor?</li>
+</ol>
+<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb174-1" title="1">vars &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;year&quot;</span>, <span class="st">&quot;month&quot;</span>, <span class="st">&quot;day&quot;</span>, <span class="st">&quot;dep_delay&quot;</span>, <span class="st">&quot;arr_delay&quot;</span>)</a></code></pre></div>
+<ol start="12" style="list-style-type: decimal">
+<li>Execute o código abaixo. O resultado te surpreendeu? Como os helpers de <code>select()</code> entendem o uso da maiúsculas por padrão? Como você poderia alterar esse comportamento?</li>
+<li>Atualmente, <code>dep_time</code> e <code>sched_dep_time</code> são convenientes para apresentação, mas são ruins de usar para cálculos, pois não são números na forma de variável contínua. Converta-os para uma representação do número de minutos passados desde a meia-noite.</li>
+<li>Compare <code>air_time</code> com <code>arr_time - dep_time</code>. O que você esperaria ver? O que você vê? O que você precisa fazer para consertar este problema?</li>
+<li>Compare <code>dep_time</code>, <code>sched_dep_time</code> e <code>dep_delay</code>. Como você esperaria que estes três números se relacionassem?</li>
+<li>Encontre os 10 voos mais atrasados usando uma função da família <code>_rank()</code>. Como você lida com os “empates”. Leia a documentação de <code>min_rank()</code>.</li>
+<li>O que 1:3 + 1:10 retorna? Porque?</li>
+<li>Que funções trigonométricas estão disponíveis em R?</li>
+<li>Imagine pelo menos 5 formas diferentes de medir as características dos atrasos em grupos de voos. Considere os seguintes cenários:</li>
+</ol>
+<ul>
+<li>Um voo atrasa 50% das vezes e 50% das vezes não atrasa</li>
+<li>Um voo sempre atrasa 10 minutos</li>
+<li>Um voo atrasa 30 minutos 50% das vezes e chega 30 minutos mais cedo nas outras 50%</li>
+<li>99% o voo chega no horario e 1% das vezes atrasa duas horas<br />
+Qual variável é mais relevante, atraso na chegada (<code>arr_delay</code>) ou atraso na decolagem (<code>dep_delay</code>)?</li>
+</ul>
+<ol start="20" style="list-style-type: decimal">
+<li>Desenvolva um código que produza o mesmo resultado de <code>not_cancelled %&gt;% count(dest)</code> e <code>not_cancelled %&gt;% count(dest, wt = distance)</code>, mas sem usar <code>count()</code>.</li>
+<li>Nossa definição de voos cancelados ( is.na(dep_delay) | is.na(arr_delay) ) tem um pequeno problema. Porque? Qual é a coluna mais importante?</li>
+<li>Olhe o número de voos cancelados por dia. Há algum padrão? A proporção de voos cancelados tem alguma relação com a média do tempo de atraso?</li>
+<li>Qual a companhia área que tem os piores atrasos? Desafio: você consegue descobrir se os atrasos são culpa da Cia. Aérea ou do Aeroporto? Porque (não)? Dica: reflita sobre <code>flights %&gt;% group_by(carrier, dest) %&gt;% summarise(n())</code>.</li>
+<li>O que argumento <code>sort</code> faz em <code>count()</code>? Quando você o utilizaria?</li>
+<li>Volte para as listas de funções que podem ser utilizadas com <code>mutate()</code> e <code>filter()</code>. Descreve como cada operação muda a partir do momento em que você usa um agrupamento (<code>group_by()</code>).</li>
+<li>Qual avião (<code>tailnum</code>) tem a pior pontualidade?</li>
+<li>Qual o horário do dia no qual você deveria viajar para minimizar a possibilidade de atrasos?</li>
+<li>Para cada destino, compute o número total de minutos de atraso. Para cada voo, compute a proporção de atraso total até o seu destino.</li>
+<li>Atrasos são geralmente correlacionados temporalmente: mesmo após o problema ser resolvido, voos posteriores atrasam para permitir que os voos represados decolem. Usando <code>lag()</code>, explore como o atraso de um voo se relaciona com o atraso de um voo imediatamente anterior.</li>
+<li>Analise os destinos. Você pode encontrar voos que são rápidos-demais-pra-ser-verdade (ou seja, podem ter sido registrados incorretamente no banco)? Compute o tempo de voo relativo ao tempo de voo mais curto registrado para cada destino. Que aviões atrasaram mais durante o trajeto?</li>
+<li>Encontre todos os destinos operadores por pelo menos duas cias. aéreas. Use está informação para ordená-las.</li>
+<li>Para cada avião, conte o número de voos antes do primeiro atraso maior que 1h.</li>
+</ol>
 </div>
 
 

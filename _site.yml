@@ -5,6 +5,8 @@ navbar:
   left:
     - text: "Home"
       href: index.html
+    - text: "Falando a língua do R"
+      href: 01_lingua-r.html
     - text: "Banco de dados"
       href: 02_bancos-de-dados-em-r.html
     - text: "Controle de fluxo"
