@@ -345,6 +345,9 @@ $(document).ready(function () {
   <a href="index.html">Home</a>
 </li>
 <li>
+  <a href="01_lingua-r.html">Falando a língua do R</a>
+</li>
+<li>
   <a href="02_bancos-de-dados-em-r.html">Banco de dados</a>
 </li>
 <li>
@@ -613,7 +616,7 @@ $(document).ready(function () {
 <p>Tem DOIS valores missing nesse banco:</p>
 <ul>
 <li>O lucro do 4 trimestre de 2015 é um missing <strong>explícito</strong>, porque ele aparece no dataset como NA.</li>
-<li>O lucro do primeiro triste de 2016 é um missing <strong>implícito</strong>, porque ele nem aparece no banco.</li>
+<li>O lucro do primeiro trimestre de 2016 é um missing <strong>implícito</strong>, porque ele nem aparece no banco.</li>
 </ul>
 <p>É preciso ficar atento a esta questão quando se usa <code>pivot_longer()</code> e <code>pivot_wider()</code>, e no <a href="https://r4ds.had.co.nz/tidy-data.html#missing-values-3">R for Data Science</a>, Wickham &amp; Grolemund entram em mais detalhes, mas, pra não complicar desnecessariamente a questão, resolvi não incluí-la por aqui.</p>
 </div>
@@ -641,7 +644,7 @@ $(document).ready(function () {
 ## 4     2 2016    0.17</code></pre>
 <p>Dica: Preste atenção nos valores de “return” por ano e no “nome” que você daria pra cada coluna.</p>
 <ol start="4" style="list-style-type: decimal">
-<li>O que aconteceria se você “alargasse” essa tabela? Como você poderia adicionar uma nova coluna to identificar cada valor de maneira única?</li>
+<li>O que aconteceria se você “alargasse” essa tabela? Como você poderia adicionar uma nova coluna para identificar cada valor de maneira única?</li>
 </ol>
 <div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" title="1">pessoas &lt;-<span class="st"> </span><span class="kw">tribble</span>(</a>
 <a class="sourceLine" id="cb28-2" title="2">  <span class="op">~</span>nome,              <span class="op">~</span>nomes,  <span class="op">~</span>valores,</a>

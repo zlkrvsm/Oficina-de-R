@@ -198,7 +198,7 @@ acoes <- tibble(
 Tem DOIS valores missing nesse banco:
 
 * O lucro do 4 trimestre de 2015 é um missing **explícito**, porque ele aparece no dataset como NA.
-* O lucro do primeiro triste de 2016 é um missing **implícito**, porque ele nem aparece no banco.
+* O lucro do primeiro trimestre de 2016 é um missing **implícito**, porque ele nem aparece no banco.
 
 É preciso ficar atento a esta questão quando se usa `pivot_longer()` e `pivot_wider()`, e no [R for Data Science](https://r4ds.had.co.nz/tidy-data.html#missing-values-3), Wickham & Grolemund entram em mais detalhes, mas, pra não complicar desnecessariamente a questão, resolvi não incluí-la por aqui.
 
@@ -223,7 +223,7 @@ stocks %>%
 
   Dica: Preste atenção nos valores de "return" por ano e no "nome" que você daria pra cada coluna.
 
-4. O que aconteceria se você "alargasse" essa tabela? Como você poderia adicionar uma nova coluna to identificar cada valor de maneira única?
+4. O que aconteceria se você "alargasse" essa tabela? Como você poderia adicionar uma nova coluna para identificar cada valor de maneira única?
 
 ```{r}
 pessoas <- tribble(
