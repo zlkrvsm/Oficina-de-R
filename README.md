@@ -26,124 +26,128 @@ O curso será composto por 5 sessões de 4 horas de duração cada. Cada sessão
 
 ### Um exemplo de data pipeline, da importação à visualização.
 
-    - O modelo: import, tidy, transform, visualize, model, communicate.
+- O modelo: import, tidy, transform, visualize, model, communicate.
 
 ### Comentários sobre temas diversos:
 
-    - Workflow
-    - Funções, objetos, vetores, data.frames.
-    - Pasta de trabalho.
-    - Projetos e pastas.
-    - A importância dos livros e tutoriais online.
+- Workflow
+- Funções, objetos, vetores, data.frames.
+- Pasta de trabalho.
+- Projetos e pastas.
+- A importância dos livros e tutoriais online.
     
 ### Exercício
 
-    - Um exemplo-exercício: calcular algumas medidas demográficas a partir de um extrato do Censo 2010
-        - Com R Base.
-        - Com tidyverse.
+- Um exemplo-exercício: calcular algumas medidas demográficas a partir de um extrato do Censo 2010
+    - Com R Base.
+    - Com tidyverse.
 
 ## Importação e cozinha
 
 ### Importação de diferentes tipos de bases de dados
 
-    - Censo Demográfico
-    - PNAD
-    - PNAD Contínua
+- Censo Demográfico
+- PNAD
+- PNAD Contínua
 
 ### Cozinha (tidy) dos dados
 
-    - Tipos de dados (números, strings, factors, lógicos, data/hora)
-    - Missing data
-    - Long/Wide data
+- Tipos de dados (números, strings, factors, lógicos, data/hora)
+- Missing data
+- Long/Wide data
 
 ### Exportação de dados
 
-    - CSV
-    - RDS
-    - RDATA
-    - SPSS/SAS/STATA
+- CSV
+- RDS
+- RDATA
+- SPSS/SAS/STATA
 
 ### Comentários sobre temas diversos
-    - Pacotes
-    - survey objects e outros objetos estranhos
-    - Listas
-    - Como a cozinha dos dados se integra com as partes posteriores
-    - Uma crítica ao ITTVMC: "Perdidos nos dados"
-    - O ofício do cientista de dados
+
+- Pacotes
+- survey objects e outros objetos estranhos
+- Listas
+- Como a cozinha dos dados se integra com as partes posteriores
+- Uma crítica ao ITTVMC: "Perdidos nos dados"
+- O ofício do cientista de dados
 
 ### Exercício
 
-    - PNAD Contínua:
-        - importação e tratamento inicial dos dados
-        - criação do objeto survey
-        - conversão para factors
-        - tratamento dos missings
-        - conversão de long pra wide data
+- PNAD Contínua:
+    - importação e tratamento inicial dos dados
+    - criação do objeto survey
+    - conversão para factors
+    - tratamento dos missings
+    - conversão de long pra wide data
 
 ## Transformação, visualização, modelagem
 
 ### Transformando dados
-    - Variáveis derivadas
-    - Medidas resumo
-    - Operações por grupo
+
+- Variáveis derivadas
+- Medidas resumo
+- Operações por grupo
 
 ### Visualizações básicas
-    - Scatterplot
-    - Lines
-    - Boxplot
-    - Density plot
-    - Barplots and Histograms
-    - Pointrange (erros)
-    - Mapas
+
+- Scatterplot
+- Lines
+- Boxplot
+- Density plot
+- Barplots and Histograms
+- Pointrange (erros)
+- Mapas
 
 ### Modelos
 
-    - Introdução extremamente superficial a modelagem
-    - Um exemplo MUITO simples de modelo linear
-    - Visualizando uma linha de tendência de modelo linear
+- Introdução extremamente superficial a modelagem
+- Um exemplo MUITO simples de modelo linear
+- Visualizando uma linha de tendência de modelo linear
 
 ### Exercicio
 
-    - Censo Demográfico:
-        - construção de variáveis derivadas de idade, renda e educação
-        - gráficos para exploração dos dados
-        - um modelo linear de renda e educação
+- Censo Demográfico:
+    - construção de variáveis derivadas de idade, renda e educação
+    - gráficos para exploração dos dados
+    - um modelo linear de renda e educação
 
 ## Programação
 
 ### Controle de fluxo
 
-    - if/else
-    - switch
-    - break
-    - return
+- if/else
+- switch
+- break
+- return
     
 ### Loops
-    - for
-    - while
-    - repeat
+
+- for
+- while
+- repeat
     
 ### Funções: Round 2
 
-    - Componentes
-    - Escrevendo sua primeira função
-    - Modificando funções que já existem
-    - Usando funções no lugar de loops (lapply, sapply, tapply, família map)
+- Componentes
+- Escrevendo sua primeira função
+- Modificando funções que já existem
+- Usando funções no lugar de loops (lapply, sapply, tapply, família map)
     
 ### Exercicios
 
-    - Criando uma variável dummy usando ifelse/if_else
-    - Criando uma região migratória com case_when ou if - else - if chain
-    - Criando uma função que faz grupos etários a partir de um vetor de idade
-    - Criando uma função que faz índice de Myers/Whipple
-    - Criando uma função que faz taxa de fecundidade total
+- Criando uma variável dummy usando ifelse/if_else
+- Criando uma região migratória com case_when ou if - else - if chain
+- Criando uma função que faz grupos etários a partir de um vetor de idade
+- Criando uma função que faz índice de Myers/Whipple
+- Criando uma função que faz taxa de fecundidade total
 
 ## Mini-projeto em R
 
 ### Escolha um dos temas a seguir e implemente a pipeline em R, da importação até a visualização/exportação
 
-    - Taxa de fecundidade total para todos os municípios de uma área geográfica (país, estado) de acordo com a potência do seu computador com visualização
-    - Medidas resumo de migração para uma área geográfica: volume bruto, saldo migratório, taxa bruta, taxa líquida, índice de eficácia migratória.
-    - Tábua de vida
-    - Mapa coroplético de variável socioeconômica
-    - 3 visualizações mais complexas da sua preferência
+- Taxa de fecundidade total para todos os municípios de uma área geográfica (país, estado) de acordo com a potência do seu computador com visualização
+- Medidas resumo de migração para uma área geográfica: volume bruto, saldo migratório, taxa bruta, taxa líquida, índice de eficácia migratória.
+- Tábua de vida
+- Mapa coroplético de variável socioeconômica
+- 3 visualizações mais complexas da sua preferência
