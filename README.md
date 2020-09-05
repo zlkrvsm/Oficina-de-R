@@ -33,7 +33,6 @@ O curso será composto por 5 sessões de 4 horas de duração cada. Cada sessão
 - Workflow
 - Funções, objetos, vetores, data.frames.
 - Pasta de trabalho.
-- Projetos e pastas.
 - A importância dos livros e tutoriais online.
     
 ### Exercício
@@ -65,6 +64,7 @@ O curso será composto por 5 sessões de 4 horas de duração cada. Cada sessão
 
 ### Comentários sobre temas diversos
 
+- Projetos e pastas.
 - Pacotes
 - survey objects e outros objetos estranhos
 - Listas
