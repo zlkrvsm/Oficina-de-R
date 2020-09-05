@@ -1,0 +1,63 @@
+---
+title: "Aula 1"
+author: "Vinícius Maia e Augusto Schmidt"
+date: 2020-09-04
+output: html_notebook
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(microdadosBrasil)
+```
+
+
+# Instalação R/RStudio/RStudio Cloud
+
+O R Base pode ser instalado no site [Comprehensive R Archive Network][1] (link para o windows, mas também é possível instalar para Linux e Mac).
+
+O RStudio é uma interface gráfica para facilitar o trabalho com o R, e pode ser obtido no site da [Fundação RStudio][2] (que na verdade é uma empresa).
+
+Caso seu computador seja muito antigo ou você não possa/queira instalar o R e o RStudio, você pode realizar o curso a partir do [RStudio Cloud][3], onde você pode rodar código R em um servidor remoto, a partir do seu navegador. É preciso criar uma conta, mas uma vez que você entre e crie um projeto, é bem parecido com o RStudio no seu computador.
+
+<!-- O banco de dados: Censo 2010, RN, Controle + Idade + Sexo -->
+
+```{r banco-dados, include=FALSE, eval=FALSE}
+arq <- paste0("~/CONSULTORIA/2020/PROJETO MALARIA/malaria-git/",
+              "dados/cd10/RN/Amostra_Pessoas_24.txt")
+
+vars <- c("V0001", "V0002", "V0011", "V0300", "V0010", "V0601", "V6036")
+
+x <- read_CENSO("pessoas", 2010, file = arq, vars_subset = vars)
+
+x$V0010 <- x$V0010 * 10^13
+
+# fwf
+write.table(x, "censo_2010_rn.txt", sep = "", col.names = FALSE, quote = FALSE)
+#readLines("censo_2010_rn.txt", n = 10)
+
+# csv us
+write_csv(x, "censo_2010_rn_us.csv.xz")
+
+# csv br
+write_csv2(x, "censo_2010_rn_br.csv.xz")
+```
+
+# O modelo import, tidy, transform, visualize, model, communicate
+
+
+
+# Data pipeline
+
+# Comentários transversais
+
+Workflow
+Funções, objetos, vetores e data.frames
+Pasta de trabalho
+Projetos e pastas
+A importância de livros e tutoriais online
+
+# Exercício
+
+[1]: https://cran.r-project.org/bin/windows/base/
+[2]: https://rstudio.com/products/rstudio/download/
+[3]: https://rstudio.com/products/cloud/
