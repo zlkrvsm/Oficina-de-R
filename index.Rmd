@@ -6,8 +6,8 @@ title: "Oficina de R dos alunos da pós-graduação do R"
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-Esta oficina foi pensada como uma atividade extra para os alunos de pós-graduação do NEPO durante o primeiro semestre de 2020, dada a suspensão das atividades presenciais ocasionadas pela pandemia de COVID-19.
+Este site é dedicado a materiais didáticos produzidos para as Oficinas dos alunos da pós-graduação do NEPO, mas tem apelo geral para qualquer pessoa que queira aprender R e não venha de uma área mais técnica da computação, já que o público alvo original é de cientistas sociais com pouca ou nenhuma experiência em programação.
 
-A proposta é introduzir alguns conceitos básicos de programação em uma abordagem prática de programação em R para cientistas sociais, utilizando bancos de dados com os quais eles já estão familiarizados e simplificando a linguagem as vezes obscura da computação (pelo menos para cientistas sociais).
+# Sobre o autor
 
-Outro objetivo é produzir material pedagógico em R em português, considerando que praticamente todo o material de ensino de R está em inglês, com algumas exceções valiosas.
+Sou fugitivo da engenharia da computação que tornou-se Cientista Social e Demógrafo. Adoro programação e sou o mala do R no meu departamento. Só paro quando todo mundo largar o SPSS e o SAS.

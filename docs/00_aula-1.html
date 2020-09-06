@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Vinícius Maia e Augusto Schmidt" />
+
+<meta name="date" content="2020-09-04" />
+
+<title>Aula 1</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/darkly.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; } /* Alert */
+code span.an { color: #008000; } /* Annotation */
+code span.at { } /* Attribute */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #0000ff; } /* ControlFlow */
+code span.ch { color: #008080; } /* Char */
+code span.cn { } /* Constant */
+code span.co { color: #008000; } /* Comment */
+code span.cv { color: #008000; } /* CommentVar */
+code span.do { color: #008000; } /* Documentation */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.im { } /* Import */
+code span.in { color: #008000; } /* Information */
+code span.kw { color: #0000ff; } /* Keyword */
+code span.op { } /* Operator */
+code span.ot { color: #ff4000; } /* Other */
+code span.pp { color: #ff4000; } /* Preprocessor */
+code span.sc { color: #008080; } /* SpecialChar */
+code span.ss { color: #008080; } /* SpecialString */
+code span.st { color: #008080; } /* String */
+code span.va { } /* Variable */
+code span.vs { color: #008080; } /* VerbatimString */
+code span.wa { color: #008000; font-weight: bold; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="styles.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 60px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h2 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h3 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h4 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h5 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h6 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Oficina de R</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Tutoriais
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="01_lingua-r.html">Falando a língua do R</a>
+    </li>
+    <li>
+      <a href="02_bancos-de-dados-em-r.html">Banco de dados</a>
+    </li>
+    <li>
+      <a href="03_controle-de-fluxo.html">Controle de fluxo</a>
+    </li>
+    <li>
+      <a href="04_visualizacoes-em-R.html">Visualizações</a>
+    </li>
+    <li>
+      <a href="05_manipulacao-dplyr.html">Manipulação com dplyr</a>
+    </li>
+    <li>
+      <a href="06_tidy_data.html">Reformatando com tidyr</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Curso
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="00_aula-1.html">Aula 1: Introdução</a>
+    </li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Aula 1</h1>
+<h4 class="author">Vinícius Maia e Augusto Schmidt</h4>
+<h4 class="date">2020-09-04</h4>
+
+</div>
+
+
+<div id="instalação-rrstudiorstudio-cloud" class="section level1">
+<h1>Instalação R/RStudio/RStudio Cloud</h1>
+<p>O R Base pode ser instalado no site <a href="https://cran.r-project.org/bin/windows/base/">Comprehensive R Archive Network</a> (link para o windows, mas também é possível instalar para Linux e Mac).</p>
+<p>O RStudio é uma interface gráfica para facilitar o trabalho com o R, e pode ser obtido no site da <a href="https://rstudio.com/products/rstudio/download/">Fundação RStudio</a> (que na verdade é uma empresa).</p>
+<p>Caso seu computador seja muito antigo ou você não possa/queira instalar o R e o RStudio, você pode realizar o curso a partir do <a href="https://rstudio.com/products/cloud/">RStudio Cloud</a>, onde você pode rodar código R em um servidor remoto, a partir do seu navegador. É preciso criar uma conta, mas uma vez que você entre e crie um projeto, é bem parecido com o RStudio no seu computador.</p>
+<!-- O banco de dados: Censo 2010, RN, Controle + Idade + Sexo -->
+</div>
+<div id="o-modelo-import-tidy-transform-visualize-model-communicate" class="section level1">
+<h1>O modelo import, tidy, transform, visualize, model, communicate</h1>
+<p>Existe uma sequência de atividades que nós precisamos efetuar sempre que trabalhamos com dados. Esta sequência foi sistematizada, por exemplo, por <a href="https://r4ds.had.co.nz/explore-intro.html">Wickham &amp; Grolemund</a> no seguinte diagrama.</p>
+<p><img src="data-science-explore.png" /><!-- --></p>
+<p>É uma forma simplificada e genérica de descrever a sequência de operações que são necessárias pra transformar dado bruto em dado processado, analisado, transformado, modelado, visualizado e eventualmente disponibilizado para o público. Vou me referir a esse processo a partir de agora como se fosse uma tubulação, ou pipeline, pelas quais os dados precisam passar até que eles cheguem em um estado final definido por nós como adequado.</p>
+</div>
+<div id="data-pipeline" class="section level1">
+<h1>Data pipeline</h1>
+<div id="importação" class="section level2">
+<h2>Importação</h2>
+<p>A primeira fase de qualquer operação com dados é a importação de um formato externo, os mais comuns são o formato “largura-fixa” (Censo Demográfico, PNAD) e CSV (separado por “;” ou “,”), mas também é possível importar arquivos do Excel, STATA, SPSS, SAS e praticamente qualquer outro formato comum.</p>
+<p>Vamos começar importando um pedacinho do Censo 2010 do estado mais mentiroso da federação: o Rio Grande do Norte.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">readLines</span>(<span class="st">&quot;censo_2010_rn.txt&quot;</span>, <span class="dt">n =</span> <span class="dv">10</span>)</a></code></pre></div>
+<pre><code>##  [1] &quot;240010924001090010017444   48988640153956 154 &quot;
+##  [2] &quot;240010924001090010017444   48988640153956 245 &quot;
+##  [3] &quot;240010924001090010017444   48988640153956 214 &quot;
+##  [4] &quot;240010924001090010017444   48988640153956 218 &quot;
+##  [5] &quot;240010924001090010017473   58511403038445 123 &quot;
+##  [6] &quot;240010924001090010017473   58511403038445 223 &quot;
+##  [7] &quot;240010924001090010017473   58511403038445 22  &quot;
+##  [8] &quot;2400109240010900100120879  57320527509375 255 &quot;
+##  [9] &quot;2400109240010900100129535  40226838017028 168 &quot;
+## [10] &quot;2400109240010900100129535  40226838017028 265 &quot;</code></pre>
+<hr />
+<p><strong>Pasta de trabalho</strong></p>
+<p>Você pode ter tido um problema ao tentar ler o arquivo aqui. Talvez o R não tenha encontrado o arquivo que você está tentando ler. O R possui um conceito poderoso chamado <em>pasta de trabalho</em>. A ideia é que ele vai sempre procurar os arquivos nessa pasta, e você pode acessar e mudar essa pasta como você quiser.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="co"># descubra sua pasta de trabalho atual</span></a>
+<a class="sourceLine" id="cb3-2" title="2"><span class="kw">getwd</span>()</a>
+<a class="sourceLine" id="cb3-3" title="3"></a>
+<a class="sourceLine" id="cb3-4" title="4"><span class="co"># mude sua pasta para outra</span></a>
+<a class="sourceLine" id="cb3-5" title="5"><span class="kw">setwd</span>(<span class="st">&quot;~/R/oficina-de-r/course/&quot;</span>)</a></code></pre></div>
+<p>Também é possível acessar/alterar sua pasta de trabalho através da interface do RStudio:</p>
+<p><img src="workingdir.png" /><!-- --> ***</p>
+<p>Podemos usar <code>readLines()</code> pra ver “a cara” de um arquivo qualquer, especificando que leremos <code>n = 10</code> linhas. Como vocês podem ver, não dá pra ler esse arquivo “sozinho”, precisamos saber onde começam e terminam as colunas. Nesse caso, o dicionário é o seguinte:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">dicionario &lt;-<span class="st"> </span><span class="kw">tribble</span>(</a>
+<a class="sourceLine" id="cb4-2" title="2">  <span class="op">~</span>Variavel, <span class="op">~</span>PosIni, <span class="op">~</span>PosFim, <span class="op">~</span>Int, <span class="op">~</span>Dec, <span class="op">~</span>Tipo,</a>
+<a class="sourceLine" id="cb4-3" title="3">  <span class="st">&quot;V0001&quot;</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="ot">NA</span>, <span class="st">&quot;A&quot;</span>,</a>
+<a class="sourceLine" id="cb4-4" title="4">  <span class="st">&quot;V0002&quot;</span>, <span class="dv">3</span>, <span class="dv">7</span>, <span class="dv">5</span>, <span class="ot">NA</span>, <span class="st">&quot;A&quot;</span>,</a>
+<a class="sourceLine" id="cb4-5" title="5">  <span class="st">&quot;V0011&quot;</span>, <span class="dv">8</span>, <span class="dv">20</span>, <span class="dv">13</span>, <span class="ot">NA</span>, <span class="st">&quot;A&quot;</span>,</a>
+<a class="sourceLine" id="cb4-6" title="6">  <span class="st">&quot;V0300&quot;</span>, <span class="dv">21</span>, <span class="dv">27</span>, <span class="dv">8</span>, <span class="ot">NA</span>, <span class="st">&quot;N&quot;</span>,</a>
+<a class="sourceLine" id="cb4-7" title="7">  <span class="st">&quot;V0010&quot;</span>, <span class="dv">28</span>, <span class="dv">42</span>, <span class="dv">3</span>, <span class="dv">12</span>, <span class="st">&quot;N&quot;</span>,</a>
+<a class="sourceLine" id="cb4-8" title="8">  <span class="st">&quot;V0601&quot;</span>, <span class="dv">43</span>, <span class="dv">43</span>, <span class="dv">1</span>, <span class="ot">NA</span>, <span class="st">&quot;C&quot;</span>,</a>
+<a class="sourceLine" id="cb4-9" title="9">  <span class="st">&quot;V6036&quot;</span>, <span class="dv">44</span>, <span class="dv">46</span>, <span class="dv">3</span>, <span class="ot">NA</span>, <span class="st">&quot;N&quot;</span></a>
+<a class="sourceLine" id="cb4-10" title="10">)</a>
+<a class="sourceLine" id="cb4-11" title="11">dicionario</a></code></pre></div>
+<pre><code>## # A tibble: 7 x 6
+##   Variavel PosIni PosFim   Int   Dec Tipo 
+##   &lt;chr&gt;     &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;
+## 1 V0001         1      2     2    NA A    
+## 2 V0002         3      7     5    NA A    
+## 3 V0011         8     20    13    NA A    
+## 4 V0300        21     27     8    NA N    
+## 5 V0010        28     42     3    12 N    
+## 6 V0601        43     43     1    NA C    
+## 7 V6036        44     46     3    NA N</code></pre>
+<p>Esse tipo de dicionário de dados é geralmente disponibilizado junto com os microdados. Pra importar um arquivo desses no R, usamos <code>read.fwf()</code> ou <code>read_fwf()</code> do pacote <code>readr</code>.</p>
+<hr />
+<p><strong>Pacotes</strong> são extensões do software R base e contém funções extras ou melhorias. São uma parte essencial do ecossistema do R e vamos utilizar vários deles por aqui.</p>
+<p>Existem três formas de instalar um pacote no R. Vamos vê-las.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="kw">install.packages</span>(<span class="st">&quot;readr&quot;</span>)</a></code></pre></div>
+<p><img src="install.packages.png" /><!-- --></p>
+<p><img src="install.packages2.png" /><!-- --></p>
+<p>Depois de instalado, é só carregar o pacote no início do seu código com:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1"><span class="kw">library</span>(readr)</a></code></pre></div>
+<hr />
+<p>Voltando a importação, pegamos a largura das colunas.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1">colunas &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">13</span>, <span class="dv">7</span>, <span class="dv">15</span>, <span class="dv">1</span>, <span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb8-2" title="2">colunas</a></code></pre></div>
+<pre><code>## [1]  2  5 13  7 15  1  3</code></pre>
+<p>Os tipos das colunas.</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1">tipos &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;character&quot;</span>, <span class="st">&quot;character&quot;</span>, <span class="st">&quot;character&quot;</span>, <span class="st">&quot;numeric&quot;</span>, <span class="st">&quot;numeric&quot;</span>, <span class="st">&quot;character&quot;</span>, <span class="st">&quot;numeric&quot;</span>)</a>
+<a class="sourceLine" id="cb10-2" title="2">tipos</a></code></pre></div>
+<pre><code>## [1] &quot;character&quot; &quot;character&quot; &quot;character&quot; &quot;numeric&quot;   &quot;numeric&quot;   &quot;character&quot; &quot;numeric&quot;</code></pre>
+<p>E passamos pra <code>read.fwf()</code></p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" title="1">censo_rn &lt;-<span class="st"> </span><span class="kw">read.fwf</span>(<span class="dt">file =</span> <span class="st">&quot;censo_2010_rn.txt&quot;</span>, </a>
+<a class="sourceLine" id="cb12-2" title="2">                     <span class="dt">widths =</span> colunas, </a>
+<a class="sourceLine" id="cb12-3" title="3">                     <span class="dt">colClasses =</span> tipos)</a>
+<a class="sourceLine" id="cb12-4" title="4"><span class="kw">head</span>(censo_rn)</a></code></pre></div>
+<pre><code>##   V1    V2            V3   V4             V5 V6 V7
+## 1 24 00109 2400109001001 7444 48988640153956  1 54
+## 2 24 00109 2400109001001 7444 48988640153956  2 45
+## 3 24 00109 2400109001001 7444 48988640153956  2 14
+## 4 24 00109 2400109001001 7444 48988640153956  2 18
+## 5 24 00109 2400109001001 7473 58511403038445  1 23
+## 6 24 00109 2400109001001 7473 58511403038445  2 23</code></pre>
+<p>Ou, algo parecido, para <code>read_fwf()</code></p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1">posicao &lt;-<span class="st"> </span><span class="kw">fwf_widths</span>(<span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">5</span>, <span class="dv">13</span>, <span class="dv">7</span>, <span class="dv">15</span>, <span class="dv">1</span>, <span class="dv">3</span>))</a>
+<a class="sourceLine" id="cb14-2" title="2"></a>
+<a class="sourceLine" id="cb14-3" title="3">tipos2 &lt;-<span class="st"> &quot;cccnncn&quot;</span></a>
+<a class="sourceLine" id="cb14-4" title="4"></a>
+<a class="sourceLine" id="cb14-5" title="5">censo_rn2 &lt;-<span class="st"> </span><span class="kw">read_fwf</span>(<span class="dt">file =</span> <span class="st">&quot;censo_2010_rn.txt&quot;</span>,</a>
+<a class="sourceLine" id="cb14-6" title="6">                      <span class="dt">col_positions =</span> posicao,</a>
+<a class="sourceLine" id="cb14-7" title="7">                      <span class="dt">col_types =</span> tipos2)</a>
+<a class="sourceLine" id="cb14-8" title="8"><span class="kw">head</span>(censo_rn2)</a></code></pre></div>
+<pre><code>## # A tibble: 6 x 7
+##   X1    X2    X3               X4      X5 X6       X7
+##   &lt;chr&gt; &lt;chr&gt; &lt;chr&gt;         &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt;
+## 1 24    00109 2400109001001  7444 4.90e13 1        54
+## 2 24    00109 2400109001001  7444 4.90e13 2        45
+## 3 24    00109 2400109001001  7444 4.90e13 2        14
+## 4 24    00109 2400109001001  7444 4.90e13 2        18
+## 5 24    00109 2400109001001  7473 5.85e13 1        23
+## 6 24    00109 2400109001001  7473 5.85e13 2        23</code></pre>
+<p>De uma maneira geral, não há motivo hoje em dia pra usar <code>base::read.fwf()</code> se você puder usar o <code>readr::read_fwf()</code>, o segundo é mais rápido e mais flexível.</p>
+<hr />
+<p><strong>Workflow</strong></p>
+<p>Pra muitos de nós, usar um programa consista em abrir aquele programa e simplesmente usar ele. Talvez você abra seu Excel e simplesmente trabalhe ali o tempo todo, talvez você consulte um ou outro documento aqui e ali.</p>
+<p>Trabalhar no R tem um workflow muito diferente. Em geral, você vai ter pelo menos 3 ou 4 janelas diferentes abertas e vai consultá-las constantemente ao longo do processo. <strong>NINGUÉM DECORA TUDO ISSO</strong>.</p>
+<p>Você provavelmente vai ter abertas:</p>
+<p>Janela do Rstudio</p>
+<p><img src="janelas.png" /><!-- --></p>
+<p>Stackoverflow</p>
+<p><img src="so.png" /><!-- --></p>
+<p>Um bom livro</p>
+<p><img src="r4ds.png" /><!-- --></p>
+<p>Um tutorial</p>
+<p><img src="tutorial.png" /><!-- --></p>
+<p>Colas</p>
+<p><embed src="data-transformation.pdf" /><!-- --></p>
+<p>Um dicionário de dados do IBGE</p>
+<p><img src="dic.png" /><!-- --></p>
+<p>Programar não é simplesmente usar um programa e não depende da nossa capacidade de memorizar comandos. Envolve reflexão, consulta constante de outros materiais e organização de conteúdos espalhados por fontes diferentes.</p>
+<hr />
+</div>
+<div id="tidycozinha" class="section level2">
+<h2>Tidy/Cozinha</h2>
+<p>Ok, importamos nossos dados. Mas eles não estão no formato adequado. Nossas colunas tem nomes estranhos, nossos números não tem casas decimais, nossas categorias são números. Precisamos fazer um processo de limpeza nos nossos dados para poder trabalhar com eles.</p>
+<p>Vamos começar pelos nomes das variáveis.</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1"><span class="kw">names</span>(censo_rn)</a></code></pre></div>
+<pre><code>## [1] &quot;V1&quot; &quot;V2&quot; &quot;V3&quot; &quot;V4&quot; &quot;V5&quot; &quot;V6&quot; &quot;V7&quot;</code></pre>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1"><span class="kw">names</span>(censo_rn2)</a></code></pre></div>
+<pre><code>## [1] &quot;X1&quot; &quot;X2&quot; &quot;X3&quot; &quot;X4&quot; &quot;X5&quot; &quot;X6&quot; &quot;X7&quot;</code></pre>
+<p>Podemos mudar os nomes das variáveis para o que a gente quiser:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1"><span class="co"># r base</span></a>
+<a class="sourceLine" id="cb20-2" title="2"><span class="kw">names</span>(censo_rn) &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;V0001&quot;</span>, <span class="st">&quot;V0002&quot;</span>, <span class="st">&quot;V0011&quot;</span>, <span class="st">&quot;V0300&quot;</span>, <span class="st">&quot;V0010&quot;</span>, <span class="st">&quot;V0601&quot;</span>, <span class="st">&quot;V6036&quot;</span>)</a>
+<a class="sourceLine" id="cb20-3" title="3"></a>
+<a class="sourceLine" id="cb20-4" title="4"><span class="co"># dplyr</span></a>
+<a class="sourceLine" id="cb20-5" title="5"><span class="kw">library</span>(dplyr)</a>
+<a class="sourceLine" id="cb20-6" title="6"></a>
+<a class="sourceLine" id="cb20-7" title="7">censo_rn2 &lt;-<span class="st"> </span><span class="kw">rename</span>(censo_rn2, <span class="dt">uf =</span> X1, <span class="dt">municipio =</span> X2, <span class="dt">areap =</span> X3, <span class="dt">controle =</span> X4, <span class="dt">peso =</span> X5, <span class="dt">sexo =</span> X6, <span class="dt">idade =</span> X7)</a>
+<a class="sourceLine" id="cb20-8" title="8"></a>
+<a class="sourceLine" id="cb20-9" title="9"><span class="kw">head</span>(censo_rn)</a></code></pre></div>
+<pre><code>##   V0001 V0002         V0011 V0300          V0010 V0601 V6036
+## 1    24 00109 2400109001001  7444 48988640153956     1    54
+## 2    24 00109 2400109001001  7444 48988640153956     2    45
+## 3    24 00109 2400109001001  7444 48988640153956     2    14
+## 4    24 00109 2400109001001  7444 48988640153956     2    18
+## 5    24 00109 2400109001001  7473 58511403038445     1    23
+## 6    24 00109 2400109001001  7473 58511403038445     2    23</code></pre>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1"><span class="kw">head</span>(censo_rn2)</a></code></pre></div>
+<pre><code>## # A tibble: 6 x 7
+##   uf    municipio areap         controle    peso sexo  idade
+##   &lt;chr&gt; &lt;chr&gt;     &lt;chr&gt;            &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt;
+## 1 24    00109     2400109001001     7444 4.90e13 1        54
+## 2 24    00109     2400109001001     7444 4.90e13 2        45
+## 3 24    00109     2400109001001     7444 4.90e13 2        14
+## 4 24    00109     2400109001001     7444 4.90e13 2        18
+## 5 24    00109     2400109001001     7473 5.85e13 1        23
+## 6 24    00109     2400109001001     7473 5.85e13 2        23</code></pre>
+<p>Também precisamos alterar o conteúdo de algumas variáveis. Peso, por exemplo, é uma variável que tem 3 números inteiros, mas todos os outros são casas decimais. Alteramos assim:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" title="1"><span class="co"># r base</span></a>
+<a class="sourceLine" id="cb24-2" title="2">censo_rn<span class="op">$</span>V0010 &lt;-<span class="st"> </span>censo_rn<span class="op">$</span>V0010 <span class="op">/</span><span class="st"> </span>(<span class="dv">10</span> <span class="op">^</span><span class="st"> </span><span class="dv">13</span>)</a>
+<a class="sourceLine" id="cb24-3" title="3"></a>
+<a class="sourceLine" id="cb24-4" title="4"><span class="co"># dplyr</span></a>
+<a class="sourceLine" id="cb24-5" title="5">censo_rn2 &lt;-<span class="st"> </span><span class="kw">mutate</span>(censo_rn2, <span class="dt">peso =</span> peso <span class="op">/</span><span class="st"> </span>(<span class="dv">10</span> <span class="op">^</span><span class="st"> </span><span class="dv">13</span>))</a>
+<a class="sourceLine" id="cb24-6" title="6"></a>
+<a class="sourceLine" id="cb24-7" title="7"><span class="kw">head</span>(censo_rn)</a></code></pre></div>
+<pre><code>##   V0001 V0002         V0011 V0300    V0010 V0601 V6036
+## 1    24 00109 2400109001001  7444 4.898864     1    54
+## 2    24 00109 2400109001001  7444 4.898864     2    45
+## 3    24 00109 2400109001001  7444 4.898864     2    14
+## 4    24 00109 2400109001001  7444 4.898864     2    18
+## 5    24 00109 2400109001001  7473 5.851140     1    23
+## 6    24 00109 2400109001001  7473 5.851140     2    23</code></pre>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" title="1"><span class="kw">head</span>(censo_rn2)</a></code></pre></div>
+<pre><code>## # A tibble: 6 x 7
+##   uf    municipio areap         controle  peso sexo  idade
+##   &lt;chr&gt; &lt;chr&gt;     &lt;chr&gt;            &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt;
+## 1 24    00109     2400109001001     7444  4.90 1        54
+## 2 24    00109     2400109001001     7444  4.90 2        45
+## 3 24    00109     2400109001001     7444  4.90 2        14
+## 4 24    00109     2400109001001     7444  4.90 2        18
+## 5 24    00109     2400109001001     7473  5.85 1        23
+## 6 24    00109     2400109001001     7473  5.85 2        23</code></pre>
+<p>Podemos também querer criar uma categoria unificada para uf e município. Há diversas formas de fazer isso, vamos ver duas. Criaremos uma nova variável, <code>mun7</code>.</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" title="1"><span class="co"># r base</span></a>
+<a class="sourceLine" id="cb28-2" title="2">censo_rn<span class="op">$</span>mun7 &lt;-<span class="st"> </span><span class="kw">paste0</span>(censo_rn<span class="op">$</span>V0001, censo_rn<span class="op">$</span>V0002)</a>
+<a class="sourceLine" id="cb28-3" title="3"></a>
+<a class="sourceLine" id="cb28-4" title="4"><span class="co"># tidyr</span></a>
+<a class="sourceLine" id="cb28-5" title="5"><span class="kw">library</span>(tidyr)</a>
+<a class="sourceLine" id="cb28-6" title="6"></a>
+<a class="sourceLine" id="cb28-7" title="7">censo_rn2 &lt;-<span class="st"> </span><span class="kw">unite</span>(censo_rn2, mun7, uf, municipio, <span class="dt">sep =</span> <span class="st">&quot;&quot;</span>, <span class="dt">remove =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb28-8" title="8"></a>
+<a class="sourceLine" id="cb28-9" title="9"><span class="kw">head</span>(censo_rn)</a></code></pre></div>
+<pre><code>##   V0001 V0002         V0011 V0300    V0010 V0601 V6036    mun7
+## 1    24 00109 2400109001001  7444 4.898864     1    54 2400109
+## 2    24 00109 2400109001001  7444 4.898864     2    45 2400109
+## 3    24 00109 2400109001001  7444 4.898864     2    14 2400109
+## 4    24 00109 2400109001001  7444 4.898864     2    18 2400109
+## 5    24 00109 2400109001001  7473 5.851140     1    23 2400109
+## 6    24 00109 2400109001001  7473 5.851140     2    23 2400109</code></pre>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" title="1"><span class="kw">head</span>(censo_rn2)</a></code></pre></div>
+<pre><code>## # A tibble: 6 x 8
+##   mun7    uf    municipio areap         controle  peso sexo  idade
+##   &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;     &lt;chr&gt;            &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt;
+## 1 2400109 24    00109     2400109001001     7444  4.90 1        54
+## 2 2400109 24    00109     2400109001001     7444  4.90 2        45
+## 3 2400109 24    00109     2400109001001     7444  4.90 2        14
+## 4 2400109 24    00109     2400109001001     7444  4.90 2        18
+## 5 2400109 24    00109     2400109001001     7473  5.85 1        23
+## 6 2400109 24    00109     2400109001001     7473  5.85 2        23</code></pre>
+<p>Por último, podemos transformar variáveis categóricas em categorias textuais. Em R, esse tipo de dado é chamado de <code>factor()</code>.</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" title="1"><span class="co"># r base</span></a>
+<a class="sourceLine" id="cb32-2" title="2">censo_rn<span class="op">$</span>V0601f &lt;-<span class="st"> </span><span class="kw">factor</span>(<span class="dt">x =</span> censo_rn<span class="op">$</span>V0601,</a>
+<a class="sourceLine" id="cb32-3" title="3">                          <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>),</a>
+<a class="sourceLine" id="cb32-4" title="4">                          <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Masculino&quot;</span>, <span class="st">&quot;Feminino&quot;</span>))</a>
+<a class="sourceLine" id="cb32-5" title="5"></a>
+<a class="sourceLine" id="cb32-6" title="6"><span class="co"># dplyr</span></a>
+<a class="sourceLine" id="cb32-7" title="7"><span class="kw">library</span>(dplyr)</a>
+<a class="sourceLine" id="cb32-8" title="8">censo_rn2 &lt;-<span class="st"> </span><span class="kw">mutate</span>(censo_rn2, </a>
+<a class="sourceLine" id="cb32-9" title="9">                    <span class="dt">sexof =</span> <span class="kw">factor</span>(<span class="dt">x =</span> sexo,</a>
+<a class="sourceLine" id="cb32-10" title="10">                                   <span class="dt">levels =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>),</a>
+<a class="sourceLine" id="cb32-11" title="11">                                   <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Masculino&quot;</span>, <span class="st">&quot;Feminino&quot;</span>)))</a>
+<a class="sourceLine" id="cb32-12" title="12"></a>
+<a class="sourceLine" id="cb32-13" title="13"><span class="kw">head</span>(censo_rn)</a></code></pre></div>
+<pre><code>##   V0001 V0002         V0011 V0300    V0010 V0601 V6036    mun7    V0601f
+## 1    24 00109 2400109001001  7444 4.898864     1    54 2400109 Masculino
+## 2    24 00109 2400109001001  7444 4.898864     2    45 2400109  Feminino
+## 3    24 00109 2400109001001  7444 4.898864     2    14 2400109  Feminino
+## 4    24 00109 2400109001001  7444 4.898864     2    18 2400109  Feminino
+## 5    24 00109 2400109001001  7473 5.851140     1    23 2400109 Masculino
+## 6    24 00109 2400109001001  7473 5.851140     2    23 2400109  Feminino</code></pre>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" title="1"><span class="kw">head</span>(censo_rn2)</a></code></pre></div>
+<pre><code>## # A tibble: 6 x 9
+##   mun7    uf    municipio areap         controle  peso sexo  idade sexof    
+##   &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;     &lt;chr&gt;            &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt; &lt;dbl&gt; &lt;fct&gt;    
+## 1 2400109 24    00109     2400109001001     7444  4.90 1        54 Masculino
+## 2 2400109 24    00109     2400109001001     7444  4.90 2        45 Feminino 
+## 3 2400109 24    00109     2400109001001     7444  4.90 2        14 Feminino 
+## 4 2400109 24    00109     2400109001001     7444  4.90 2        18 Feminino 
+## 5 2400109 24    00109     2400109001001     7473  5.85 1        23 Masculino
+## 6 2400109 24    00109     2400109001001     7473  5.85 2        23 Feminino</code></pre>
+<p>Agora que nossos dados estão mais ou menos no formato que queremos. Podemos descartar algumas variáveis que não precisamos mais.</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" title="1"><span class="co"># r base</span></a>
+<a class="sourceLine" id="cb36-2" title="2">censo_rn<span class="op">$</span>V0001 &lt;-<span class="st"> </span><span class="ot">NULL</span></a>
+<a class="sourceLine" id="cb36-3" title="3">censo_rn<span class="op">$</span>V0002 &lt;-<span class="st"> </span><span class="ot">NULL</span></a>
+<a class="sourceLine" id="cb36-4" title="4">censo_rn<span class="op">$</span>V0601 &lt;-<span class="st"> </span><span class="ot">NULL</span></a>
+<a class="sourceLine" id="cb36-5" title="5"></a>
+<a class="sourceLine" id="cb36-6" title="6"><span class="co"># dplyr</span></a>
+<a class="sourceLine" id="cb36-7" title="7">censo_rn2 &lt;-<span class="st"> </span><span class="kw">select</span>(censo_rn2, <span class="op">-</span>uf, <span class="op">-</span>municipio, <span class="op">-</span>sexo)</a>
+<a class="sourceLine" id="cb36-8" title="8"></a>
+<a class="sourceLine" id="cb36-9" title="9"><span class="kw">head</span>(censo_rn)</a></code></pre></div>
+<pre><code>##           V0011 V0300    V0010 V6036    mun7    V0601f
+## 1 2400109001001  7444 4.898864    54 2400109 Masculino
+## 2 2400109001001  7444 4.898864    45 2400109  Feminino
+## 3 2400109001001  7444 4.898864    14 2400109  Feminino
+## 4 2400109001001  7444 4.898864    18 2400109  Feminino
+## 5 2400109001001  7473 5.851140    23 2400109 Masculino
+## 6 2400109001001  7473 5.851140    23 2400109  Feminino</code></pre>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" title="1"><span class="kw">head</span>(censo_rn2)</a></code></pre></div>
+<pre><code>## # A tibble: 6 x 6
+##   mun7    areap         controle  peso idade sexof    
+##   &lt;chr&gt;   &lt;chr&gt;            &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt;    
+## 1 2400109 2400109001001     7444  4.90    54 Masculino
+## 2 2400109 2400109001001     7444  4.90    45 Feminino 
+## 3 2400109 2400109001001     7444  4.90    14 Feminino 
+## 4 2400109 2400109001001     7444  4.90    18 Feminino 
+## 5 2400109 2400109001001     7473  5.85    23 Masculino
+## 6 2400109 2400109001001     7473  5.85    23 Feminino</code></pre>
+<p>Talvez a gente queira também ordenar o banco de acordo com algumas variáveis, como colocar as idades mais jovens primeiro.</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" title="1"><span class="co"># r base</span></a>
+<a class="sourceLine" id="cb40-2" title="2">censo_rn &lt;-<span class="st"> </span>censo_rn[<span class="kw">order</span>(censo_rn<span class="op">$</span>V6036),]</a>
+<a class="sourceLine" id="cb40-3" title="3"></a>
+<a class="sourceLine" id="cb40-4" title="4"><span class="co"># dplyr</span></a>
+<a class="sourceLine" id="cb40-5" title="5">censo_rn2 &lt;-<span class="st"> </span><span class="kw">arrange</span>(censo_rn2, idade)</a>
+<a class="sourceLine" id="cb40-6" title="6"></a>
+<a class="sourceLine" id="cb40-7" title="7"><span class="kw">head</span>(censo_rn)</a></code></pre></div>
+<pre><code>##             V0011   V0300    V0010 V6036    mun7    V0601f
+## 27  2400109001001   65321 5.684840     0 2400109  Feminino
+## 152 2400109001001  544709 4.303455     0 2400109 Masculino
+## 200 2400109001001  770658 4.645231     0 2400109 Masculino
+## 224 2400109001001  819997 4.397638     0 2400109 Masculino
+## 255 2400109001001  950237 4.099784     0 2400109  Feminino
+## 417 2400109001001 1468323 4.115547     0 2400109  Feminino</code></pre>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" title="1"><span class="kw">head</span>(censo_rn2)</a></code></pre></div>
+<pre><code>## # A tibble: 6 x 6
+##   mun7    areap         controle  peso idade sexof    
+##   &lt;chr&gt;   &lt;chr&gt;            &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt;    
+## 1 2400109 2400109001001    65321  5.68     0 Feminino 
+## 2 2400109 2400109001001   544709  4.30     0 Masculino
+## 3 2400109 2400109001001   770658  4.65     0 Masculino
+## 4 2400109 2400109001001   819997  4.40     0 Masculino
+## 5 2400109 2400109001001   950237  4.10     0 Feminino 
+## 6 2400109 2400109001001  1468323  4.12     0 Feminino</code></pre>
+</div>
+<div id="transformar" class="section level2">
+<h2>Transformar</h2>
+<p>Frequentemente, o banco de dados bruto não é suficiente para a análise. Aqui entra muita teoria e reflexão crítica do dado, mas uma das transformações mais comuns que fazemos é construir categorias de grupos etários, por exemplo. Isto envolve uma transformação da variável numérica idade em uma variável <code>factor()</code> que tem categorias de idade definidas por nós. Vamos começar com o conceito de população em idade ativa (0 a 14 anos, 15 a 59 anos, 65 anos e mais). A função no R é <code>cut()</code></p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" title="1"><span class="co"># r base</span></a>
+<a class="sourceLine" id="cb44-2" title="2">censo_rn<span class="op">$</span>ge_pia &lt;-<span class="st"> </span><span class="kw">cut</span>(<span class="dt">x =</span> censo_rn<span class="op">$</span>V6036, <span class="dt">breaks =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">15</span>, <span class="dv">65</span>, <span class="dv">140</span>),</a>
+<a class="sourceLine" id="cb44-3" title="3">                       <span class="dt">right =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb44-4" title="4"></a>
+<a class="sourceLine" id="cb44-5" title="5"><span class="co"># dplyr</span></a>
+<a class="sourceLine" id="cb44-6" title="6">censo_rn2 &lt;-<span class="st"> </span><span class="kw">mutate</span>(censo_rn2, <span class="dt">ge_pia =</span> <span class="kw">cut</span>(idade, <span class="dt">breaks =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">15</span>, <span class="dv">65</span>, <span class="dv">140</span>), <span class="dt">right =</span> <span class="ot">FALSE</span>))</a>
+<a class="sourceLine" id="cb44-7" title="7"></a>
+<a class="sourceLine" id="cb44-8" title="8"><span class="kw">head</span>(censo_rn)</a></code></pre></div>
+<pre><code>##             V0011   V0300    V0010 V6036    mun7    V0601f ge_pia
+## 27  2400109001001   65321 5.684840     0 2400109  Feminino [0,15)
+## 152 2400109001001  544709 4.303455     0 2400109 Masculino [0,15)
+## 200 2400109001001  770658 4.645231     0 2400109 Masculino [0,15)
+## 224 2400109001001  819997 4.397638     0 2400109 Masculino [0,15)
+## 255 2400109001001  950237 4.099784     0 2400109  Feminino [0,15)
+## 417 2400109001001 1468323 4.115547     0 2400109  Feminino [0,15)</code></pre>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" title="1"><span class="kw">head</span>(censo_rn2)</a></code></pre></div>
+<pre><code>## # A tibble: 6 x 7
+##   mun7    areap         controle  peso idade sexof     ge_pia
+##   &lt;chr&gt;   &lt;chr&gt;            &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt;     &lt;fct&gt; 
+## 1 2400109 2400109001001    65321  5.68     0 Feminino  [0,15)
+## 2 2400109 2400109001001   544709  4.30     0 Masculino [0,15)
+## 3 2400109 2400109001001   770658  4.65     0 Masculino [0,15)
+## 4 2400109 2400109001001   819997  4.40     0 Masculino [0,15)
+## 5 2400109 2400109001001   950237  4.10     0 Feminino  [0,15)
+## 6 2400109 2400109001001  1468323  4.12     0 Feminino  [0,15)</code></pre>
+<p>Outro tipo de transformação comum é transformar o tipo da variável. Por exemplo, podemos querer transformar <code>mun7</code> de string de caracteres para um número inteiro. Não é necessário aqui, mas pode ser útil no futuro. Fazemos isso com a família de funções <code>as.___</code>. <code>class()</code> mostra o tipo da variável ou objeto.</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" title="1"><span class="co"># antes</span></a>
+<a class="sourceLine" id="cb48-2" title="2"><span class="kw">class</span>(censo_rn<span class="op">$</span>mun7)</a></code></pre></div>
+<pre><code>## [1] &quot;character&quot;</code></pre>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb50-1" title="1"><span class="kw">class</span>(censo_rn2<span class="op">$</span>mun7)</a></code></pre></div>
+<pre><code>## [1] &quot;character&quot;</code></pre>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb52-1" title="1"><span class="co"># r base</span></a>
+<a class="sourceLine" id="cb52-2" title="2">censo_rn<span class="op">$</span>mun7 &lt;-<span class="st"> </span><span class="kw">as.integer</span>(censo_rn<span class="op">$</span>mun7)</a>
+<a class="sourceLine" id="cb52-3" title="3"></a>
+<a class="sourceLine" id="cb52-4" title="4"><span class="co"># dplyr</span></a>
+<a class="sourceLine" id="cb52-5" title="5">censo_rn2 &lt;-<span class="st"> </span><span class="kw">mutate</span>(censo_rn2, <span class="dt">mun7 =</span> <span class="kw">as.integer</span>(mun7))</a>
+<a class="sourceLine" id="cb52-6" title="6"></a>
+<a class="sourceLine" id="cb52-7" title="7"><span class="co"># depois</span></a>
+<a class="sourceLine" id="cb52-8" title="8"><span class="kw">class</span>(censo_rn<span class="op">$</span>mun7)</a></code></pre></div>
+<pre><code>## [1] &quot;integer&quot;</code></pre>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb54-1" title="1"><span class="kw">class</span>(censo_rn2<span class="op">$</span>mun7)</a></code></pre></div>
+<pre><code>## [1] &quot;integer&quot;</code></pre>
+<p>Outro tipo de transformação importante é recortar seu dado de alguma forma. Vamos selecionar o município de Natal para fazer algumas análises posteriores.</p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb56-1" title="1">cod_natal &lt;-<span class="st"> </span><span class="dv">2408102</span></a>
+<a class="sourceLine" id="cb56-2" title="2"></a>
+<a class="sourceLine" id="cb56-3" title="3"><span class="co"># r base</span></a>
+<a class="sourceLine" id="cb56-4" title="4">natal &lt;-<span class="st"> </span>censo_rn[censo_rn<span class="op">$</span>mun7 <span class="op">==</span><span class="st"> </span>cod_natal, ]</a>
+<a class="sourceLine" id="cb56-5" title="5"></a>
+<a class="sourceLine" id="cb56-6" title="6"><span class="co"># dplyr</span></a>
+<a class="sourceLine" id="cb56-7" title="7">natal2 &lt;-<span class="st"> </span><span class="kw">filter</span>(censo_rn2, mun7 <span class="op">==</span><span class="st"> </span>cod_natal)</a>
+<a class="sourceLine" id="cb56-8" title="8"></a>
+<a class="sourceLine" id="cb56-9" title="9"><span class="kw">head</span>(natal)</a></code></pre></div>
+<pre><code>##                V0011   V0300    V0010 V6036    mun7    V0601f ge_pia
+## 232168 2408102004001   44785 13.10527     0 2408102  Feminino [0,15)
+## 232389 2408102004001 1121530 17.58977     0 2408102  Feminino [0,15)
+## 232420 2408102004001 1446007 22.00150     0 2408102 Masculino [0,15)
+## 232502 2408102004001 1722335 23.65273     0 2408102 Masculino [0,15)
+## 232728 2408102004001 2698866 18.32756     0 2408102  Feminino [0,15)
+## 232850 2408102004001 3326600 15.46714     0 2408102 Masculino [0,15)</code></pre>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb58-1" title="1"><span class="kw">head</span>(natal2)</a></code></pre></div>
+<pre><code>## # A tibble: 6 x 7
+##      mun7 areap         controle  peso idade sexof     ge_pia
+##     &lt;int&gt; &lt;chr&gt;            &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;fct&gt;     &lt;fct&gt; 
+## 1 2408102 2408102004001    44785  13.1     0 Feminino  [0,15)
+## 2 2408102 2408102004001  1121530  17.6     0 Feminino  [0,15)
+## 3 2408102 2408102004001  1446007  22.0     0 Masculino [0,15)
+## 4 2408102 2408102004001  1722335  23.7     0 Masculino [0,15)
+## 5 2408102 2408102004001  2698866  18.3     0 Feminino  [0,15)
+## 6 2408102 2408102004001  3326600  15.5     0 Masculino [0,15)</code></pre>
+<hr />
+<p><strong>Conceitos e terminologia</strong></p>
+<p>R é uma linguagem de programação e, portanto, carregada de um jargão <em>insuportável</em> das ciências da computação, que, infelizmente, nós temos que dominar minimamente. O objetivo desta seção é simplesmente apresentar alguns termos. Eventualmente, vocês vão acabar se familiarizando com esses termos, mas por agora, fica como um mini-dicionário pra ser consultado depois.</p>
+<p><strong>Funções</strong> são rotinas que executam alguma sequência de operações bem definidas de forma consistente e previsível. Exemplo: soma = <code>sum()</code></p>
+<p><strong>Objetos</strong> são abstrações para qualquer coisa que fica guardada na memória do computador. Eles podem ser tão simples quanto o valor de uma variável (<code>cod_natal</code>) até bancos de dados mais complexos (<code>censo_rn</code> e <code>censo_rn2</code>), ou até mesmo funções!</p>
+<p><strong>Vetores</strong> são um tipo específico de objeto, e tem o formato:</p>
+<p><img src="Vectors-in-R.jpg" /><!-- --> Podem ser de diversos tipos, numéricos, caracteres (string), lógicos (TRUE/FALSE), etc.</p>
+<p><strong>Data.frames</strong> são um tipo de lista de dados.</p>
+<p><img src="data.frames.png" /><!-- --></p>
+<p>São criadas juntando vários vetores de tipos diferentes, mas todo com o mesmo comprimento (length), exemplo <code>censo_rn</code> e <code>censo_rn2</code>. Um dos erros mais comuns é tentar criar data.frames a partir de vetores de tamanhos diferentes. O R não aceita.</p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb60-1" title="1"><span class="kw">class</span>(censo_rn)</a></code></pre></div>
+<pre><code>## [1] &quot;data.frame&quot;</code></pre>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb62-1" title="1"><span class="kw">class</span>(censo_rn2)</a></code></pre></div>
+<pre><code>## [1] &quot;tbl_df&quot;     &quot;tbl&quot;        &quot;data.frame&quot;</code></pre>
+<hr />
+</div>
+<div id="visualização" class="section level2">
+<h2>Visualização</h2>
+<p>Outro aspecto crucial do trabalho com grandes bancos de dados é a visualização desses dados. Em geral, visualizações são mais eficazes que tabelas para comunicar características importantes dos dados. Podemos fazer diversos tipos de gráficos. Vamos ver alguns.</p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb64-1" title="1"><span class="co"># histograma</span></a>
+<a class="sourceLine" id="cb64-2" title="2"><span class="kw">hist</span>(censo_rn<span class="op">$</span>V6036, <span class="dt">main =</span> <span class="st">&quot;Idade&quot;</span>) <span class="co"># base</span></a></code></pre></div>
+<p><img src="00_aula-1_files/figure-html/unnamed-chunk-33-1.png" width="672" /></p>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb65-1" title="1">h_ggplot &lt;-<span class="st"> </span><span class="kw">ggplot</span>(censo_rn2) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb65-2" title="2"><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="kw">aes</span>(<span class="dt">x =</span> idade)) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb65-3" title="3"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Idade&quot;</span>) <span class="co"># ggplot</span></a>
+<a class="sourceLine" id="cb65-4" title="4">h_ggplot</a></code></pre></div>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+<p><img src="00_aula-1_files/figure-html/unnamed-chunk-33-2.png" width="672" /></p>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb67-1" title="1"><span class="co"># boxplot</span></a>
+<a class="sourceLine" id="cb67-2" title="2"><span class="kw">boxplot</span>(censo_rn<span class="op">$</span>V6036, <span class="dt">main =</span> <span class="st">&quot;Idade&quot;</span>)</a></code></pre></div>
+<p><img src="00_aula-1_files/figure-html/unnamed-chunk-33-3.png" width="672" /></p>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb68-1" title="1">b_ggplot &lt;-<span class="st"> </span><span class="kw">ggplot</span>(censo_rn2) <span class="op">+</span></a>
+<a class="sourceLine" id="cb68-2" title="2"><span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="kw">aes</span>(<span class="dt">y =</span> idade)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb68-3" title="3"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Idade&quot;</span>)</a>
+<a class="sourceLine" id="cb68-4" title="4"></a>
+<a class="sourceLine" id="cb68-5" title="5">b_ggplot</a></code></pre></div>
+<p><img src="00_aula-1_files/figure-html/unnamed-chunk-33-4.png" width="672" /></p>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb69-1" title="1"><span class="co"># pie</span></a>
+<a class="sourceLine" id="cb69-2" title="2">x &lt;-<span class="st"> </span><span class="kw">table</span>(censo_rn<span class="op">$</span>V0601f)</a>
+<a class="sourceLine" id="cb69-3" title="3"><span class="kw">pie</span>(x)</a></code></pre></div>
+<p><img src="00_aula-1_files/figure-html/unnamed-chunk-33-5.png" width="672" /></p>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb70-1" title="1">p_ggplot &lt;-<span class="st"> </span><span class="kw">ggplot</span>(censo_rn2) <span class="op">+</span></a>
+<a class="sourceLine" id="cb70-2" title="2"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="kw">aes</span>(<span class="dt">x =</span> sexof, <span class="dt">fill =</span> sexof), <span class="dt">stat =</span> <span class="st">&quot;count&quot;</span>, <span class="dt">width =</span> <span class="dv">1</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb70-3" title="3"><span class="st">  </span><span class="kw">coord_polar</span>()</a>
+<a class="sourceLine" id="cb70-4" title="4"></a>
+<a class="sourceLine" id="cb70-5" title="5">p_ggplot</a></code></pre></div>
+<p><img src="00_aula-1_files/figure-html/unnamed-chunk-33-6.png" width="672" /></p>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb71-1" title="1"><span class="co"># barras</span></a>
+<a class="sourceLine" id="cb71-2" title="2">x &lt;-<span class="st"> </span><span class="kw">table</span>(censo_rn<span class="op">$</span>V0601f)</a>
+<a class="sourceLine" id="cb71-3" title="3"><span class="kw">barplot</span>(x)</a></code></pre></div>
+<p><img src="00_aula-1_files/figure-html/unnamed-chunk-33-7.png" width="672" /></p>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb72-1" title="1">bar_ggplot &lt;-<span class="st"> </span><span class="kw">ggplot</span>(censo_rn2) <span class="op">+</span></a>
+<a class="sourceLine" id="cb72-2" title="2"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="kw">aes</span>(<span class="dt">x =</span> sexof, <span class="dt">fill =</span> sexof), <span class="dt">stat =</span> <span class="st">&quot;count&quot;</span>, <span class="dt">width =</span> <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb72-3" title="3"></a>
+<a class="sourceLine" id="cb72-4" title="4">bar_ggplot</a></code></pre></div>
+<p><img src="00_aula-1_files/figure-html/unnamed-chunk-33-8.png" width="672" /></p>
+<p>Podemos construir gráficos para comparar a situação do estado com a situação da capital.</p>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb73-1" title="1"><span class="co"># r base</span></a>
+<a class="sourceLine" id="cb73-2" title="2">pia_estadual &lt;-<span class="st"> </span><span class="kw">prop.table</span>(<span class="kw">table</span>(censo_rn<span class="op">$</span>ge_pia))</a>
+<a class="sourceLine" id="cb73-3" title="3">pia_capital &lt;-<span class="st"> </span><span class="kw">prop.table</span>(<span class="kw">table</span>(natal<span class="op">$</span>ge_pia))</a>
+<a class="sourceLine" id="cb73-4" title="4"></a>
+<a class="sourceLine" id="cb73-5" title="5">pia_estadual</a></code></pre></div>
+<pre><code>## 
+##     [0,15)    [15,65)   [65,140) 
+## 0.25743195 0.66059408 0.08197397</code></pre>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb75-1" title="1">pia_capital</a></code></pre></div>
+<pre><code>## 
+##    [0,15)   [15,65)  [65,140) 
+## 0.2199449 0.7096717 0.0703834</code></pre>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb77-1" title="1"><span class="kw">barplot</span>(<span class="kw">cbind</span>(pia_estadual, pia_capital), <span class="dt">legend.text =</span> <span class="kw">c</span>(<span class="st">&quot;0 a 14 anos&quot;</span>, <span class="st">&quot;15 a 64 anos&quot;</span>, <span class="st">&quot;65 anos e mais&quot;</span>), <span class="dt">beside =</span> <span class="ot">TRUE</span>, <span class="dt">args.legend =</span> <span class="kw">list</span>(<span class="dt">x =</span> <span class="st">&quot;top&quot;</span>))</a></code></pre></div>
+<p><img src="00_aula-1_files/figure-html/unnamed-chunk-34-1.png" width="672" /></p>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb78-1" title="1"><span class="co"># ggplot</span></a>
+<a class="sourceLine" id="cb78-2" title="2">x &lt;-<span class="st"> </span><span class="kw">count</span>(natal2, ge_pia) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">group =</span> <span class="st">&quot;Natal&quot;</span>, <span class="dt">n =</span> n<span class="op">/</span><span class="kw">sum</span>(n))</a>
+<a class="sourceLine" id="cb78-3" title="3">y &lt;-<span class="st"> </span><span class="kw">count</span>(censo_rn2, ge_pia) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">group =</span> <span class="st">&quot;Estado&quot;</span>, <span class="dt">n =</span> n<span class="op">/</span><span class="kw">sum</span>(n))</a>
+<a class="sourceLine" id="cb78-4" title="4">grafico &lt;-<span class="st"> </span><span class="kw">bind_rows</span>(x, y)</a>
+<a class="sourceLine" id="cb78-5" title="5"></a>
+<a class="sourceLine" id="cb78-6" title="6"><span class="kw">ggplot</span>(grafico) <span class="op">+</span><span class="st"> </span><span class="kw">geom_col</span>(<span class="kw">aes</span>(<span class="dt">x =</span> group, <span class="dt">y =</span> n, <span class="dt">fill =</span> ge_pia))</a></code></pre></div>
+<p><img src="00_aula-1_files/figure-html/unnamed-chunk-34-2.png" width="672" /></p>
+<p>A parte de <strong>modelagem</strong> e <strong>comunicação</strong> será trabalhada em outra aula.</p>
+</div>
+<div id="salvando-nossos-resultados" class="section level2">
+<h2>Salvando nossos resultados</h2>
+<p>Em geral, uma vez feito esse trabalho inicial de importação e limpeza, ficamos com nosso banco de dados pronto para análises futuras. Para isso, precisamos salvá-lo em algum formato que seja de fácil leitura posterior. Vamos usar o CSV (comma-separated-values).</p>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb79-1" title="1"><span class="co"># r base</span></a>
+<a class="sourceLine" id="cb79-2" title="2"><span class="kw">write.csv2</span>(censo_rn, <span class="st">&quot;censo_rn_processado.csv&quot;</span>)</a>
+<a class="sourceLine" id="cb79-3" title="3"><span class="kw">write.csv2</span>(natal, <span class="st">&quot;natal_processado.csv&quot;</span>)</a>
+<a class="sourceLine" id="cb79-4" title="4"></a>
+<a class="sourceLine" id="cb79-5" title="5"><span class="co"># readr</span></a>
+<a class="sourceLine" id="cb79-6" title="6"><span class="kw">library</span>(readr)</a>
+<a class="sourceLine" id="cb79-7" title="7"><span class="kw">write_csv2</span>(censo_rn2, <span class="st">&quot;censo_rn2_processado.csv&quot;</span>)</a>
+<a class="sourceLine" id="cb79-8" title="8"><span class="kw">write.csv2</span>(natal2, <span class="st">&quot;natal2_processado.csv&quot;</span>)</a></code></pre></div>
+<p>Também podemos querer salvar nossos gráficos, que ficaram muito bonitos!</p>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb80-1" title="1"><span class="co"># r base</span></a>
+<a class="sourceLine" id="cb80-2" title="2"><span class="kw">png</span>(<span class="st">&quot;histograma_base.png&quot;</span>)</a>
+<a class="sourceLine" id="cb80-3" title="3"></a>
+<a class="sourceLine" id="cb80-4" title="4"><span class="kw">hist</span>(censo_rn<span class="op">$</span>V6036, <span class="dt">main =</span> <span class="st">&quot;Idade&quot;</span>)</a>
+<a class="sourceLine" id="cb80-5" title="5"></a>
+<a class="sourceLine" id="cb80-6" title="6"><span class="kw">dev.off</span>()</a>
+<a class="sourceLine" id="cb80-7" title="7"></a>
+<a class="sourceLine" id="cb80-8" title="8"><span class="co"># ggplot</span></a>
+<a class="sourceLine" id="cb80-9" title="9"><span class="kw">ggsave</span>(<span class="st">&quot;histograma_ggplot.png&quot;</span>, h_ggplot)</a></code></pre></div>
+<hr />
+<p><strong>Livros e tutoriais online</strong></p>
+<p>Aprender qualquer software estatístico é um processo que leva bastante tempo. Em geral, no começo, nós conseguimos executar tarefas simples, mas nossas ambições acadêmicas nos levam a projetos cada vez mais complexos e a gente jamais pode prosseguir sozinho nessas empreitadas. Cada passo que damos nessa jornada é dado com o apoio de nossos antecessores, que nos legaram os materiais de apoio que utilizaremos para aprender novas funções, novas técnicas de programação e novos caminhos. Já mostramos na parte de <em>workflow</em> que você sempre deve ter um manual, tutorial ou o que o valha a tiracolo quando estiver programando. Aqui vão alguns bons!</p>
+<ul>
+<li><a href="https://r4ds.had.co.nz/explore-intro.html">R for data science</a></li>
+<li><a href="https://www.curso-r.com/material/">Curso R - Materiais</a></li>
+<li><a href="https://zlkrvsm.github.io/Oficina-de-R/">Meu site!</a></li>
+<li><a href="http://www.cookbook-r.com/">Cookbook R - Dúvidas rápidas!</a></li>
+<li><a href="https://swirlstats.com/">Swirl - Autoestudo de R</a></li>
+<li><a href="https://rstudio.cloud/learn/primers">RStudio Cloud Learnr - Autoestudo de R no Browser! (precisa de conta gratuita)</a></li>
+<li><a href="https://bookdown.org/home/archive/">Bookdown.org - Livros e mais livros de R de graça!</a></li>
+<li><a href="https://rstudio.com/resources/cheatsheets/">Cheatsheets - Trapacear em R é muito bom!</a></li>
+</ul>
+<hr />
+</div>
+</div>
+<div id="exercício" class="section level1">
+<h1>Exercício</h1>
+<p>Você vai criar uma data pipeline parecida com a que acabamos de fazer para outro estado da federação.</p>
+<!-- deixar o arquivo pronto -->
+<ul>
+<li>Importe os arquivos</li>
+<li>Faça a cozinha das variáveis</li>
+<li>Transforme o banco se necessário</li>
+<li>Produza algumas visualizações, por exemplo:
+<ul>
+<li>scatterplot renda x instrução</li>
+<li>PIA estadual vs capital</li>
+<li>Barras, instrução, estadual vs capital</li>
+</ul></li>
+<li>Salve o seu banco e suas visualizações</li>
+</ul>
+</div>
+
+<p>Copyright &copy; 2020 Vinícius Maia. Nenhum Direito a menos.</p>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
