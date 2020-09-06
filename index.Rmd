@@ -1,0 +1,13 @@
+---
+title: "Oficina de R dos alunos da pós-graduação do R"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Este site é dedicado a materiais didáticos produzidos para as Oficinas dos alunos da pós-graduação do NEPO, mas tem apelo geral para qualquer pessoa que queira aprender R e não venha de uma área mais técnica da computação, já que o público alvo original é de cientistas sociais com pouca ou nenhuma experiência em programação.
+
+# Sobre o autor
+
+Sou fugitivo da engenharia da computação que tornou-se Cientista Social e Demógrafo. Adoro programação e sou o mala do R no meu departamento. Só paro quando todo mundo largar o SPSS e o SAS.
