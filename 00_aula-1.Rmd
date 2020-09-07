@@ -461,7 +461,7 @@ x <- count(natal2, ge_pia) %>% mutate(group = "Natal", n = n/sum(n))
 y <- count(censo_rn2, ge_pia) %>% mutate(group = "Estado", n = n/sum(n))
 grafico <- bind_rows(x, y)
 
-ggplot(grafico) + geom_col(aes(x = group, y = n, fill = ge_pia))
+ggplot(grafico) + geom_col(aes(x = group, y = n, fill = ge_pia), position = "dodge")
 
 ```
 
@@ -479,7 +479,7 @@ write.csv2(natal, "natal_processado.csv")
 # readr
 library(readr)
 write_csv2(censo_rn2, "censo_rn2_processado.csv")
-write.csv2(natal2, "natal2_processado.csv")
+write_csv2(natal2, "natal2_processado.csv")
 ```
 
 Também podemos querer salvar nossos gráficos, que ficaram muito bonitos!
@@ -515,7 +515,7 @@ Aprender qualquer software estatístico é um processo que leva bastante tempo. 
 
 # Exercício
 
-Você vai criar uma data pipeline parecida com a que acabamos de fazer para outro estado da federação.
+Você vai criar uma data pipeline parecida com a que acabamos de fazer para outro estado da federação. Abaixo, vocês podem ver algumas linhas do arquivo, e, em seguida, o dicionário de variáveis.
 
 <!-- deixar o arquivo pronto -->
 
@@ -541,7 +541,7 @@ x$V6531 <- x$V6531 * 10 ^ 2
 gdata::write.fwf(x, file = "censo_2010_sc.txt", sep = "", colnames = F)
 ```
 
-```{r dicionario-ex, include=FALSE}
+```{r dicionario-ex, echo=FALSE}
 readLines("censo_2010_sc.txt", n = 5)
 dicionario <- tribble(
   ~Variavel, ~PosIni, ~PosFim, ~Int, ~Dec, ~Tipo,
@@ -573,12 +573,14 @@ censo_sc <- read_fwf(file = "censo_2010_sc.txt",
 censo_sc
 ```
 
+Com base nessas informações,
+
 - Importe os arquivos
 - Faça a cozinha das variáveis
 - Transforme o banco se necessário
 - Produza algumas visualizações, por exemplo:
-    - scatterplot renda x instrução
-    - PIA estadual vs capital
+    - Boxplot renda x instrução
+    - Barras, PIA estadual vs capital
     - Barras, instrução, estadual vs capital
 - Salve o seu banco e suas visualizações
 

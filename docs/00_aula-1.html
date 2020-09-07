@@ -930,7 +930,7 @@ div.tocify {
 <a class="sourceLine" id="cb78-3" title="3">y &lt;-<span class="st"> </span><span class="kw">count</span>(censo_rn2, ge_pia) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">group =</span> <span class="st">&quot;Estado&quot;</span>, <span class="dt">n =</span> n<span class="op">/</span><span class="kw">sum</span>(n))</a>
 <a class="sourceLine" id="cb78-4" title="4">grafico &lt;-<span class="st"> </span><span class="kw">bind_rows</span>(x, y)</a>
 <a class="sourceLine" id="cb78-5" title="5"></a>
-<a class="sourceLine" id="cb78-6" title="6"><span class="kw">ggplot</span>(grafico) <span class="op">+</span><span class="st"> </span><span class="kw">geom_col</span>(<span class="kw">aes</span>(<span class="dt">x =</span> group, <span class="dt">y =</span> n, <span class="dt">fill =</span> ge_pia))</a></code></pre></div>
+<a class="sourceLine" id="cb78-6" title="6"><span class="kw">ggplot</span>(grafico) <span class="op">+</span><span class="st"> </span><span class="kw">geom_col</span>(<span class="kw">aes</span>(<span class="dt">x =</span> group, <span class="dt">y =</span> n, <span class="dt">fill =</span> ge_pia), <span class="dt">position =</span> <span class="st">&quot;dodge&quot;</span>)</a></code></pre></div>
 <p><img src="00_aula-1_files/figure-html/unnamed-chunk-34-2.png" width="672" /></p>
 <p>A parte de <strong>modelagem</strong> e <strong>comunicação</strong> será trabalhada em outra aula.</p>
 </div>
@@ -944,7 +944,7 @@ div.tocify {
 <a class="sourceLine" id="cb79-5" title="5"><span class="co"># readr</span></a>
 <a class="sourceLine" id="cb79-6" title="6"><span class="kw">library</span>(readr)</a>
 <a class="sourceLine" id="cb79-7" title="7"><span class="kw">write_csv2</span>(censo_rn2, <span class="st">&quot;censo_rn2_processado.csv&quot;</span>)</a>
-<a class="sourceLine" id="cb79-8" title="8"><span class="kw">write.csv2</span>(natal2, <span class="st">&quot;natal2_processado.csv&quot;</span>)</a></code></pre></div>
+<a class="sourceLine" id="cb79-8" title="8"><span class="kw">write_csv2</span>(natal2, <span class="st">&quot;natal2_processado.csv&quot;</span>)</a></code></pre></div>
 <p>Também podemos querer salvar nossos gráficos, que ficaram muito bonitos!</p>
 <div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb80-1" title="1"><span class="co"># r base</span></a>
 <a class="sourceLine" id="cb80-2" title="2"><span class="kw">png</span>(<span class="st">&quot;histograma_base.png&quot;</span>)</a>
@@ -973,16 +973,34 @@ div.tocify {
 </div>
 <div id="exercício" class="section level1">
 <h1>Exercício</h1>
-<p>Você vai criar uma data pipeline parecida com a que acabamos de fazer para outro estado da federação.</p>
+<p>Você vai criar uma data pipeline parecida com a que acabamos de fazer para outro estado da federação. Abaixo, vocês podem ver algumas linhas do arquivo, e, em seguida, o dicionário de variáveis.</p>
 <!-- deixar o arquivo pronto -->
+<pre><code>## [1] &quot;42000514200051001001    745 348686947514191 622  185500&quot;
+## [2] &quot;42000514200051001001    745 348686947514192 641  185500&quot;
+## [3] &quot;42000514200051001001  29472 352373909726982 501   62500&quot;
+## [4] &quot;42000514200051001001  29472 352373909726981 513   62500&quot;
+## [5] &quot;42000514200051001001  49362 225961408674142 464  126667&quot;</code></pre>
+<pre><code>## # A tibble: 9 x 6
+##   Variavel PosIni PosFim   Int   Dec Tipo 
+##   &lt;chr&gt;     &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;chr&gt;
+## 1 V0001         1      2     2     0 A    
+## 2 V0002         3      7     5     0 A    
+## 3 V0011         8     20    13     0 A    
+## 4 V0300        21     27     7     0 N    
+## 5 V0010        28     42     3    12 N    
+## 6 V0601        43     43     1     0 C    
+## 7 V6036        44     46     3     0 N    
+## 8 V6400        47     47     1     0 C    
+## 9 V6531        48     55     6     2 N</code></pre>
+<p>Com base nessas informações,</p>
 <ul>
 <li>Importe os arquivos</li>
 <li>Faça a cozinha das variáveis</li>
 <li>Transforme o banco se necessário</li>
 <li>Produza algumas visualizações, por exemplo:
 <ul>
-<li>scatterplot renda x instrução</li>
-<li>PIA estadual vs capital</li>
+<li>Boxplot renda x instrução</li>
+<li>Barras, PIA estadual vs capital</li>
 <li>Barras, instrução, estadual vs capital</li>
 </ul></li>
 <li>Salve o seu banco e suas visualizações</li>
