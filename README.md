@@ -1,8 +1,8 @@
 # Oficina de R
 
-Oficina de R dos alunos da pós-graduação do NEPO, que encararam aprender a programar no isolamento social.
+Oficina de R dos alunos da pós-graduação do NEPO, Round 2.
 
-Link para o site: https://zlkrvsm.github.io/Oficina-de-R/index.html
+Link para o site: https://zlkrvsm.github.io/Oficina-de-R/
 
 # Proposta
 O uso do software R oferece uma alternativa a outras formas de trabalho com dados quantitativos para as ciências sociais quantitativas e, especialmente, a demografia. No entanto, o software tem uma barreira de entrada alta, devido a ausência de uma interface de usuário gráfica e da necessidade da introdução de temas de programação, ciência da computação e ciência de dados. Por essa razão, este curso introdutório pretende suavizar essa curva de aprendizado através da introdução de conceitos e técnicas de programação em R em linguagem acessível e voltada para praticantes das ciências humanas. O curso pretende introduzir também algumas alternativas para a realização das diferentes tarefas, usando exemplos do R base e do tidyverse.
