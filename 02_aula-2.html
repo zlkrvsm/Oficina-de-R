@@ -1,0 +1,1240 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+
+<meta name="author" content="Vinícius Maia e Augusto Schmidt" />
+
+<meta name="date" content="2020-09-07" />
+
+<title>Aula 2</title>
+
+<script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<link href="site_libs/bootstrap-3.3.5/css/darkly.min.css" rel="stylesheet" />
+<script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
+<script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
+<script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
+
+
+<style type="text/css">code{white-space: pre;}</style>
+<style type="text/css" data-origin="pandoc">
+a.sourceLine { display: inline-block; line-height: 1.25; }
+a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
+a.sourceLine:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode { white-space: pre; position: relative; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+code.sourceCode { white-space: pre-wrap; }
+a.sourceLine { text-indent: -1em; padding-left: 1em; }
+}
+pre.numberSource a.sourceLine
+  { position: relative; left: -4em; }
+pre.numberSource a.sourceLine::before
+  { content: attr(title);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {  }
+@media screen {
+a.sourceLine::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; } /* Alert */
+code span.an { color: #008000; } /* Annotation */
+code span.at { } /* Attribute */
+code span.bu { } /* BuiltIn */
+code span.cf { color: #0000ff; } /* ControlFlow */
+code span.ch { color: #008080; } /* Char */
+code span.cn { } /* Constant */
+code span.co { color: #008000; } /* Comment */
+code span.cv { color: #008000; } /* CommentVar */
+code span.do { color: #008000; } /* Documentation */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.im { } /* Import */
+code span.in { color: #008000; } /* Information */
+code span.kw { color: #0000ff; } /* Keyword */
+code span.op { } /* Operator */
+code span.ot { color: #ff4000; } /* Other */
+code span.pp { color: #ff4000; } /* Preprocessor */
+code span.sc { color: #008080; } /* SpecialChar */
+code span.ss { color: #008080; } /* SpecialString */
+code span.st { color: #008080; } /* String */
+code span.va { } /* Variable */
+code span.vs { color: #008080; } /* VerbatimString */
+code span.wa { color: #008000; font-weight: bold; } /* Warning */
+
+</style>
+<script>
+// apply pandoc div.sourceCode style to pre.sourceCode instead
+(function() {
+  var sheets = document.styleSheets;
+  for (var i = 0; i < sheets.length; i++) {
+    if (sheets[i].ownerNode.dataset["origin"] !== "pandoc") continue;
+    try { var rules = sheets[i].cssRules; } catch (e) { continue; }
+    for (var j = 0; j < rules.length; j++) {
+      var rule = rules[j];
+      // check if there is a div.sourceCode rule
+      if (rule.type !== rule.STYLE_RULE || rule.selectorText !== "div.sourceCode") continue;
+      var style = rule.style.cssText;
+      // check if color or background-color is set
+      if (rule.style.color === '' && rule.style.backgroundColor === '') continue;
+      // replace div.sourceCode by a pre.sourceCode rule
+      sheets[i].deleteRule(j);
+      sheets[i].insertRule('pre.sourceCode{' + style + '}', j);
+    }
+  }
+})();
+</script>
+<style type="text/css">
+  pre:not([class]) {
+    background-color: white;
+  }
+</style>
+
+
+<style type="text/css">
+h1 {
+  font-size: 34px;
+}
+h1.title {
+  font-size: 38px;
+}
+h2 {
+  font-size: 30px;
+}
+h3 {
+  font-size: 24px;
+}
+h4 {
+  font-size: 18px;
+}
+h5 {
+  font-size: 16px;
+}
+h6 {
+  font-size: 12px;
+}
+.table th:not([align]) {
+  text-align: left;
+}
+</style>
+
+<link rel="stylesheet" href="styles.css" type="text/css" />
+
+
+
+<style type = "text/css">
+.main-container {
+  max-width: 940px;
+  margin-left: auto;
+  margin-right: auto;
+}
+code {
+  color: inherit;
+  background-color: rgba(0, 0, 0, 0.04);
+}
+img {
+  max-width:100%;
+}
+.tabbed-pane {
+  padding-top: 12px;
+}
+.html-widget {
+  margin-bottom: 20px;
+}
+button.code-folding-btn:focus {
+  outline: none;
+}
+summary {
+  display: list-item;
+}
+</style>
+
+
+<style type="text/css">
+/* padding for bootstrap navbar */
+body {
+  padding-top: 60px;
+  padding-bottom: 40px;
+}
+/* offset scroll position for anchor links (for fixed navbar)  */
+.section h1 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h2 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h3 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h4 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h5 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.section h6 {
+  padding-top: 65px;
+  margin-top: -65px;
+}
+.dropdown-submenu {
+  position: relative;
+}
+.dropdown-submenu>.dropdown-menu {
+  top: 0;
+  left: 100%;
+  margin-top: -6px;
+  margin-left: -1px;
+  border-radius: 0 6px 6px 6px;
+}
+.dropdown-submenu:hover>.dropdown-menu {
+  display: block;
+}
+.dropdown-submenu>a:after {
+  display: block;
+  content: " ";
+  float: right;
+  width: 0;
+  height: 0;
+  border-color: transparent;
+  border-style: solid;
+  border-width: 5px 0 5px 5px;
+  border-left-color: #cccccc;
+  margin-top: 5px;
+  margin-right: -10px;
+}
+.dropdown-submenu:hover>a:after {
+  border-left-color: #ffffff;
+}
+.dropdown-submenu.pull-left {
+  float: none;
+}
+.dropdown-submenu.pull-left>.dropdown-menu {
+  left: -100%;
+  margin-left: 10px;
+  border-radius: 6px 0 6px 6px;
+}
+</style>
+
+<script>
+// manage active state of menu based on current page
+$(document).ready(function () {
+  // active menu anchor
+  href = window.location.pathname
+  href = href.substr(href.lastIndexOf('/') + 1)
+  if (href === "")
+    href = "index.html";
+  var menuAnchor = $('a[href="' + href + '"]');
+
+  // mark it active
+  menuAnchor.parent().addClass('active');
+
+  // if it's got a parent navbar menu mark it active as well
+  menuAnchor.closest('li.dropdown').addClass('active');
+});
+</script>
+
+<!-- tabsets -->
+
+<style type="text/css">
+.tabset-dropdown > .nav-tabs {
+  display: inline-table;
+  max-height: 500px;
+  min-height: 44px;
+  overflow-y: auto;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.tabset-dropdown > .nav-tabs > li.active:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
+  content: "&#xe258;";
+  border: none;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "";
+  font-family: 'Glyphicons Halflings';
+  display: inline-block;
+  padding: 10px;
+  border-right: 1px solid #ddd;
+}
+
+.tabset-dropdown > .nav-tabs > li.active {
+  display: block;
+}
+
+.tabset-dropdown > .nav-tabs > li > a,
+.tabset-dropdown > .nav-tabs > li > a:focus,
+.tabset-dropdown > .nav-tabs > li > a:hover {
+  border: none;
+  display: inline-block;
+  border-radius: 4px;
+  background-color: transparent;
+}
+
+.tabset-dropdown > .nav-tabs.nav-tabs-open > li {
+  display: block;
+  float: none;
+}
+
+.tabset-dropdown > .nav-tabs > li {
+  display: none;
+}
+</style>
+
+<!-- code folding -->
+
+
+
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
+
+</head>
+
+<body>
+
+
+<div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
+
+
+
+
+<div class="navbar navbar-default  navbar-fixed-top" role="navigation">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Oficina de R</a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li>
+  <a href="index.html">Home</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Tutoriais
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="11_lingua-r.html">Falando a língua do R</a>
+    </li>
+    <li>
+      <a href="12_bancos-de-dados-em-r.html">Banco de dados</a>
+    </li>
+    <li>
+      <a href="13_controle-de-fluxo.html">Controle de fluxo</a>
+    </li>
+    <li>
+      <a href="14_visualizacoes-em-R.html">Visualizações</a>
+    </li>
+    <li>
+      <a href="15_manipulacao-dplyr.html">Manipulação com dplyr</a>
+    </li>
+    <li>
+      <a href="16_tidy_data.html">Reformatando com tidyr</a>
+    </li>
+  </ul>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Curso
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="00_aula-1.html">Aula 1: Introdução</a>
+    </li>
+    <li class="dropdown-header">Aula 2: Importação e cozinha</li>
+  </ul>
+</li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        
+      </ul>
+    </div><!--/.nav-collapse -->
+  </div><!--/.container -->
+</div><!--/.navbar -->
+
+<div class="fluid-row" id="header">
+
+
+
+<h1 class="title toc-ignore">Aula 2</h1>
+<h4 class="author">Vinícius Maia e Augusto Schmidt</h4>
+<h4 class="date">2020-09-07</h4>
+
+</div>
+
+
+<div id="introdução" class="section level1">
+<h1>Introdução</h1>
+<p>Depois da aventura enlouquecedora da primeira aula, o próximo passo lógico é a gente recuar um pouco e olhar cada uma das etapas do processo pelo qual passamos de montanha russa em queda livre com um pouco mais de cuidado, carinho e atenção. Ou raiva, desgosto e resignação, depende da <em>vibe</em>.</p>
+</div>
+<div id="importação-de-diferentes-tipos-de-bases-de-dados" class="section level1">
+<h1>Importação de diferentes tipos de bases de dados</h1>
+<p>A importação (e, por extensão, a exportação) de dados dependem basicamente da nossa capacidade de, em linhas muito gerais, entender como os dados estão organizados para poder, então, lê-los num formato com o qual a gente consiga trabalhar.</p>
+<p>Concretamente, se sabemos que os dados estão separados por vírgulas e as colunas estão na primeira linha e as variáveis não-numéricas estão cercadas por <code>"</code>, então podemos importar estrategicamnete com base nessas regras e partir daí.</p>
+<p>Por outro lado, se todas as variáveis estão codificadas em números sem separadores, não existe uma primeira linha com nomes de variável e a informação de importação está codificada em um outro arquivo separado do primeiro, estamos f*#$@. Brincadeira, a importação por dicionários não precisa ser um pesadelo infernal graças ao trabalho de alguns santos que vamos conhecer em breve.</p>
+<div id="censo-demográfico" class="section level2">
+<h2>Censo Demográfico</h2>
+<p>A minha forma preferida de importação dos bancos de dados da Demografia Histórica (Censos Demográficos de 2000 e 2010 e da PNAD 1976-2015), é o pacote <a href="https://github.com/lucasmation/microdadosBrasil">microdadosBrasil</a>, escrito por <span class="citation">@lucasmation</span>. Lucas jamais publicou seu trabalho no CRAN, então a gente precisa instalar o pacote a partir do github dele. O que é muito fácil de fazer:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">install.packages</span>(<span class="st">&quot;devtools&quot;</span>)</a>
+<a class="sourceLine" id="cb1-2" title="2">devtools<span class="op">::</span><span class="kw">install_github</span>(<span class="st">&quot;lucasmation/microdadosBrasil&quot;</span>)</a></code></pre></div>
+<p>Depois, podemos consultar os dicionários de importação de dados do Lucas (que, lamentavelmente, estão um pouco incompletos, pois ele nunca conseguiu concluir seu trabalho de sísifo).</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">library</span>(microdadosBrasil)</a>
+<a class="sourceLine" id="cb2-2" title="2"></a>
+<a class="sourceLine" id="cb2-3" title="3">dic1 &lt;-<span class="st"> </span><span class="kw">get_import_dictionary</span>(<span class="dt">dataset =</span> <span class="st">&quot;CENSO&quot;</span>, <span class="dv">2000</span>, <span class="st">&quot;domicilios&quot;</span>)</a>
+<a class="sourceLine" id="cb2-4" title="4"><span class="kw">head</span>(dic1)</a></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["int_pos"],"name":[1],"type":["int"],"align":["right"]},{"label":["var_name"],"name":[2],"type":["chr"],"align":["left"]},{"label":["x"],"name":[3],"type":["chr"],"align":["left"]},{"label":["label"],"name":[4],"type":["lgl"],"align":["right"]},{"label":["length"],"name":[5],"type":["int"],"align":["right"]},{"label":["decimal_places"],"name":[6],"type":["int"],"align":["right"]},{"label":["fin_pos"],"name":[7],"type":["int"],"align":["right"]},{"label":["col_type"],"name":[8],"type":["chr"],"align":["left"]},{"label":["CHAR"],"name":[9],"type":["lgl"],"align":["right"]}],"data":[{"1":"1","2":"V0102","3":"$2.","4":"NA","5":"2","6":"0","7":"2","8":"c","9":"TRUE","_rn_":"1"},{"1":"3","2":"V1002","3":"$4.","4":"NA","5":"4","6":"0","7":"6","8":"c","9":"TRUE","_rn_":"2"},{"1":"7","2":"V1003","3":"$5.","4":"NA","5":"5","6":"0","7":"11","8":"c","9":"TRUE","_rn_":"3"},{"1":"12","2":"V0103","3":"$7.","4":"NA","5":"7","6":"0","7":"18","8":"c","9":"TRUE","_rn_":"4"},{"1":"19","2":"V0104","3":"$9.","4":"NA","5":"9","6":"0","7":"27","8":"c","9":"TRUE","_rn_":"5"},{"1":"28","2":"V0105","3":"$11.","4":"NA","5":"11","6":"0","7":"38","8":"c","9":"TRUE","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1">dic2 &lt;-<span class="st"> </span><span class="kw">get_import_dictionary</span>(<span class="dt">dataset =</span> <span class="st">&quot;CENSO&quot;</span>, <span class="dv">2000</span>, <span class="st">&quot;pessoas&quot;</span>)</a>
+<a class="sourceLine" id="cb3-2" title="2"><span class="kw">head</span>(dic2)</a></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["int_pos"],"name":[1],"type":["int"],"align":["right"]},{"label":["var_name"],"name":[2],"type":["chr"],"align":["left"]},{"label":["x"],"name":[3],"type":["chr"],"align":["left"]},{"label":["label"],"name":[4],"type":["lgl"],"align":["right"]},{"label":["length"],"name":[5],"type":["int"],"align":["right"]},{"label":["decimal_places"],"name":[6],"type":["int"],"align":["right"]},{"label":["fin_pos"],"name":[7],"type":["int"],"align":["right"]},{"label":["col_type"],"name":[8],"type":["chr"],"align":["left"]},{"label":["CHAR"],"name":[9],"type":["lgl"],"align":["right"]}],"data":[{"1":"1","2":"V0102","3":"$2.","4":"NA","5":"2","6":"0","7":"2","8":"c","9":"TRUE","_rn_":"1"},{"1":"3","2":"V1002","3":"$4.","4":"NA","5":"4","6":"0","7":"6","8":"c","9":"TRUE","_rn_":"2"},{"1":"7","2":"V1003","3":"$5.","4":"NA","5":"5","6":"0","7":"11","8":"c","9":"TRUE","_rn_":"3"},{"1":"12","2":"V0103","3":"$7.","4":"NA","5":"7","6":"0","7":"18","8":"c","9":"TRUE","_rn_":"4"},{"1":"19","2":"V0104","3":"$9.","4":"NA","5":"9","6":"0","7":"27","8":"c","9":"TRUE","_rn_":"5"},{"1":"28","2":"V0105","3":"$11.","4":"NA","5":"11","6":"0","7":"38","8":"c","9":"TRUE","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" title="1">dic3 &lt;-<span class="st"> </span><span class="kw">get_import_dictionary</span>(<span class="dt">dataset =</span> <span class="st">&quot;CENSO&quot;</span>, <span class="dv">2010</span>, <span class="st">&quot;domicilios&quot;</span>)</a>
+<a class="sourceLine" id="cb4-2" title="2"><span class="kw">head</span>(dic3)</a></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["int_pos"],"name":[1],"type":["int"],"align":["right"]},{"label":["var_name"],"name":[2],"type":["chr"],"align":["left"]},{"label":["x"],"name":[3],"type":["lgl"],"align":["right"]},{"label":["label"],"name":[4],"type":["lgl"],"align":["right"]},{"label":["length"],"name":[5],"type":["int"],"align":["right"]},{"label":["decimal_places"],"name":[6],"type":["int"],"align":["right"]},{"label":["fin_pos"],"name":[7],"type":["int"],"align":["right"]},{"label":["col_type"],"name":[8],"type":["chr"],"align":["left"]},{"label":["CHAR"],"name":[9],"type":["lgl"],"align":["right"]}],"data":[{"1":"1","2":"V0001","3":"NA","4":"NA","5":"2","6":"NA","7":"2","8":"c","9":"FALSE","_rn_":"1"},{"1":"3","2":"V0002","3":"NA","4":"NA","5":"5","6":"NA","7":"7","8":"c","9":"FALSE","_rn_":"2"},{"1":"8","2":"V0011","3":"NA","4":"NA","5":"13","6":"NA","7":"20","8":"c","9":"FALSE","_rn_":"3"},{"1":"21","2":"V0300","3":"NA","4":"NA","5":"8","6":"NA","7":"28","8":"d","9":"FALSE","_rn_":"4"},{"1":"29","2":"V0010","3":"NA","4":"NA","5":"3","6":"13","7":"44","8":"d","9":"FALSE","_rn_":"5"},{"1":"45","2":"V1001","3":"NA","4":"NA","5":"1","6":"NA","7":"45","8":"c","9":"TRUE","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1">dic4 &lt;-<span class="st"> </span><span class="kw">get_import_dictionary</span>(<span class="dt">dataset =</span> <span class="st">&quot;CENSO&quot;</span>, <span class="dv">2010</span>, <span class="st">&quot;pessoas&quot;</span>)</a>
+<a class="sourceLine" id="cb5-2" title="2"><span class="kw">head</span>(dic4)</a></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["int_pos"],"name":[1],"type":["int"],"align":["right"]},{"label":["var_name"],"name":[2],"type":["chr"],"align":["left"]},{"label":["x"],"name":[3],"type":["lgl"],"align":["right"]},{"label":["label"],"name":[4],"type":["lgl"],"align":["right"]},{"label":["length"],"name":[5],"type":["int"],"align":["right"]},{"label":["decimal_places"],"name":[6],"type":["int"],"align":["right"]},{"label":["fin_pos"],"name":[7],"type":["int"],"align":["right"]},{"label":["col_type"],"name":[8],"type":["chr"],"align":["left"]},{"label":["CHAR"],"name":[9],"type":["lgl"],"align":["right"]}],"data":[{"1":"1","2":"V0001","3":"NA","4":"NA","5":"2","6":"NA","7":"2","8":"c","9":"FALSE","_rn_":"1"},{"1":"3","2":"V0002","3":"NA","4":"NA","5":"5","6":"NA","7":"7","8":"c","9":"FALSE","_rn_":"2"},{"1":"8","2":"V0011","3":"NA","4":"NA","5":"13","6":"NA","7":"20","8":"c","9":"FALSE","_rn_":"3"},{"1":"21","2":"V0300","3":"NA","4":"NA","5":"8","6":"NA","7":"28","8":"d","9":"FALSE","_rn_":"4"},{"1":"29","2":"V0010","3":"NA","4":"NA","5":"3","6":"13","7":"44","8":"d","9":"FALSE","_rn_":"5"},{"1":"45","2":"V1001","3":"NA","4":"NA","5":"1","6":"NA","7":"45","8":"c","9":"TRUE","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>Com a ajuda dos dicionários providenciados pelo IBGE, a gente pode importar os nossos arquivos do Censo para a memória do R. Por uma questão de praticidade, vamos importar um pequeno arquivo de domicílios do Censo 2010, do RN. Vocês verão depois que é relativamente fácil expandir essa lógica pra importar o país como um todo.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1">variaveis &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;V0001&quot;</span>, <span class="st">&quot;V0002&quot;</span>, <span class="st">&quot;V0011&quot;</span>, <span class="st">&quot;V0300&quot;</span>, <span class="st">&quot;V0010&quot;</span>, <span class="st">&quot;V1006&quot;</span>, <span class="st">&quot;V2011&quot;</span>, <span class="st">&quot;V0207&quot;</span>, <span class="st">&quot;V0208&quot;</span>, <span class="st">&quot;V0401&quot;</span>, <span class="st">&quot;V6529&quot;</span>)</a>
+<a class="sourceLine" id="cb6-2" title="2"></a>
+<a class="sourceLine" id="cb6-3" title="3">nomes &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;uf&quot;</span>, <span class="st">&quot;municipio&quot;</span>, <span class="st">&quot;areap&quot;</span>, <span class="st">&quot;controle&quot;</span>, <span class="st">&quot;peso&quot;</span>, <span class="st">&quot;sit_ru&quot;</span>,  <span class="st">&quot;v_alug&quot;</span>, <span class="st">&quot;esgoto&quot;</span>, <span class="st">&quot;agua&quot;</span>, <span class="st">&quot;n_mora&quot;</span>)</a>
+<a class="sourceLine" id="cb6-4" title="4"></a>
+<a class="sourceLine" id="cb6-5" title="5">censo_dom_rn &lt;-<span class="st"> </span><span class="kw">read_CENSO</span>(<span class="dt">ft =</span> <span class="st">&quot;domicilios&quot;</span>, <span class="dt">i =</span>  <span class="dv">2010</span>,</a>
+<a class="sourceLine" id="cb6-6" title="6">                           <span class="dt">file =</span> <span class="st">&quot;Amostra_Domicilios_24.txt&quot;</span>,</a>
+<a class="sourceLine" id="cb6-7" title="7">                           <span class="dt">vars_subset =</span> variaveis)</a></code></pre></div>
+<pre><code>## You have specified the &#39;file&#39; argument, in this case we will assume that data is in a .txt or .csv file stored in the adress specified by the &#39;file&#39; parameter.</code></pre>
+<pre><code>## integer(0)
+## Time difference of 1.433589 secs
+## 0 Gb</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="kw">head</span>(censo_dom_rn)</a></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["V0001"],"name":[1],"type":["chr"],"align":["left"]},{"label":["V0002"],"name":[2],"type":["chr"],"align":["left"]},{"label":["V0011"],"name":[3],"type":["chr"],"align":["left"]},{"label":["V0300"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["V0010"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["V1006"],"name":[6],"type":["chr"],"align":["left"]},{"label":["V2011"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["V0207"],"name":[8],"type":["chr"],"align":["left"]},{"label":["V0208"],"name":[9],"type":["chr"],"align":["left"]},{"label":["V0401"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["V6529"],"name":[11],"type":["dbl"],"align":["right"]}],"data":[{"1":"24","2":"00109","3":"2400109001001","4":"7444","5":"4.898864","6":"1","7":"NA","8":"1","9":"01","10":"4","11":"1020"},{"1":"24","2":"00109","3":"2400109001001","4":"7473","5":"5.851140","6":"1","7":"100","8":"1","9":"01","10":"3","11":"700"},{"1":"24","2":"00109","3":"2400109001001","4":"20879","5":"5.732053","6":"1","7":"NA","8":"1","9":"01","10":"1","11":"60"},{"1":"24","2":"00109","3":"2400109001001","4":"29535","5":"4.022684","6":"1","7":"NA","8":"1","9":"01","10":"2","11":"1020"},{"1":"24","2":"00109","3":"2400109001001","4":"31361","5":"4.584575","6":"1","7":"NA","8":"1","9":"01","10":"2","11":"0"},{"1":"24","2":"00109","3":"2400109001001","4":"53641","5":"4.503748","6":"2","7":"NA","8":"3","9":"02","10":"3","11":"1390"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>Et voilá! Aí está nosso banco de dados. Se quiser importar outras variáveis do Censo, de outro estado, ou de outro estrato do dataset, é só adaptar esse processo, relativamente indolor.</p>
+</div>
+<div id="pnad" class="section level2">
+<h2>PNAD</h2>
+<p>A PNAD segue um sistema similar, mas ela exige alguns passos a mais: juntar os domicílios/pessoas e criar um objeto “survey” com pesos pós-estratificados. Numa situação real, o mais provável é que você simplesmente importe a pnad inteira. Você poderia fazer isso assim:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="co"># Não execute!!! É só um exemplo!</span></a>
+<a class="sourceLine" id="cb10-2" title="2">dom &lt;-<span class="st"> </span><span class="kw">read_PNAD</span>(<span class="dt">ft =</span> <span class="st">&quot;domicilios&quot;</span>, <span class="dt">i =</span> <span class="dv">2015</span>, <span class="dt">file =</span> <span class="st">&quot;&lt;seu arquivo domicilios&gt;&quot;</span>)</a>
+<a class="sourceLine" id="cb10-3" title="3">pes &lt;-<span class="st"> </span><span class="kw">read_PNAD</span>(<span class="dt">ft =</span> <span class="st">&quot;pessoas&quot;</span>, <span class="dt">i =</span> <span class="dv">2015</span>, <span class="dt">file =</span> <span class="st">&quot;&lt;seu arquivo pessoas&gt;&quot;</span>)</a></code></pre></div>
+<p>Não é um arquivo pequeno, mas ele cabe na memória do R sem problemas. Para fins didáticos, vamos ler só o arquivo de domicílios da PNAD de 2015.</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1">pnad_d &lt;-<span class="st"> </span><span class="kw">read_PNAD</span>(<span class="dt">ft =</span> <span class="st">&quot;domicilios&quot;</span>, <span class="dt">i =</span> <span class="dv">2015</span>, <span class="dt">file =</span> <span class="st">&quot;pnad2015/Dados/DOM2015.gz&quot;</span>)</a></code></pre></div>
+<pre><code>## You have specified the &#39;file&#39; argument, in this case we will assume that data is in a .txt or .csv file stored in the adress specified by the &#39;file&#39; parameter.</code></pre>
+<pre><code>## [1] 1
+## Time difference of 6.277105 secs
+## 0.1 Gb</code></pre>
+<p>Por causa da bruxaria amostral empregada na produção das estimativas da PNAD, não podemos simplesmente calcular nossas medidas, como médias, totais, proporções. Precisamos ponderar essas medidas pelo desenho amostral e muitos de vocês vão precisar de medidas estatísticas como desvio padrão, erro, etc. Mas não temam, pois a solução está aqui <a href="http://asdfree.com/pesquisa-nacional-por-amostra-de-domicilios-pnad.html">(graças ao A. J. Damico)</a>:</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" title="1"><span class="kw">options</span>( <span class="dt">survey.lonely.psu =</span> <span class="st">&quot;adjust&quot;</span> )</a>
+<a class="sourceLine" id="cb14-2" title="2"></a>
+<a class="sourceLine" id="cb14-3" title="3"><span class="kw">library</span>(survey)</a>
+<a class="sourceLine" id="cb14-4" title="4"></a>
+<a class="sourceLine" id="cb14-5" title="5"><span class="co"># Transformar em número a variável Projeção Populacional</span></a>
+<a class="sourceLine" id="cb14-6" title="6">pnad_d<span class="op">$</span>V4609 &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(pnad_d<span class="op">$</span>V4609)</a>
+<a class="sourceLine" id="cb14-7" title="7"></a>
+<a class="sourceLine" id="cb14-8" title="8"><span class="co"># Data frame com os valores dessa variável</span></a>
+<a class="sourceLine" id="cb14-9" title="9">pop_types &lt;-<span class="st"> </span><span class="kw">data.frame</span>( </a>
+<a class="sourceLine" id="cb14-10" title="10">  <span class="dt">V4609 =</span> <span class="kw">unique</span>( pnad_d<span class="op">$</span>V4609 ) , </a>
+<a class="sourceLine" id="cb14-11" title="11">  <span class="dt">Freq =</span> <span class="kw">unique</span>( pnad_d<span class="op">$</span>V4609 )</a>
+<a class="sourceLine" id="cb14-12" title="12">)</a>
+<a class="sourceLine" id="cb14-13" title="13"></a>
+<a class="sourceLine" id="cb14-14" title="14"><span class="co"># Primeiro, ponderamos pelos pesos pré-estratificados</span></a>
+<a class="sourceLine" id="cb14-15" title="15">prestratified_design &lt;-<span class="st"> </span><span class="kw">svydesign</span>(</a>
+<a class="sourceLine" id="cb14-16" title="16">  <span class="dt">id =</span> <span class="op">~</span><span class="st"> </span>V4618 ,</a>
+<a class="sourceLine" id="cb14-17" title="17">  <span class="dt">strata =</span> <span class="op">~</span><span class="st"> </span>V4617 ,</a>
+<a class="sourceLine" id="cb14-18" title="18">  <span class="dt">data =</span> pnad_d ,</a>
+<a class="sourceLine" id="cb14-19" title="19">  <span class="dt">weights =</span> <span class="op">~</span><span class="st"> </span>V4610 ,</a>
+<a class="sourceLine" id="cb14-20" title="20">  <span class="dt">nest =</span> <span class="ot">TRUE</span></a>
+<a class="sourceLine" id="cb14-21" title="21">)</a>
+<a class="sourceLine" id="cb14-22" title="22"></a>
+<a class="sourceLine" id="cb14-23" title="23"><span class="co"># Agora ajustamos pela população total</span></a>
+<a class="sourceLine" id="cb14-24" title="24">pnad_design &lt;-<span class="st"> </span><span class="kw">postStratify</span>( </a>
+<a class="sourceLine" id="cb14-25" title="25">  <span class="dt">design =</span> prestratified_design ,</a>
+<a class="sourceLine" id="cb14-26" title="26">  <span class="dt">strata =</span> <span class="op">~</span><span class="st"> </span>V4609 ,</a>
+<a class="sourceLine" id="cb14-27" title="27">  <span class="dt">population =</span> pop_types</a>
+<a class="sourceLine" id="cb14-28" title="28">)</a></code></pre></div>
+<p>Esse processo de pesagem e estratificação é complexo, e eu não finjo entendê-lo, mas com esse script na mão, vocês conseguem analisar as PNADs todas. Vou deixar no final alguns links com outros materiais que detalham melhor essa questão da amostra.</p>
+</div>
+<div id="pnad-contínua" class="section level2">
+<h2>PNAD Contínua</h2>
+<p>A PNAD Contínua possui <a href="https://rpubs.com/BragaDouglas/335574">um pacote dedicado</a>, feito por Douglas Braga, Gabriel Assunção e Luna Hidalgo. Você pode baixar a de 2018 assim:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1"><span class="kw">install.packages</span>(<span class="st">&quot;PNADcIBGE&quot;</span>)</a>
+<a class="sourceLine" id="cb15-2" title="2"><span class="kw">library</span>(PNADcIBGE)</a></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1"><span class="co"># Leitura offline</span></a>
+<a class="sourceLine" id="cb16-2" title="2">pnadc &lt;-<span class="st"> </span><span class="kw">read_pnadc</span>(<span class="dt">microdata =</span> <span class="st">&quot;PNADC_2018_visita1.txt.xz&quot;</span>,</a>
+<a class="sourceLine" id="cb16-3" title="3">                    <span class="dt">input_txt =</span> <span class="st">&quot;input_PNADC_2018_visita1.txt&quot;</span>)</a>
+<a class="sourceLine" id="cb16-4" title="4"></a>
+<a class="sourceLine" id="cb16-5" title="5">pnadc &lt;-<span class="st"> </span><span class="kw">pnadc_labeller</span>(<span class="dt">data_pnadc =</span> pnadc, </a>
+<a class="sourceLine" id="cb16-6" title="6">                        <span class="dt">dictionary.file =</span> <span class="st">&quot;dicionario_PNADC_microdados_2018_visita1.xls&quot;</span>)</a>
+<a class="sourceLine" id="cb16-7" title="7"></a>
+<a class="sourceLine" id="cb16-8" title="8">pnadc &lt;-<span class="st"> </span><span class="kw">pnadc_design</span>(pnadc)</a>
+<a class="sourceLine" id="cb16-9" title="9"></a>
+<a class="sourceLine" id="cb16-10" title="10">pnadc</a></code></pre></div>
+<pre><code>## Stratified 1 - level Cluster Sampling design (with replacement)
+## With (12077) clusters.
+## survey::postStratify(design = data_prior, strata = ~posest, population = popc.types)</code></pre>
+<p>O PNADcIBGE já deixa o objeto praticamente pronto pra análise, bom seria se a gente tivesse um desses pra outras pesquisas!</p>
+</div>
+<div id="sidra" class="section level2">
+<h2>SIDRA</h2>
+<p>O SIDRA pode já ser um velho conhecido de quem fez demografia na Unicamp, mas em geral, o processo de importação pro R era meio chato. Envolvia procurar e montar a tabela no sistema do IBGE, salvar um extrato em .CSV e depois importar com <code>read_csv()</code>, por exemplo. Felizmente, graças ao Renato Prado Siqueira, podemos cortar caminho com o pacote <a href="https://cran.r-project.org/web/packages/sidrar/vignettes/Introduction_to_sidrar.html">sidrar</a>.</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1"><span class="kw">install.packages</span>(<span class="st">&quot;sidrar&quot;</span>)</a>
+<a class="sourceLine" id="cb18-2" title="2"><span class="kw">library</span>(sidrar)</a></code></pre></div>
+<p>Funciona assim, você pode circular pelo site do SIDRA e encontrar o número da sua tabela, ou usar a função:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" title="1"><span class="kw">search_sidra</span>(<span class="st">&quot;Filhos tidos pelas mulheres de 10 anos ou mais&quot;</span>)</a></code></pre></div>
+<p>Com o número da tabela que você quer, você dá um:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1"><span class="kw">info_sidra</span>(<span class="dt">x =</span> <span class="dv">96</span>, <span class="dt">wb =</span> T)</a></code></pre></div>
+<p>Aí tem uma parte um pouco chata, que é traduzir todas opções pro R:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" title="1">filhos &lt;-<span class="st"> </span><span class="kw">get_sidra</span>(<span class="dt">x =</span> <span class="dv">96</span>,</a>
+<a class="sourceLine" id="cb21-2" title="2">                    <span class="dt">variable =</span> <span class="dv">378</span>,</a>
+<a class="sourceLine" id="cb21-3" title="3">                    <span class="dt">period =</span> <span class="st">&quot;2010&quot;</span>,</a>
+<a class="sourceLine" id="cb21-4" title="4">                    <span class="dt">geo =</span> <span class="st">&quot;State&quot;</span>,</a>
+<a class="sourceLine" id="cb21-5" title="5">                    <span class="dt">geo.filter =</span> <span class="kw">list</span>(<span class="dt">State =</span> <span class="dv">24</span>),</a>
+<a class="sourceLine" id="cb21-6" title="6">                    <span class="dt">classific =</span> <span class="st">&quot;C1&quot;</span>,</a>
+<a class="sourceLine" id="cb21-7" title="7">                    <span class="dt">category =</span> <span class="st">&quot;all&quot;</span>)</a>
+<a class="sourceLine" id="cb21-8" title="8">filhos</a></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Nível Territorial (Código)"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Nível Territorial"],"name":[2],"type":["chr"],"align":["left"]},{"label":["Unidade da Federação (Código)"],"name":[3],"type":["chr"],"align":["left"]},{"label":["Unidade da Federação"],"name":[4],"type":["chr"],"align":["left"]},{"label":["Ano (Código)"],"name":[5],"type":["chr"],"align":["left"]},{"label":["Ano"],"name":[6],"type":["chr"],"align":["left"]},{"label":["Variável (Código)"],"name":[7],"type":["chr"],"align":["left"]},{"label":["Variável"],"name":[8],"type":["chr"],"align":["left"]},{"label":["Situação do domicílio (Código)"],"name":[9],"type":["chr"],"align":["left"]},{"label":["Situação do domicílio"],"name":[10],"type":["chr"],"align":["left"]},{"label":["Cor ou raça (Código)"],"name":[11],"type":["chr"],"align":["left"]},{"label":["Cor ou raça"],"name":[12],"type":["chr"],"align":["left"]},{"label":["Nível de instrução (Código)"],"name":[13],"type":["chr"],"align":["left"]},{"label":["Nível de instrução"],"name":[14],"type":["chr"],"align":["left"]},{"label":["Estado civil (Código)"],"name":[15],"type":["chr"],"align":["left"]},{"label":["Estado civil"],"name":[16],"type":["chr"],"align":["left"]},{"label":["Grupos de idade das mulheres (Código)"],"name":[17],"type":["chr"],"align":["left"]},{"label":["Grupos de idade das mulheres"],"name":[18],"type":["chr"],"align":["left"]},{"label":["Unidade de Medida (Código)"],"name":[19],"type":["chr"],"align":["left"]},{"label":["Unidade de Medida"],"name":[20],"type":["chr"],"align":["left"]},{"label":["Valor"],"name":[21],"type":["dbl"],"align":["right"]}],"data":[{"1":"3","2":"Unidade da Federação","3":"24","4":"Rio Grande do Norte","5":"2010","6":"2010","7":"378","8":"Filhos tidos nascidos vivos pelas mulheres de 10 anos ou mais de idade no período de referência de 12 meses","9":"0","10":"Total","11":"0","12":"Total","13":"0","14":"Total","15":"0","16":"Total","17":"0","18":"Total","19":"45","20":"Pessoas","21":"45560","_rn_":"2"},{"1":"3","2":"Unidade da Federação","3":"24","4":"Rio Grande do Norte","5":"2010","6":"2010","7":"378","8":"Filhos tidos nascidos vivos pelas mulheres de 10 anos ou mais de idade no período de referência de 12 meses","9":"1","10":"Urbana","11":"0","12":"Total","13":"0","14":"Total","15":"0","16":"Total","17":"0","18":"Total","19":"45","20":"Pessoas","21":"34702","_rn_":"3"},{"1":"3","2":"Unidade da Federação","3":"24","4":"Rio Grande do Norte","5":"2010","6":"2010","7":"378","8":"Filhos tidos nascidos vivos pelas mulheres de 10 anos ou mais de idade no período de referência de 12 meses","9":"2","10":"Rural","11":"0","12":"Total","13":"0","14":"Total","15":"0","16":"Total","17":"0","18":"Total","19":"45","20":"Pessoas","21":"10858","_rn_":"4"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>A tabela é meio longa, com muitas e muitas variáveis que agente acaba não utilizando, mas o importante é que ela vem direto pro R e a gente pode selecionar só as informações que nos importam depois.</p>
+</div>
+<div id="undata" class="section level2">
+<h2>UNData</h2>
+<p>A UN Data já tem uma API, mas ainda não existe interface pro R, então a solução é baixar os CSVs do site.</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1"><span class="kw">include_graphics</span>(<span class="st">&quot;injury.png&quot;</span>)</a></code></pre></div>
+<p><img src="injury.png" /><!-- --></p>
+<p>O bom é que ele já vem estruturado e a importação é tão simples quanto:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" title="1">injury &lt;-<span class="st"> </span><span class="kw">read_csv2</span>(<span class="st">&quot;UNdata-injury.txt&quot;</span>)</a></code></pre></div>
+<pre><code>## Using &#39;,&#39; as decimal and &#39;.&#39; as grouping mark. Use read_delim() for more control.</code></pre>
+<pre><code>## Parsed with column specification:
+## cols(
+##   `Country or Area` = col_character(),
+##   `Year(s)` = col_double(),
+##   Value = col_double(),
+##   `Value Footnotes` = col_logical(),
+##   `Value Footnotes_1` = col_logical()
+## )</code></pre>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" title="1"><span class="kw">head</span>(injury)</a></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["Country or Area"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Year(s)"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Value"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Value Footnotes"],"name":[4],"type":["lgl"],"align":["right"]},{"label":["Value Footnotes_1"],"name":[5],"type":["lgl"],"align":["right"]}],"data":[{"1":"Afghanistan","2":"2008","3":"149","4":"NA","5":"NA"},{"1":"Albania","2":"2008","3":"46","4":"NA","5":"NA"},{"1":"Algeria","2":"2008","3":"47","4":"NA","5":"NA"},{"1":"Andorra","2":"2008","3":"27","4":"NA","5":"NA"},{"1":"Angola","2":"2008","3":"112","4":"NA","5":"NA"},{"1":"Antigua and Barbuda","2":"2008","3":"46","4":"NA","5":"NA"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+<div id="cozinha-tidy-dos-dados" class="section level1">
+<h1>Cozinha (tidy) dos dados</h1>
+<p>Dependendo da fonte de dados, o processo de cozinha dos dados pode ser mais ou menos complexo. Ao invés de tentar criar uma lista exaustiva, vou passar uma sequência de exemplos de atividades comuns que fazemos com nossos dados, que certamente serão úteis em vários contextos.</p>
+<div id="tipos-de-dados" class="section level2">
+<h2>Tipos de dados</h2>
+<p>R entende basicamente 3 tipos de dados: números, strings e lógicos. Existem subtipos desses dados, mas são basicamente esses 3.</p>
+<div id="números" class="section level3">
+<h3>Números</h3>
+<p>Podem ser inteiros, podem ser submetidos a operações matemáticas e fazer parte de testes lógicos.</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" title="1">x &lt;-<span class="st"> </span>censo_dom_rn<span class="op">$</span>V0401[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]</a>
+<a class="sourceLine" id="cb27-2" title="2"></a>
+<a class="sourceLine" id="cb27-3" title="3">x</a></code></pre></div>
+<pre><code>##  [1] 4 3 1 2 2 3 4 2 2 5</code></pre>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" title="1"><span class="kw">class</span>(x)</a></code></pre></div>
+<pre><code>## [1] &quot;numeric&quot;</code></pre>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" title="1"><span class="kw">is.numeric</span>(x)</a></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" title="1"><span class="kw">is.integer</span>(x)</a></code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" title="1"><span class="kw">is.double</span>(x)</a></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" title="1"><span class="co"># Dê uma olhada na ajuda: ?Arithmetic</span></a>
+<a class="sourceLine" id="cb37-2" title="2"></a>
+<a class="sourceLine" id="cb37-3" title="3">x <span class="op">*</span><span class="st"> </span><span class="dv">10</span></a></code></pre></div>
+<pre><code>##  [1] 40 30 10 20 20 30 40 20 20 50</code></pre>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" title="1">x <span class="op">+</span><span class="st"> </span><span class="dv">10</span></a></code></pre></div>
+<pre><code>##  [1] 14 13 11 12 12 13 14 12 12 15</code></pre>
+<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" title="1">x <span class="op">&gt;=</span><span class="st"> </span><span class="dv">3</span></a></code></pre></div>
+<pre><code>##  [1]  TRUE  TRUE FALSE FALSE FALSE  TRUE  TRUE FALSE FALSE  TRUE</code></pre>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" title="1">x[x <span class="op">&gt;=</span><span class="st"> </span><span class="dv">3</span>]</a></code></pre></div>
+<pre><code>## [1] 4 3 3 4 5</code></pre>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" title="1">x <span class="op">==</span><span class="st"> </span><span class="dv">4</span></a></code></pre></div>
+<pre><code>##  [1]  TRUE FALSE FALSE FALSE FALSE FALSE  TRUE FALSE FALSE FALSE</code></pre>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" title="1">x[x <span class="op">==</span><span class="st"> </span><span class="dv">4</span>]</a></code></pre></div>
+<pre><code>## [1] 4 4</code></pre>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" title="1">x <span class="op">!=</span><span class="st"> </span><span class="dv">4</span></a></code></pre></div>
+<pre><code>##  [1] FALSE  TRUE  TRUE  TRUE  TRUE  TRUE FALSE  TRUE  TRUE  TRUE</code></pre>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" title="1">x[x <span class="op">!=</span><span class="st"> </span><span class="dv">4</span>]</a></code></pre></div>
+<pre><code>## [1] 3 1 2 2 3 2 2 5</code></pre>
+<p>Podem ser números reais, com casas decimais</p>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb53-1" title="1">x &lt;-<span class="st"> </span>censo_dom_rn<span class="op">$</span>V0010[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]</a>
+<a class="sourceLine" id="cb53-2" title="2"></a>
+<a class="sourceLine" id="cb53-3" title="3">x</a></code></pre></div>
+<pre><code>##  [1] 4.898864 5.851140 5.732053 4.022684 4.584575 4.503748 5.376555 4.015957 6.145692 5.684840</code></pre>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb55-1" title="1"><span class="kw">class</span>(x)</a></code></pre></div>
+<pre><code>## [1] &quot;numeric&quot;</code></pre>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb57-1" title="1"><span class="kw">is.numeric</span>(x)</a></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb59-1" title="1"><span class="kw">is.integer</span>(x)</a></code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb61-1" title="1"><span class="kw">is.double</span>(x)</a></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb63-1" title="1">x <span class="op">^</span><span class="st"> </span><span class="dv">2</span></a></code></pre></div>
+<pre><code>##  [1] 23.99887 34.23584 32.85643 16.18198 21.01833 20.28374 28.90734 16.12791 37.76953 32.31740</code></pre>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb65-1" title="1"><span class="kw">sqrt</span>(x)</a></code></pre></div>
+<pre><code>##  [1] 2.213338 2.418913 2.394171 2.005663 2.141162 2.122203 2.318740 2.003985 2.479051 2.384290</code></pre>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb67-1" title="1">?Comparison</a>
+<a class="sourceLine" id="cb67-2" title="2"></a>
+<a class="sourceLine" id="cb67-3" title="3">x <span class="op">&lt;</span><span class="st"> </span><span class="fl">4.7</span></a></code></pre></div>
+<pre><code>##  [1] FALSE FALSE FALSE  TRUE  TRUE  TRUE FALSE  TRUE FALSE FALSE</code></pre>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb69-1" title="1">x <span class="op">==</span><span class="st"> </span><span class="fl">4.898864</span> <span class="co"># números reais são durões</span></a></code></pre></div>
+<pre><code>##  [1] FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE FALSE</code></pre>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb71-1" title="1"><span class="kw">near</span>(x, <span class="fl">4.898864</span>, <span class="dt">tol =</span> <span class="fl">0.5</span>)</a></code></pre></div>
+<pre><code>##  [1]  TRUE FALSE FALSE FALSE  TRUE  TRUE  TRUE FALSE FALSE FALSE</code></pre>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb73-1" title="1">x[x <span class="op">&lt;</span><span class="st"> </span><span class="fl">4.7</span>]</a></code></pre></div>
+<pre><code>## [1] 4.022684 4.584575 4.503748 4.015957</code></pre>
+</div>
+<div id="strings" class="section level3">
+<h3>Strings</h3>
+<p>São sequências de caracteres alfanuméricos, geralmente estão rodeados por <code>"</code> em R. Podem ser classificados em categorias, e aí são chamados de <code>factors</code>, ou podem não ser classificados, e aí são <code>characters</code></p>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb75-1" title="1">x &lt;-<span class="st"> </span><span class="kw">sample</span>(pnadc<span class="op">$</span>variables<span class="op">$</span>UF, <span class="dv">10</span>)</a>
+<a class="sourceLine" id="cb75-2" title="2"></a>
+<a class="sourceLine" id="cb75-3" title="3">x</a></code></pre></div>
+<pre><code>##  [1] Maranhão       Ceará          Piauí          Piauí          São Paulo      Espírito Santo
+##  [7] Santa Catarina Pernambuco     Pernambuco     Minas Gerais  
+## 27 Levels: Rondônia Acre Amazonas Roraima Pará Amapá Tocantins Maranhão Piauí ... Distrito Federal</code></pre>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb77-1" title="1"><span class="kw">class</span>(x)</a></code></pre></div>
+<pre><code>## [1] &quot;factor&quot;</code></pre>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb79-1" title="1"><span class="kw">is.numeric</span>(x)</a></code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb81-1" title="1"><span class="kw">is.character</span>(x)</a></code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb83-1" title="1"><span class="kw">is.factor</span>(x)</a></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb85-1" title="1">y &lt;-<span class="st"> </span><span class="kw">as.character</span>(x)</a>
+<a class="sourceLine" id="cb85-2" title="2"></a>
+<a class="sourceLine" id="cb85-3" title="3">y</a></code></pre></div>
+<pre><code>##  [1] &quot;Maranhão&quot;       &quot;Ceará&quot;          &quot;Piauí&quot;          &quot;Piauí&quot;          &quot;São Paulo&quot;     
+##  [6] &quot;Espírito Santo&quot; &quot;Santa Catarina&quot; &quot;Pernambuco&quot;     &quot;Pernambuco&quot;     &quot;Minas Gerais&quot;</code></pre>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb87-1" title="1"><span class="kw">class</span>(y)</a></code></pre></div>
+<pre><code>## [1] &quot;character&quot;</code></pre>
+</div>
+<div id="lógicos" class="section level3">
+<h3>Lógicos</h3>
+<p>São do tipo verdadeiro ou falso, ou 1 e 0. São principalmente usados para fazer controle de fluxo (tema de uma das próximas aulas) e para selecionar casos num banco de dados. Podem ser testados usando lógica formal (E, OU, NEGAÇÃO, IGUAL, DIFERENTE, MAIOR, MENOR, etc.)</p>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb89-1" title="1">x &lt;-<span class="st"> </span><span class="ot">TRUE</span></a>
+<a class="sourceLine" id="cb89-2" title="2">y &lt;-<span class="st"> </span><span class="ot">FALSE</span></a>
+<a class="sourceLine" id="cb89-3" title="3"></a>
+<a class="sourceLine" id="cb89-4" title="4"><span class="kw">class</span>(x)</a></code></pre></div>
+<pre><code>## [1] &quot;logical&quot;</code></pre>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb91-1" title="1"><span class="kw">is.logical</span>(x)</a></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb93-1" title="1"><span class="kw">as.numeric</span>(x)</a></code></pre></div>
+<pre><code>## [1] 1</code></pre>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb95-1" title="1"><span class="kw">as.numeric</span>(y)</a></code></pre></div>
+<pre><code>## [1] 0</code></pre>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb97-1" title="1"><span class="kw">isTRUE</span>(x)</a></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb99-1" title="1"><span class="kw">isFALSE</span>(x)</a></code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb101-1" title="1"><span class="co"># Dê um olhada na ajuda: ?Logic</span></a>
+<a class="sourceLine" id="cb101-2" title="2"></a>
+<a class="sourceLine" id="cb101-3" title="3">x <span class="op">&amp;</span><span class="st"> </span>y <span class="co"># e</span></a></code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb103-1" title="1">x <span class="op">|</span><span class="st"> </span>y <span class="co"># ou</span></a></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb105-1" title="1"><span class="kw">xor</span>(x, y) <span class="co"># ou exclusivo</span></a></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb107-1" title="1"><span class="op">!</span>x <span class="co"># negação de x</span></a></code></pre></div>
+<pre><code>## [1] FALSE</code></pre>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb109-1" title="1">x <span class="op">&amp;</span><span class="st"> </span><span class="op">!</span>y <span class="co"># x e a negação de y</span></a></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<p>Podemos converter entre tipos, quando possível:</p>
+<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb111-1" title="1">x &lt;-<span class="st"> </span>censo_dom_rn<span class="op">$</span>V0010[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]</a>
+<a class="sourceLine" id="cb111-2" title="2"></a>
+<a class="sourceLine" id="cb111-3" title="3">x</a></code></pre></div>
+<pre><code>##  [1] 4.898864 5.851140 5.732053 4.022684 4.584575 4.503748 5.376555 4.015957 6.145692 5.684840</code></pre>
+<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb113-1" title="1"><span class="kw">as.integer</span>(x)</a></code></pre></div>
+<pre><code>##  [1] 4 5 5 4 4 4 5 4 6 5</code></pre>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb115-1" title="1">x &lt;-<span class="st"> </span>censo_dom_rn<span class="op">$</span>V0001[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]</a>
+<a class="sourceLine" id="cb115-2" title="2"></a>
+<a class="sourceLine" id="cb115-3" title="3">x</a></code></pre></div>
+<pre><code>##  [1] &quot;24&quot; &quot;24&quot; &quot;24&quot; &quot;24&quot; &quot;24&quot; &quot;24&quot; &quot;24&quot; &quot;24&quot; &quot;24&quot; &quot;24&quot;</code></pre>
+<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb117-1" title="1"><span class="kw">as.factor</span>(x)</a></code></pre></div>
+<pre><code>##  [1] 24 24 24 24 24 24 24 24 24 24
+## Levels: 24</code></pre>
+<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb119-1" title="1"><span class="kw">factor</span>(x, <span class="dt">levels =</span> <span class="dv">24</span>, <span class="dt">labels =</span> <span class="st">&quot;Rio Grande do Norte&quot;</span>)</a></code></pre></div>
+<pre><code>##  [1] Rio Grande do Norte Rio Grande do Norte Rio Grande do Norte Rio Grande do Norte
+##  [5] Rio Grande do Norte Rio Grande do Norte Rio Grande do Norte Rio Grande do Norte
+##  [9] Rio Grande do Norte Rio Grande do Norte
+## Levels: Rio Grande do Norte</code></pre>
+<p>Conversões de dados podem ser extremamente importantes para determinados aspectos da análise de dados, porque algumas funções são muito estritas e exigem que o dado esteja em um formato específico. Essa é uma das fontes de erro mais comuns em nossos scripts quando estamos começando.</p>
+</div>
+</div>
+<div id="valores-desconhecidos-missing-data" class="section level2">
+<h2>Valores desconhecidos (missing data)</h2>
+<p>Representados de diferentes maneiras, valores desconhecidos são geralmente representados no R por <code>NA</code>. Eles procuram representar a incerteza sobre o valor de alguma coisa e se comportam de acordo com essa premissa.</p>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb121-1" title="1">x &lt;-<span class="st"> </span><span class="ot">NA_integer_</span></a>
+<a class="sourceLine" id="cb121-2" title="2">y &lt;-<span class="st"> </span><span class="dv">25</span></a>
+<a class="sourceLine" id="cb121-3" title="3"></a>
+<a class="sourceLine" id="cb121-4" title="4">x <span class="op">+</span><span class="st"> </span>y</a></code></pre></div>
+<pre><code>## [1] NA</code></pre>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb123-1" title="1"><span class="kw">sum</span>(x <span class="op">+</span><span class="st"> </span>y)</a></code></pre></div>
+<pre><code>## [1] NA</code></pre>
+<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb125-1" title="1"><span class="kw">sum</span>(<span class="kw">c</span>(x, y), <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<pre><code>## [1] 25</code></pre>
+<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb127-1" title="1">x &lt;-<span class="st"> </span><span class="ot">NA</span></a>
+<a class="sourceLine" id="cb127-2" title="2">y &lt;-<span class="st"> </span><span class="ot">TRUE</span></a>
+<a class="sourceLine" id="cb127-3" title="3"></a>
+<a class="sourceLine" id="cb127-4" title="4">x <span class="op">&amp;</span><span class="st"> </span>y</a></code></pre></div>
+<pre><code>## [1] NA</code></pre>
+<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb129-1" title="1">x <span class="op">|</span><span class="st"> </span>y</a></code></pre></div>
+<pre><code>## [1] TRUE</code></pre>
+<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb131-1" title="1"><span class="kw">xor</span>(x, y)</a></code></pre></div>
+<pre><code>## [1] NA</code></pre>
+<div class="sourceCode" id="cb133"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb133-1" title="1"><span class="op">!</span>x</a></code></pre></div>
+<pre><code>## [1] NA</code></pre>
+<p>Em nossos bancos de dados, muitas vezes os valores são lidos como <code>NA</code>, mas as vezes, eles vem codificados de outra forma.</p>
+<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb135-1" title="1"><span class="co"># Variável númerica</span></a>
+<a class="sourceLine" id="cb135-2" title="2">x &lt;-<span class="st"> </span>censo_dom_rn<span class="op">$</span>V2011</a>
+<a class="sourceLine" id="cb135-3" title="3"></a>
+<a class="sourceLine" id="cb135-4" title="4"><span class="kw">summary</span>(x)</a></code></pre></div>
+<pre><code>##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max.    NA&#39;s 
+##       1     100     150     205     250   12000  102916</code></pre>
+<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb137-1" title="1"><span class="co"># Variável categórica</span></a>
+<a class="sourceLine" id="cb137-2" title="2">y &lt;-<span class="st"> </span>censo_dom_rn<span class="op">$</span>V0207</a>
+<a class="sourceLine" id="cb137-3" title="3"><span class="kw">table</span>(y)</a></code></pre></div>
+<pre><code>## y
+##           1     2     3     4     5     6 
+##  4159 25810 18033 67933  2006   296  1670</code></pre>
+<p>A depender da nossa definição, os 4159 valores em branco poderiam ser considerados <code>NA</code>, por serem desconhecidos. Poderíamos também, definir o valor 6 (“Outro”) como <code>NA</code>, porque também representaria uma incerteza. Isso depende de um processo de reflexão crítica sobre os dados e de construção do objeto de análise. Podemos “tratar” os nossos <code>NA</code> no R de diversas formas.</p>
+<div class="sourceCode" id="cb139"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb139-1" title="1"><span class="co"># Excluir os casos NA</span></a>
+<a class="sourceLine" id="cb139-2" title="2">pagam_aluguel &lt;-<span class="st"> </span>censo_dom_rn <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(V2011))<span class="co"># Atente para o &quot;!&quot; = negação</span></a>
+<a class="sourceLine" id="cb139-3" title="3"></a>
+<a class="sourceLine" id="cb139-4" title="4"><span class="kw">head</span>(pagam_aluguel)</a></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["V0001"],"name":[1],"type":["chr"],"align":["left"]},{"label":["V0002"],"name":[2],"type":["chr"],"align":["left"]},{"label":["V0011"],"name":[3],"type":["chr"],"align":["left"]},{"label":["V0300"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["V0010"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["V1006"],"name":[6],"type":["chr"],"align":["left"]},{"label":["V2011"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["V0207"],"name":[8],"type":["chr"],"align":["left"]},{"label":["V0208"],"name":[9],"type":["chr"],"align":["left"]},{"label":["V0401"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["V6529"],"name":[11],"type":["dbl"],"align":["right"]}],"data":[{"1":"24","2":"00109","3":"2400109001001","4":"7473","5":"5.851140","6":"1","7":"100","8":"1","9":"01","10":"3","11":"700"},{"1":"24","2":"00109","3":"2400109001001","4":"58741","5":"4.015957","6":"1","7":"80","8":"1","9":"01","10":"2","11":"510"},{"1":"24","2":"00109","3":"2400109001001","4":"59333","5":"6.145692","6":"1","7":"127","8":"1","9":"01","10":"2","11":"1510"},{"1":"24","2":"00109","3":"2400109001001","4":"82395","5":"4.016804","6":"1","7":"200","8":"1","9":"01","10":"3","11":"1600"},{"1":"24","2":"00109","3":"2400109001001","4":"113581","5":"4.669805","6":"1","7":"127","8":"1","9":"01","10":"3","11":"1322"},{"1":"24","2":"00109","3":"2400109001001","4":"114183","5":"2.335965","6":"1","7":"150","8":"1","9":"01","10":"3","11":"510"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb140-1" title="1"><span class="co"># Transformar os casos NA em 0</span></a>
+<a class="sourceLine" id="cb140-2" title="2">aluguel0 &lt;-<span class="st"> </span>censo_dom_rn <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">V2011 =</span> <span class="kw">ifelse</span>(</a>
+<a class="sourceLine" id="cb140-3" title="3">  <span class="dt">test =</span> <span class="kw">is.na</span>(V2011), <span class="dt">yes =</span> <span class="dv">0</span>, <span class="dt">no =</span> V2011</a>
+<a class="sourceLine" id="cb140-4" title="4">))</a>
+<a class="sourceLine" id="cb140-5" title="5"></a>
+<a class="sourceLine" id="cb140-6" title="6"><span class="kw">summary</span>(aluguel0<span class="op">$</span>V2011)</a></code></pre></div>
+<pre><code>##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max. 
+##     0.00     0.00     0.00    29.05     0.00 12000.00</code></pre>
+<div class="sourceCode" id="cb142"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb142-1" title="1"><span class="co"># Manter os NAs no Banco e realizar operações desconsiderando eles</span></a>
+<a class="sourceLine" id="cb142-2" title="2"><span class="kw">mean</span>(censo_dom_rn<span class="op">$</span>V2011, <span class="dt">na.rm =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<pre><code>## [1] NA</code></pre>
+<div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb144-1" title="1"><span class="kw">mean</span>(censo_dom_rn<span class="op">$</span>V2011, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<pre><code>## [1] 204.978</code></pre>
+<div class="sourceCode" id="cb146"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb146-1" title="1"><span class="kw">min</span>(censo_dom_rn<span class="op">$</span>V2011, <span class="dt">na.rm =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<pre><code>## [1] NA</code></pre>
+<div class="sourceCode" id="cb148"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb148-1" title="1"><span class="kw">min</span>(censo_dom_rn<span class="op">$</span>V2011, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<pre><code>## [1] 1</code></pre>
+<div class="sourceCode" id="cb150"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb150-1" title="1"><span class="kw">max</span>(censo_dom_rn<span class="op">$</span>V2011, <span class="dt">na.rm =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<pre><code>## [1] NA</code></pre>
+<div class="sourceCode" id="cb152"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb152-1" title="1"><span class="kw">max</span>(censo_dom_rn<span class="op">$</span>V2011, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<pre><code>## [1] 12000</code></pre>
+<div class="sourceCode" id="cb154"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb154-1" title="1"><span class="co"># Definir alguns campos e valores como NA</span></a>
+<a class="sourceLine" id="cb154-2" title="2">esgoto_na &lt;-<span class="st"> </span>censo_dom_rn <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">V0207 =</span> <span class="kw">factor</span>(</a>
+<a class="sourceLine" id="cb154-3" title="3">  <span class="dt">x =</span> V0207, </a>
+<a class="sourceLine" id="cb154-4" title="4">  <span class="co"># São 6 níveis + branco, mas se eu definir só 5, os outros dois viram NA</span></a>
+<a class="sourceLine" id="cb154-5" title="5">  <span class="dt">levels =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">5</span>,</a>
+<a class="sourceLine" id="cb154-6" title="6">  <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Rede geral&quot;</span>, <span class="st">&quot;Fossa sép.&quot;</span>, <span class="st">&quot;Fossa rude.&quot;</span>, <span class="st">&quot;Vala&quot;</span>, <span class="st">&quot;Rio, Lago, Mar&quot;</span>)</a>
+<a class="sourceLine" id="cb154-7" title="7">))</a>
+<a class="sourceLine" id="cb154-8" title="8"></a>
+<a class="sourceLine" id="cb154-9" title="9">esgoto_na <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">count</span>(V0207)</a></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["V0207"],"name":[1],"type":["fctr"],"align":["left"]},{"label":["n"],"name":[2],"type":["int"],"align":["right"]}],"data":[{"1":"Rede geral","2":"25810"},{"1":"Fossa sép.","2":"18033"},{"1":"Fossa rude.","2":"67933"},{"1":"Vala","2":"2006"},{"1":"Rio, Lago, Mar","2":"296"},{"1":"NA","2":"5829"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<div id="longwide-data" class="section level2">
+<h2>Long/Wide data</h2>
+<p>Em geral, não costumamos pensar muito em que formato os dados aparecem para nós, até o momento em que estamos tentando produzir algo específico e notamos o quanto o formato do dado nos ajuda ou atrapalha a realizar determinadas tarefas. O pacote <a href="https://cran.r-project.org/web/packages/sidrar/vignettes/Introduction_to_sidrar.html">tidyverse</a> coloca uma grande ênfase sobre o que eles chamam de “tidy data”. O que nada mais é seguir a seguinte regra:</p>
+<blockquote>
+<p>Cada observação em sua linha, cada variável em sua coluna"</p>
+</blockquote>
+<p>É uma idéia tão profundamente simples quanto ela é abstrata e confusa. Afinal, o que é uma “observação” e o que é uma “variável” pode, <em>rufem os tabores</em>, variar. Porém, visualmente, é algo bastante simples de mostrar.</p>
+<div class="sourceCode" id="cb155"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb155-1" title="1">x &lt;-<span class="st"> </span>esgoto_na <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">count</span>(V0002, V0207)</a>
+<a class="sourceLine" id="cb155-2" title="2"><span class="kw">head</span>(x)</a></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["V0002"],"name":[1],"type":["chr"],"align":["left"]},{"label":["V0207"],"name":[2],"type":["fctr"],"align":["left"]},{"label":["n"],"name":[3],"type":["int"],"align":["right"]}],"data":[{"1":"00109","2":"Rede geral","3":"522"},{"1":"00109","2":"Fossa sép.","3":"26"},{"1":"00109","2":"Fossa rude.","3":"98"},{"1":"00109","2":"Rio, Lago, Mar","3":"1"},{"1":"00109","2":"NA","3":"20"},{"1":"00208","2":"Rede geral","3":"23"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>O banco de dados <code>x</code> é “tidy”, porque para cada município, e cada tipo de esgotamento sanitário, temos um valor de n. E cada característica, ou seja, código do município, tipo de esgotamento e número de domicílios, está na sua própria variável. Contraste agora com y.</p>
+<div class="sourceCode" id="cb156"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb156-1" title="1">y &lt;-<span class="st"> </span>x <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pivot_wider</span>(<span class="dt">names_from =</span> V0207, <span class="dt">values_from =</span> n)</a>
+<a class="sourceLine" id="cb156-2" title="2"></a>
+<a class="sourceLine" id="cb156-3" title="3"><span class="kw">head</span>(y)</a></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["V0002"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Rede geral"],"name":[2],"type":["int"],"align":["right"]},{"label":["Fossa sép."],"name":[3],"type":["int"],"align":["right"]},{"label":["Fossa rude."],"name":[4],"type":["int"],"align":["right"]},{"label":["Rio, Lago, Mar"],"name":[5],"type":["int"],"align":["right"]},{"label":["NA"],"name":[6],"type":["int"],"align":["right"]},{"label":["Vala"],"name":[7],"type":["int"],"align":["right"]}],"data":[{"1":"00109","2":"522","3":"26","4":"98","5":"1","6":"20","7":"NA"},{"1":"00208","2":"23","3":"172","4":"1194","5":"NA","6":"89","7":"18"},{"1":"00307","2":"228","3":"66","4":"197","5":"NA","6":"53","7":"9"},{"1":"00406","2":"18","3":"1","4":"228","5":"NA","6":"14","7":"NA"},{"1":"00505","2":"402","3":"56","4":"174","5":"1","6":"111","7":"29"},{"1":"00604","2":"2","3":"56","4":"399","5":"NA","6":"19","7":"1"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>Em y, cada linha representa um município, mas a variável “tipo de esgotamento” agora está espalhada em 6 variáveis diferentes. Outro jeito de olhar pra isso é dizer que x está na forma “longa” (long), porque ele se expande pra baixo, em número de linhas enquanto y está na forma “larga” (wide), já que ele se expande para a direita em número de colunas. A conversão de um pra outro pode ser feito com vários pacotes em R. No dplyr</p>
+<div class="sourceCode" id="cb157"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb157-1" title="1"><span class="co"># de &quot;longo&quot; para &quot;largo&quot;</span></a>
+<a class="sourceLine" id="cb157-2" title="2">x <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pivot_wider</span>(<span class="dt">names_from =</span> V0207, <span class="dt">values_from =</span> n)</a></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["V0002"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Rede geral"],"name":[2],"type":["int"],"align":["right"]},{"label":["Fossa sép."],"name":[3],"type":["int"],"align":["right"]},{"label":["Fossa rude."],"name":[4],"type":["int"],"align":["right"]},{"label":["Rio, Lago, Mar"],"name":[5],"type":["int"],"align":["right"]},{"label":["NA"],"name":[6],"type":["int"],"align":["right"]},{"label":["Vala"],"name":[7],"type":["int"],"align":["right"]}],"data":[{"1":"00109","2":"522","3":"26","4":"98","5":"1","6":"20","7":"NA"},{"1":"00208","2":"23","3":"172","4":"1194","5":"NA","6":"89","7":"18"},{"1":"00307","2":"228","3":"66","4":"197","5":"NA","6":"53","7":"9"},{"1":"00406","2":"18","3":"1","4":"228","5":"NA","6":"14","7":"NA"},{"1":"00505","2":"402","3":"56","4":"174","5":"1","6":"111","7":"29"},{"1":"00604","2":"2","3":"56","4":"399","5":"NA","6":"19","7":"1"},{"1":"00703","2":"47","3":"13","4":"630","5":"NA","6":"27","7":"3"},{"1":"00802","2":"56","3":"195","4":"336","5":"3","6":"53","7":"11"},{"1":"00901","2":"167","3":"5","4":"452","5":"2","6":"71","7":"5"},{"1":"01008","2":"24","3":"90","4":"790","5":"NA","6":"54","7":"26"},{"1":"01107","2":"75","3":"135","4":"468","5":"3","6":"22","7":"18"},{"1":"01206","2":"67","3":"77","4":"517","5":"NA","6":"25","7":"4"},{"1":"01305","2":"4","3":"83","4":"304","5":"NA","6":"119","7":"7"},{"1":"01404","2":"1","3":"41","4":"375","5":"NA","6":"15","7":"1"},{"1":"01453","2":"5","3":"62","4":"571","5":"NA","6":"19","7":"4"},{"1":"01503","2":"1","3":"92","4":"241","5":"NA","6":"17","7":"28"},{"1":"01602","2":"6","3":"62","4":"325","5":"NA","6":"16","7":"21"},{"1":"01651","2":"3","3":"89","4":"115","5":"NA","6":"29","7":"3"},{"1":"01701","2":"NA","3":"60","4":"441","5":"NA","6":"15","7":"7"},{"1":"01800","2":"149","3":"60","4":"441","5":"NA","6":"8","7":"NA"},{"1":"01859","2":"7","3":"206","4":"292","5":"NA","6":"19","7":"2"},{"1":"01909","2":"79","3":"92","4":"110","5":"NA","6":"11","7":"NA"},{"1":"02006","2":"1311","3":"110","4":"346","5":"11","6":"74","7":"18"},{"1":"02105","2":"217","3":"47","4":"253","5":"1","6":"38","7":"12"},{"1":"02204","2":"22","3":"24","4":"597","5":"8","6":"34","7":"51"},{"1":"02303","2":"41","3":"46","4":"411","5":"NA","6":"47","7":"41"},{"1":"02402","2":"123","3":"6","4":"601","5":"NA","6":"14","7":"7"},{"1":"02501","2":"158","3":"92","4":"222","5":"NA","6":"62","7":"18"},{"1":"02600","2":"477","3":"495","4":"653","5":"NA","6":"52","7":"31"},{"1":"02709","2":"25","3":"9","4":"514","5":"7","6":"33","7":"21"},{"1":"02808","2":"23","3":"90","4":"268","5":"7","6":"75","7":"62"},{"1":"02907","2":"NA","3":"2","4":"338","5":"NA","6":"76","7":"4"},{"1":"03004","2":"285","3":"39","4":"135","5":"NA","6":"22","7":"8"},{"1":"03103","2":"992","3":"45","4":"133","5":"1","6":"45","7":"32"},{"1":"03202","2":"158","3":"3","4":"360","5":"NA","6":"69","7":"NA"},{"1":"03251","2":"205","3":"3094","4":"2394","5":"1","6":"111","7":"17"},{"1":"03301","2":"49","3":"25","4":"394","5":"NA","6":"23","7":"3"},{"1":"03400","2":"271","3":"20","4":"242","5":"4","6":"21","7":"17"},{"1":"03509","2":"81","3":"23","4":"430","5":"6","6":"25","7":"11"},{"1":"03608","2":"2","3":"233","4":"373","5":"NA","6":"11","7":"7"},{"1":"03707","2":"3","3":"21","4":"464","5":"NA","6":"61","7":"9"},{"1":"03756","2":"NA","3":"16","4":"244","5":"NA","6":"18","7":"3"},{"1":"03806","2":"340","3":"36","4":"113","5":"NA","6":"10","7":"13"},{"1":"03905","2":"6","3":"NA","4":"248","5":"NA","6":"19","7":"5"},{"1":"04002","2":"7","3":"1","4":"408","5":"NA","6":"13","7":"NA"},{"1":"04101","2":"NA","3":"1","4":"255","5":"NA","6":"22","7":"NA"},{"1":"04200","2":"104","3":"123","4":"297","5":"2","6":"17","7":"11"},{"1":"04309","2":"3","3":"213","4":"369","5":"NA","6":"75","7":"17"},{"1":"04408","2":"NA","3":"97","4":"416","5":"NA","6":"32","7":"3"},{"1":"04507","2":"213","3":"47","4":"352","5":"NA","6":"13","7":"37"},{"1":"04606","2":"25","3":"98","4":"471","5":"NA","6":"51","7":"1"},{"1":"04705","2":"5","3":"137","4":"541","5":"NA","6":"60","7":"13"},{"1":"04804","2":"4","3":"NA","4":"319","5":"NA","6":"NA","7":"2"},{"1":"04853","2":"11","3":"91","4":"382","5":"NA","6":"95","7":"25"},{"1":"04903","2":"3","3":"13","4":"520","5":"NA","6":"19","7":"1"},{"1":"05009","2":"1","3":"1","4":"435","5":"NA","6":"20","7":"NA"},{"1":"05108","2":"3","3":"85","4":"485","5":"NA","6":"34","7":"11"},{"1":"05207","2":"58","3":"145","4":"260","5":"NA","6":"32","7":"12"},{"1":"05306","2":"54","3":"8","4":"387","5":"1","6":"29","7":"6"},{"1":"05405","2":"270","3":"7","4":"157","5":"15","6":"57","7":"21"},{"1":"05504","2":"6","3":"17","4":"211","5":"NA","6":"7","7":"2"},{"1":"05603","2":"45","3":"127","4":"543","5":"2","6":"48","7":"17"},{"1":"05702","2":"418","3":"155","4":"158","5":"3","6":"24","7":"7"},{"1":"05801","2":"112","3":"42","4":"612","5":"NA","6":"42","7":"22"},{"1":"05900","2":"57","3":"36","4":"150","5":"2","6":"6","7":"3"},{"1":"06007","2":"64","3":"77","4":"443","5":"NA","6":"25","7":"6"},{"1":"06106","2":"224","3":"117","4":"566","5":"NA","6":"119","7":"41"},{"1":"06155","2":"NA","3":"17","4":"303","5":"NA","6":"23","7":"NA"},{"1":"06205","2":"5","3":"36","4":"482","5":"1","6":"30","7":"7"},{"1":"06304","2":"4","3":"54","4":"548","5":"NA","6":"34","7":"8"},{"1":"06403","2":"3","3":"43","4":"196","5":"NA","6":"8","7":"NA"},{"1":"06502","2":"248","3":"90","4":"356","5":"1","6":"27","7":"7"},{"1":"06601","2":"4","3":"12","4":"662","5":"NA","6":"22","7":"2"},{"1":"06700","2":"335","3":"33","4":"193","5":"2","6":"26","7":"1"},{"1":"06809","2":"150","3":"NA","4":"249","5":"NA","6":"37","7":"5"},{"1":"06908","2":"223","3":"43","4":"95","5":"NA","6":"3","7":"1"},{"1":"07005","2":"19","3":"2","4":"405","5":"NA","6":"79","7":"8"},{"1":"07104","2":"140","3":"253","4":"1420","5":"11","6":"54","7":"31"},{"1":"07203","2":"563","3":"34","4":"202","5":"5","6":"34","7":"5"},{"1":"07252","2":"7","3":"60","4":"260","5":"NA","6":"4","7":"1"},{"1":"07302","2":"78","3":"66","4":"252","5":"5","6":"49","7":"27"},{"1":"07401","2":"NA","3":"NA","4":"468","5":"NA","6":"10","7":"3"},{"1":"07500","2":"14","3":"15","4":"476","5":"NA","6":"20","7":"1"},{"1":"07609","2":"NA","3":"67","4":"299","5":"NA","6":"26","7":"2"},{"1":"07708","2":"6","3":"25","4":"548","5":"1","6":"26","7":"14"},{"1":"07807","2":"40","3":"102","4":"392","5":"NA","6":"9","7":"11"},{"1":"07906","2":"80","3":"2","4":"224","5":"2","6":"18","7":"7"},{"1":"08003","2":"2854","3":"1795","4":"2315","5":"12","6":"215","7":"29"},{"1":"08102","2":"3631","3":"3572","4":"3981","5":"68","6":"152","7":"63"},{"1":"08201","2":"5","3":"123","4":"488","5":"NA","6":"67","7":"3"},{"1":"08300","2":"111","3":"31","4":"697","5":"11","6":"80","7":"53"},{"1":"08409","2":"8","3":"7","4":"379","5":"NA","6":"38","7":"NA"},{"1":"08508","2":"75","3":"2","4":"374","5":"NA","6":"8","7":"5"},{"1":"08607","2":"5","3":"3","4":"293","5":"1","6":"29","7":"48"},{"1":"08706","2":"44","3":"29","4":"228","5":"NA","6":"36","7":"37"},{"1":"08805","2":"180","3":"1","4":"203","5":"NA","6":"14","7":"2"},{"1":"08904","2":"432","3":"3","4":"160","5":"1","6":"11","7":"3"},{"1":"08953","2":"1","3":"2","4":"452","5":"NA","6":"29","7":"5"},{"1":"09100","2":"353","3":"5","4":"240","5":"NA","6":"12","7":"6"},{"1":"09209","2":"19","3":"NA","4":"259","5":"NA","6":"5","7":"1"},{"1":"09308","2":"40","3":"122","4":"457","5":"NA","6":"57","7":"51"},{"1":"09332","2":"3","3":"1","4":"431","5":"NA","6":"12","7":"1"},{"1":"09407","2":"340","3":"134","4":"294","5":"3","6":"31","7":"15"},{"1":"09506","2":"2","3":"7","4":"279","5":"NA","6":"10","7":"1"},{"1":"09605","2":"2","3":"8","4":"165","5":"NA","6":"36","7":"2"},{"1":"09704","2":"264","3":"63","4":"247","5":"NA","6":"29","7":"27"},{"1":"09803","2":"262","3":"6","4":"392","5":"1","6":"86","7":"11"},{"1":"09902","2":"235","3":"225","4":"275","5":"NA","6":"13","7":"NA"},{"1":"10009","2":"13","3":"64","4":"182","5":"NA","6":"25","7":"40"},{"1":"10108","2":"7","3":"48","4":"604","5":"NA","6":"23","7":"2"},{"1":"10207","2":"NA","3":"12","4":"655","5":"NA","6":"39","7":"6"},{"1":"10256","2":"NA","3":"NA","4":"446","5":"3","6":"29","7":"2"},{"1":"10306","2":"65","3":"70","4":"300","5":"NA","6":"15","7":"5"},{"1":"10405","2":"3","3":"2","4":"374","5":"NA","6":"24","7":"24"},{"1":"10504","2":"49","3":"47","4":"313","5":"1","6":"35","7":"4"},{"1":"10603","2":"1","3":"12","4":"297","5":"NA","6":"11","7":"NA"},{"1":"10702","2":"130","3":"51","4":"112","5":"NA","6":"13","7":"1"},{"1":"10801","2":"16","3":"48","4":"298","5":"NA","6":"39","7":"7"},{"1":"10900","2":"356","3":"24","4":"234","5":"NA","6":"3","7":"5"},{"1":"11007","2":"36","3":"52","4":"306","5":"NA","6":"20","7":"NA"},{"1":"11056","2":"3","3":"103","4":"225","5":"NA","6":"14","7":"1"},{"1":"11106","2":"1","3":"1","4":"295","5":"1","6":"29","7":"1"},{"1":"11205","2":"760","3":"21","4":"114","5":"4","6":"36","7":"25"},{"1":"11403","2":"342","3":"135","4":"170","5":"NA","6":"89","7":"73"},{"1":"11429","2":"155","3":"3","4":"77","5":"NA","6":"1","7":"NA"},{"1":"11502","2":"125","3":"7","4":"456","5":"2","6":"20","7":"7"},{"1":"11601","2":"3","3":"172","4":"76","5":"NA","6":"17","7":"3"},{"1":"11700","2":"188","3":"54","4":"29","5":"NA","6":"61","7":"13"},{"1":"11809","2":"4","3":"127","4":"191","5":"NA","6":"1","7":"12"},{"1":"11908","2":"NA","3":"NA","4":"372","5":"1","6":"19","7":"NA"},{"1":"12005","2":"980","3":"581","4":"760","5":"3","6":"31","7":"25"},{"1":"12104","2":"26","3":"2","4":"551","5":"2","6":"17","7":"15"},{"1":"12203","2":"22","3":"184","4":"820","5":"NA","6":"25","7":"18"},{"1":"12302","2":"196","3":"108","4":"336","5":"NA","6":"50","7":"5"},{"1":"12401","2":"265","3":"2","4":"137","5":"NA","6":"7","7":"NA"},{"1":"12500","2":"3","3":"18","4":"563","5":"NA","6":"25","7":"5"},{"1":"12559","2":"NA","3":"10","4":"335","5":"NA","6":"13","7":"19"},{"1":"12609","2":"513","3":"27","4":"325","5":"8","6":"23","7":"10"},{"1":"12708","2":"7","3":"10","4":"519","5":"1","6":"13","7":"17"},{"1":"12807","2":"269","3":"39","4":"108","5":"NA","6":"65","7":"4"},{"1":"12906","2":"173","3":"6","4":"354","5":"1","6":"76","7":"18"},{"1":"13003","2":"293","3":"68","4":"203","5":"2","6":"20","7":"13"},{"1":"13102","2":"1","3":"87","4":"383","5":"NA","6":"23","7":"20"},{"1":"13201","2":"2","3":"2","4":"328","5":"NA","6":"11","7":"2"},{"1":"13300","2":"12","3":"53","4":"411","5":"NA","6":"38","7":"19"},{"1":"13359","2":"3","3":"5","4":"521","5":"NA","6":"38","7":"1"},{"1":"13409","2":"410","3":"124","4":"140","5":"NA","6":"25","7":"25"},{"1":"13508","2":"8","3":"12","4":"525","5":"NA","6":"47","7":"8"},{"1":"13557","2":"2","3":"2","4":"425","5":"NA","6":"21","7":"2"},{"1":"13607","2":"15","3":"45","4":"460","5":"1","6":"43","7":"5"},{"1":"13706","2":"3","3":"62","4":"392","5":"NA","6":"25","7":"4"},{"1":"13805","2":"2","3":"2","4":"326","5":"NA","6":"17","7":"1"},{"1":"13904","2":"4","3":"33","4":"536","5":"NA","6":"33","7":"4"},{"1":"14001","2":"451","3":"160","4":"130","5":"1","6":"32","7":"19"},{"1":"14100","2":"145","3":"14","4":"166","5":"51","6":"135","7":"18"},{"1":"14159","2":"22","3":"12","4":"461","5":"NA","6":"16","7":"3"},{"1":"14209","2":"81","3":"48","4":"423","5":"NA","6":"17","7":"2"},{"1":"14308","2":"144","3":"183","4":"7","5":"NA","6":"2","7":"NA"},{"1":"14407","2":"81","3":"80","4":"550","5":"3","6":"46","7":"15"},{"1":"14456","2":"5","3":"NA","4":"218","5":"NA","6":"79","7":"2"},{"1":"14506","2":"2","3":"33","4":"556","5":"NA","6":"19","7":"1"},{"1":"14605","2":"6","3":"6","4":"614","5":"3","6":"40","7":"72"},{"1":"14704","2":"67","3":"NA","4":"397","5":"2","6":"18","7":"28"},{"1":"14753","2":"9","3":"6","4":"269","5":"NA","6":"35","7":"NA"},{"1":"14803","2":"9","3":"8","4":"484","5":"NA","6":"14","7":"25"},{"1":"14902","2":"172","3":"NA","4":"59","5":"NA","6":"3","7":"1"},{"1":"15008","2":"3","3":"2","4":"208","5":"NA","6":"9","7":"NA"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<div class="sourceCode" id="cb158"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb158-1" title="1"><span class="co"># de &quot;largo&quot; para &quot;longo&quot;</span></a>
+<a class="sourceLine" id="cb158-2" title="2">y <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">pivot_longer</span>(<span class="dt">cols =</span> <span class="op">-</span>V0002, <span class="dt">names_to =</span> <span class="st">&quot;V0207&quot;</span>, <span class="dt">values_to =</span> <span class="st">&quot;n&quot;</span>)</a></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["V0002"],"name":[1],"type":["chr"],"align":["left"]},{"label":["V0207"],"name":[2],"type":["chr"],"align":["left"]},{"label":["n"],"name":[3],"type":["int"],"align":["right"]}],"data":[{"1":"00109","2":"Rede geral","3":"522"},{"1":"00109","2":"Fossa sép.","3":"26"},{"1":"00109","2":"Fossa rude.","3":"98"},{"1":"00109","2":"Rio, Lago, Mar","3":"1"},{"1":"00109","2":"__NA__","3":"20"},{"1":"00109","2":"Vala","3":"NA"},{"1":"00208","2":"Rede geral","3":"23"},{"1":"00208","2":"Fossa sép.","3":"172"},{"1":"00208","2":"Fossa rude.","3":"1194"},{"1":"00208","2":"Rio, Lago, Mar","3":"NA"},{"1":"00208","2":"__NA__","3":"89"},{"1":"00208","2":"Vala","3":"18"},{"1":"00307","2":"Rede geral","3":"228"},{"1":"00307","2":"Fossa sép.","3":"66"},{"1":"00307","2":"Fossa rude.","3":"197"},{"1":"00307","2":"Rio, Lago, Mar","3":"NA"},{"1":"00307","2":"__NA__","3":"53"},{"1":"00307","2":"Vala","3":"9"},{"1":"00406","2":"Rede geral","3":"18"},{"1":"00406","2":"Fossa sép.","3":"1"},{"1":"00406","2":"Fossa rude.","3":"228"},{"1":"00406","2":"Rio, Lago, Mar","3":"NA"},{"1":"00406","2":"__NA__","3":"14"},{"1":"00406","2":"Vala","3":"NA"},{"1":"00505","2":"Rede geral","3":"402"},{"1":"00505","2":"Fossa sép.","3":"56"},{"1":"00505","2":"Fossa rude.","3":"174"},{"1":"00505","2":"Rio, Lago, Mar","3":"1"},{"1":"00505","2":"__NA__","3":"111"},{"1":"00505","2":"Vala","3":"29"},{"1":"00604","2":"Rede geral","3":"2"},{"1":"00604","2":"Fossa sép.","3":"56"},{"1":"00604","2":"Fossa rude.","3":"399"},{"1":"00604","2":"Rio, Lago, Mar","3":"NA"},{"1":"00604","2":"__NA__","3":"19"},{"1":"00604","2":"Vala","3":"1"},{"1":"00703","2":"Rede geral","3":"47"},{"1":"00703","2":"Fossa sép.","3":"13"},{"1":"00703","2":"Fossa rude.","3":"630"},{"1":"00703","2":"Rio, Lago, Mar","3":"NA"},{"1":"00703","2":"__NA__","3":"27"},{"1":"00703","2":"Vala","3":"3"},{"1":"00802","2":"Rede geral","3":"56"},{"1":"00802","2":"Fossa sép.","3":"195"},{"1":"00802","2":"Fossa rude.","3":"336"},{"1":"00802","2":"Rio, Lago, Mar","3":"3"},{"1":"00802","2":"__NA__","3":"53"},{"1":"00802","2":"Vala","3":"11"},{"1":"00901","2":"Rede geral","3":"167"},{"1":"00901","2":"Fossa sép.","3":"5"},{"1":"00901","2":"Fossa rude.","3":"452"},{"1":"00901","2":"Rio, Lago, Mar","3":"2"},{"1":"00901","2":"__NA__","3":"71"},{"1":"00901","2":"Vala","3":"5"},{"1":"01008","2":"Rede geral","3":"24"},{"1":"01008","2":"Fossa sép.","3":"90"},{"1":"01008","2":"Fossa rude.","3":"790"},{"1":"01008","2":"Rio, Lago, Mar","3":"NA"},{"1":"01008","2":"__NA__","3":"54"},{"1":"01008","2":"Vala","3":"26"},{"1":"01107","2":"Rede geral","3":"75"},{"1":"01107","2":"Fossa sép.","3":"135"},{"1":"01107","2":"Fossa rude.","3":"468"},{"1":"01107","2":"Rio, Lago, Mar","3":"3"},{"1":"01107","2":"__NA__","3":"22"},{"1":"01107","2":"Vala","3":"18"},{"1":"01206","2":"Rede geral","3":"67"},{"1":"01206","2":"Fossa sép.","3":"77"},{"1":"01206","2":"Fossa rude.","3":"517"},{"1":"01206","2":"Rio, Lago, Mar","3":"NA"},{"1":"01206","2":"__NA__","3":"25"},{"1":"01206","2":"Vala","3":"4"},{"1":"01305","2":"Rede geral","3":"4"},{"1":"01305","2":"Fossa sép.","3":"83"},{"1":"01305","2":"Fossa rude.","3":"304"},{"1":"01305","2":"Rio, Lago, Mar","3":"NA"},{"1":"01305","2":"__NA__","3":"119"},{"1":"01305","2":"Vala","3":"7"},{"1":"01404","2":"Rede geral","3":"1"},{"1":"01404","2":"Fossa sép.","3":"41"},{"1":"01404","2":"Fossa rude.","3":"375"},{"1":"01404","2":"Rio, Lago, Mar","3":"NA"},{"1":"01404","2":"__NA__","3":"15"},{"1":"01404","2":"Vala","3":"1"},{"1":"01453","2":"Rede geral","3":"5"},{"1":"01453","2":"Fossa sép.","3":"62"},{"1":"01453","2":"Fossa rude.","3":"571"},{"1":"01453","2":"Rio, Lago, Mar","3":"NA"},{"1":"01453","2":"__NA__","3":"19"},{"1":"01453","2":"Vala","3":"4"},{"1":"01503","2":"Rede geral","3":"1"},{"1":"01503","2":"Fossa sép.","3":"92"},{"1":"01503","2":"Fossa rude.","3":"241"},{"1":"01503","2":"Rio, Lago, Mar","3":"NA"},{"1":"01503","2":"__NA__","3":"17"},{"1":"01503","2":"Vala","3":"28"},{"1":"01602","2":"Rede geral","3":"6"},{"1":"01602","2":"Fossa sép.","3":"62"},{"1":"01602","2":"Fossa rude.","3":"325"},{"1":"01602","2":"Rio, Lago, Mar","3":"NA"},{"1":"01602","2":"__NA__","3":"16"},{"1":"01602","2":"Vala","3":"21"},{"1":"01651","2":"Rede geral","3":"3"},{"1":"01651","2":"Fossa sép.","3":"89"},{"1":"01651","2":"Fossa rude.","3":"115"},{"1":"01651","2":"Rio, Lago, Mar","3":"NA"},{"1":"01651","2":"__NA__","3":"29"},{"1":"01651","2":"Vala","3":"3"},{"1":"01701","2":"Rede geral","3":"NA"},{"1":"01701","2":"Fossa sép.","3":"60"},{"1":"01701","2":"Fossa rude.","3":"441"},{"1":"01701","2":"Rio, Lago, Mar","3":"NA"},{"1":"01701","2":"__NA__","3":"15"},{"1":"01701","2":"Vala","3":"7"},{"1":"01800","2":"Rede geral","3":"149"},{"1":"01800","2":"Fossa sép.","3":"60"},{"1":"01800","2":"Fossa rude.","3":"441"},{"1":"01800","2":"Rio, Lago, Mar","3":"NA"},{"1":"01800","2":"__NA__","3":"8"},{"1":"01800","2":"Vala","3":"NA"},{"1":"01859","2":"Rede geral","3":"7"},{"1":"01859","2":"Fossa sép.","3":"206"},{"1":"01859","2":"Fossa rude.","3":"292"},{"1":"01859","2":"Rio, Lago, Mar","3":"NA"},{"1":"01859","2":"__NA__","3":"19"},{"1":"01859","2":"Vala","3":"2"},{"1":"01909","2":"Rede geral","3":"79"},{"1":"01909","2":"Fossa sép.","3":"92"},{"1":"01909","2":"Fossa rude.","3":"110"},{"1":"01909","2":"Rio, Lago, Mar","3":"NA"},{"1":"01909","2":"__NA__","3":"11"},{"1":"01909","2":"Vala","3":"NA"},{"1":"02006","2":"Rede geral","3":"1311"},{"1":"02006","2":"Fossa sép.","3":"110"},{"1":"02006","2":"Fossa rude.","3":"346"},{"1":"02006","2":"Rio, Lago, Mar","3":"11"},{"1":"02006","2":"__NA__","3":"74"},{"1":"02006","2":"Vala","3":"18"},{"1":"02105","2":"Rede geral","3":"217"},{"1":"02105","2":"Fossa sép.","3":"47"},{"1":"02105","2":"Fossa rude.","3":"253"},{"1":"02105","2":"Rio, Lago, Mar","3":"1"},{"1":"02105","2":"__NA__","3":"38"},{"1":"02105","2":"Vala","3":"12"},{"1":"02204","2":"Rede geral","3":"22"},{"1":"02204","2":"Fossa sép.","3":"24"},{"1":"02204","2":"Fossa rude.","3":"597"},{"1":"02204","2":"Rio, Lago, Mar","3":"8"},{"1":"02204","2":"__NA__","3":"34"},{"1":"02204","2":"Vala","3":"51"},{"1":"02303","2":"Rede geral","3":"41"},{"1":"02303","2":"Fossa sép.","3":"46"},{"1":"02303","2":"Fossa rude.","3":"411"},{"1":"02303","2":"Rio, Lago, Mar","3":"NA"},{"1":"02303","2":"__NA__","3":"47"},{"1":"02303","2":"Vala","3":"41"},{"1":"02402","2":"Rede geral","3":"123"},{"1":"02402","2":"Fossa sép.","3":"6"},{"1":"02402","2":"Fossa rude.","3":"601"},{"1":"02402","2":"Rio, Lago, Mar","3":"NA"},{"1":"02402","2":"__NA__","3":"14"},{"1":"02402","2":"Vala","3":"7"},{"1":"02501","2":"Rede geral","3":"158"},{"1":"02501","2":"Fossa sép.","3":"92"},{"1":"02501","2":"Fossa rude.","3":"222"},{"1":"02501","2":"Rio, Lago, Mar","3":"NA"},{"1":"02501","2":"__NA__","3":"62"},{"1":"02501","2":"Vala","3":"18"},{"1":"02600","2":"Rede geral","3":"477"},{"1":"02600","2":"Fossa sép.","3":"495"},{"1":"02600","2":"Fossa rude.","3":"653"},{"1":"02600","2":"Rio, Lago, Mar","3":"NA"},{"1":"02600","2":"__NA__","3":"52"},{"1":"02600","2":"Vala","3":"31"},{"1":"02709","2":"Rede geral","3":"25"},{"1":"02709","2":"Fossa sép.","3":"9"},{"1":"02709","2":"Fossa rude.","3":"514"},{"1":"02709","2":"Rio, Lago, Mar","3":"7"},{"1":"02709","2":"__NA__","3":"33"},{"1":"02709","2":"Vala","3":"21"},{"1":"02808","2":"Rede geral","3":"23"},{"1":"02808","2":"Fossa sép.","3":"90"},{"1":"02808","2":"Fossa rude.","3":"268"},{"1":"02808","2":"Rio, Lago, Mar","3":"7"},{"1":"02808","2":"__NA__","3":"75"},{"1":"02808","2":"Vala","3":"62"},{"1":"02907","2":"Rede geral","3":"NA"},{"1":"02907","2":"Fossa sép.","3":"2"},{"1":"02907","2":"Fossa rude.","3":"338"},{"1":"02907","2":"Rio, Lago, Mar","3":"NA"},{"1":"02907","2":"__NA__","3":"76"},{"1":"02907","2":"Vala","3":"4"},{"1":"03004","2":"Rede geral","3":"285"},{"1":"03004","2":"Fossa sép.","3":"39"},{"1":"03004","2":"Fossa rude.","3":"135"},{"1":"03004","2":"Rio, Lago, Mar","3":"NA"},{"1":"03004","2":"__NA__","3":"22"},{"1":"03004","2":"Vala","3":"8"},{"1":"03103","2":"Rede geral","3":"992"},{"1":"03103","2":"Fossa sép.","3":"45"},{"1":"03103","2":"Fossa rude.","3":"133"},{"1":"03103","2":"Rio, Lago, Mar","3":"1"},{"1":"03103","2":"__NA__","3":"45"},{"1":"03103","2":"Vala","3":"32"},{"1":"03202","2":"Rede geral","3":"158"},{"1":"03202","2":"Fossa sép.","3":"3"},{"1":"03202","2":"Fossa rude.","3":"360"},{"1":"03202","2":"Rio, Lago, Mar","3":"NA"},{"1":"03202","2":"__NA__","3":"69"},{"1":"03202","2":"Vala","3":"NA"},{"1":"03251","2":"Rede geral","3":"205"},{"1":"03251","2":"Fossa sép.","3":"3094"},{"1":"03251","2":"Fossa rude.","3":"2394"},{"1":"03251","2":"Rio, Lago, Mar","3":"1"},{"1":"03251","2":"__NA__","3":"111"},{"1":"03251","2":"Vala","3":"17"},{"1":"03301","2":"Rede geral","3":"49"},{"1":"03301","2":"Fossa sép.","3":"25"},{"1":"03301","2":"Fossa rude.","3":"394"},{"1":"03301","2":"Rio, Lago, Mar","3":"NA"},{"1":"03301","2":"__NA__","3":"23"},{"1":"03301","2":"Vala","3":"3"},{"1":"03400","2":"Rede geral","3":"271"},{"1":"03400","2":"Fossa sép.","3":"20"},{"1":"03400","2":"Fossa rude.","3":"242"},{"1":"03400","2":"Rio, Lago, Mar","3":"4"},{"1":"03400","2":"__NA__","3":"21"},{"1":"03400","2":"Vala","3":"17"},{"1":"03509","2":"Rede geral","3":"81"},{"1":"03509","2":"Fossa sép.","3":"23"},{"1":"03509","2":"Fossa rude.","3":"430"},{"1":"03509","2":"Rio, Lago, Mar","3":"6"},{"1":"03509","2":"__NA__","3":"25"},{"1":"03509","2":"Vala","3":"11"},{"1":"03608","2":"Rede geral","3":"2"},{"1":"03608","2":"Fossa sép.","3":"233"},{"1":"03608","2":"Fossa rude.","3":"373"},{"1":"03608","2":"Rio, Lago, Mar","3":"NA"},{"1":"03608","2":"__NA__","3":"11"},{"1":"03608","2":"Vala","3":"7"},{"1":"03707","2":"Rede geral","3":"3"},{"1":"03707","2":"Fossa sép.","3":"21"},{"1":"03707","2":"Fossa rude.","3":"464"},{"1":"03707","2":"Rio, Lago, Mar","3":"NA"},{"1":"03707","2":"__NA__","3":"61"},{"1":"03707","2":"Vala","3":"9"},{"1":"03756","2":"Rede geral","3":"NA"},{"1":"03756","2":"Fossa sép.","3":"16"},{"1":"03756","2":"Fossa rude.","3":"244"},{"1":"03756","2":"Rio, Lago, Mar","3":"NA"},{"1":"03756","2":"__NA__","3":"18"},{"1":"03756","2":"Vala","3":"3"},{"1":"03806","2":"Rede geral","3":"340"},{"1":"03806","2":"Fossa sép.","3":"36"},{"1":"03806","2":"Fossa rude.","3":"113"},{"1":"03806","2":"Rio, Lago, Mar","3":"NA"},{"1":"03806","2":"__NA__","3":"10"},{"1":"03806","2":"Vala","3":"13"},{"1":"03905","2":"Rede geral","3":"6"},{"1":"03905","2":"Fossa sép.","3":"NA"},{"1":"03905","2":"Fossa rude.","3":"248"},{"1":"03905","2":"Rio, Lago, Mar","3":"NA"},{"1":"03905","2":"__NA__","3":"19"},{"1":"03905","2":"Vala","3":"5"},{"1":"04002","2":"Rede geral","3":"7"},{"1":"04002","2":"Fossa sép.","3":"1"},{"1":"04002","2":"Fossa rude.","3":"408"},{"1":"04002","2":"Rio, Lago, Mar","3":"NA"},{"1":"04002","2":"__NA__","3":"13"},{"1":"04002","2":"Vala","3":"NA"},{"1":"04101","2":"Rede geral","3":"NA"},{"1":"04101","2":"Fossa sép.","3":"1"},{"1":"04101","2":"Fossa rude.","3":"255"},{"1":"04101","2":"Rio, Lago, Mar","3":"NA"},{"1":"04101","2":"__NA__","3":"22"},{"1":"04101","2":"Vala","3":"NA"},{"1":"04200","2":"Rede geral","3":"104"},{"1":"04200","2":"Fossa sép.","3":"123"},{"1":"04200","2":"Fossa rude.","3":"297"},{"1":"04200","2":"Rio, Lago, Mar","3":"2"},{"1":"04200","2":"__NA__","3":"17"},{"1":"04200","2":"Vala","3":"11"},{"1":"04309","2":"Rede geral","3":"3"},{"1":"04309","2":"Fossa sép.","3":"213"},{"1":"04309","2":"Fossa rude.","3":"369"},{"1":"04309","2":"Rio, Lago, Mar","3":"NA"},{"1":"04309","2":"__NA__","3":"75"},{"1":"04309","2":"Vala","3":"17"},{"1":"04408","2":"Rede geral","3":"NA"},{"1":"04408","2":"Fossa sép.","3":"97"},{"1":"04408","2":"Fossa rude.","3":"416"},{"1":"04408","2":"Rio, Lago, Mar","3":"NA"},{"1":"04408","2":"__NA__","3":"32"},{"1":"04408","2":"Vala","3":"3"},{"1":"04507","2":"Rede geral","3":"213"},{"1":"04507","2":"Fossa sép.","3":"47"},{"1":"04507","2":"Fossa rude.","3":"352"},{"1":"04507","2":"Rio, Lago, Mar","3":"NA"},{"1":"04507","2":"__NA__","3":"13"},{"1":"04507","2":"Vala","3":"37"},{"1":"04606","2":"Rede geral","3":"25"},{"1":"04606","2":"Fossa sép.","3":"98"},{"1":"04606","2":"Fossa rude.","3":"471"},{"1":"04606","2":"Rio, Lago, Mar","3":"NA"},{"1":"04606","2":"__NA__","3":"51"},{"1":"04606","2":"Vala","3":"1"},{"1":"04705","2":"Rede geral","3":"5"},{"1":"04705","2":"Fossa sép.","3":"137"},{"1":"04705","2":"Fossa rude.","3":"541"},{"1":"04705","2":"Rio, Lago, Mar","3":"NA"},{"1":"04705","2":"__NA__","3":"60"},{"1":"04705","2":"Vala","3":"13"},{"1":"04804","2":"Rede geral","3":"4"},{"1":"04804","2":"Fossa sép.","3":"NA"},{"1":"04804","2":"Fossa rude.","3":"319"},{"1":"04804","2":"Rio, Lago, Mar","3":"NA"},{"1":"04804","2":"__NA__","3":"NA"},{"1":"04804","2":"Vala","3":"2"},{"1":"04853","2":"Rede geral","3":"11"},{"1":"04853","2":"Fossa sép.","3":"91"},{"1":"04853","2":"Fossa rude.","3":"382"},{"1":"04853","2":"Rio, Lago, Mar","3":"NA"},{"1":"04853","2":"__NA__","3":"95"},{"1":"04853","2":"Vala","3":"25"},{"1":"04903","2":"Rede geral","3":"3"},{"1":"04903","2":"Fossa sép.","3":"13"},{"1":"04903","2":"Fossa rude.","3":"520"},{"1":"04903","2":"Rio, Lago, Mar","3":"NA"},{"1":"04903","2":"__NA__","3":"19"},{"1":"04903","2":"Vala","3":"1"},{"1":"05009","2":"Rede geral","3":"1"},{"1":"05009","2":"Fossa sép.","3":"1"},{"1":"05009","2":"Fossa rude.","3":"435"},{"1":"05009","2":"Rio, Lago, Mar","3":"NA"},{"1":"05009","2":"__NA__","3":"20"},{"1":"05009","2":"Vala","3":"NA"},{"1":"05108","2":"Rede geral","3":"3"},{"1":"05108","2":"Fossa sép.","3":"85"},{"1":"05108","2":"Fossa rude.","3":"485"},{"1":"05108","2":"Rio, Lago, Mar","3":"NA"},{"1":"05108","2":"__NA__","3":"34"},{"1":"05108","2":"Vala","3":"11"},{"1":"05207","2":"Rede geral","3":"58"},{"1":"05207","2":"Fossa sép.","3":"145"},{"1":"05207","2":"Fossa rude.","3":"260"},{"1":"05207","2":"Rio, Lago, Mar","3":"NA"},{"1":"05207","2":"__NA__","3":"32"},{"1":"05207","2":"Vala","3":"12"},{"1":"05306","2":"Rede geral","3":"54"},{"1":"05306","2":"Fossa sép.","3":"8"},{"1":"05306","2":"Fossa rude.","3":"387"},{"1":"05306","2":"Rio, Lago, Mar","3":"1"},{"1":"05306","2":"__NA__","3":"29"},{"1":"05306","2":"Vala","3":"6"},{"1":"05405","2":"Rede geral","3":"270"},{"1":"05405","2":"Fossa sép.","3":"7"},{"1":"05405","2":"Fossa rude.","3":"157"},{"1":"05405","2":"Rio, Lago, Mar","3":"15"},{"1":"05405","2":"__NA__","3":"57"},{"1":"05405","2":"Vala","3":"21"},{"1":"05504","2":"Rede geral","3":"6"},{"1":"05504","2":"Fossa sép.","3":"17"},{"1":"05504","2":"Fossa rude.","3":"211"},{"1":"05504","2":"Rio, Lago, Mar","3":"NA"},{"1":"05504","2":"__NA__","3":"7"},{"1":"05504","2":"Vala","3":"2"},{"1":"05603","2":"Rede geral","3":"45"},{"1":"05603","2":"Fossa sép.","3":"127"},{"1":"05603","2":"Fossa rude.","3":"543"},{"1":"05603","2":"Rio, Lago, Mar","3":"2"},{"1":"05603","2":"__NA__","3":"48"},{"1":"05603","2":"Vala","3":"17"},{"1":"05702","2":"Rede geral","3":"418"},{"1":"05702","2":"Fossa sép.","3":"155"},{"1":"05702","2":"Fossa rude.","3":"158"},{"1":"05702","2":"Rio, Lago, Mar","3":"3"},{"1":"05702","2":"__NA__","3":"24"},{"1":"05702","2":"Vala","3":"7"},{"1":"05801","2":"Rede geral","3":"112"},{"1":"05801","2":"Fossa sép.","3":"42"},{"1":"05801","2":"Fossa rude.","3":"612"},{"1":"05801","2":"Rio, Lago, Mar","3":"NA"},{"1":"05801","2":"__NA__","3":"42"},{"1":"05801","2":"Vala","3":"22"},{"1":"05900","2":"Rede geral","3":"57"},{"1":"05900","2":"Fossa sép.","3":"36"},{"1":"05900","2":"Fossa rude.","3":"150"},{"1":"05900","2":"Rio, Lago, Mar","3":"2"},{"1":"05900","2":"__NA__","3":"6"},{"1":"05900","2":"Vala","3":"3"},{"1":"06007","2":"Rede geral","3":"64"},{"1":"06007","2":"Fossa sép.","3":"77"},{"1":"06007","2":"Fossa rude.","3":"443"},{"1":"06007","2":"Rio, Lago, Mar","3":"NA"},{"1":"06007","2":"__NA__","3":"25"},{"1":"06007","2":"Vala","3":"6"},{"1":"06106","2":"Rede geral","3":"224"},{"1":"06106","2":"Fossa sép.","3":"117"},{"1":"06106","2":"Fossa rude.","3":"566"},{"1":"06106","2":"Rio, Lago, Mar","3":"NA"},{"1":"06106","2":"__NA__","3":"119"},{"1":"06106","2":"Vala","3":"41"},{"1":"06155","2":"Rede geral","3":"NA"},{"1":"06155","2":"Fossa sép.","3":"17"},{"1":"06155","2":"Fossa rude.","3":"303"},{"1":"06155","2":"Rio, Lago, Mar","3":"NA"},{"1":"06155","2":"__NA__","3":"23"},{"1":"06155","2":"Vala","3":"NA"},{"1":"06205","2":"Rede geral","3":"5"},{"1":"06205","2":"Fossa sép.","3":"36"},{"1":"06205","2":"Fossa rude.","3":"482"},{"1":"06205","2":"Rio, Lago, Mar","3":"1"},{"1":"06205","2":"__NA__","3":"30"},{"1":"06205","2":"Vala","3":"7"},{"1":"06304","2":"Rede geral","3":"4"},{"1":"06304","2":"Fossa sép.","3":"54"},{"1":"06304","2":"Fossa rude.","3":"548"},{"1":"06304","2":"Rio, Lago, Mar","3":"NA"},{"1":"06304","2":"__NA__","3":"34"},{"1":"06304","2":"Vala","3":"8"},{"1":"06403","2":"Rede geral","3":"3"},{"1":"06403","2":"Fossa sép.","3":"43"},{"1":"06403","2":"Fossa rude.","3":"196"},{"1":"06403","2":"Rio, Lago, Mar","3":"NA"},{"1":"06403","2":"__NA__","3":"8"},{"1":"06403","2":"Vala","3":"NA"},{"1":"06502","2":"Rede geral","3":"248"},{"1":"06502","2":"Fossa sép.","3":"90"},{"1":"06502","2":"Fossa rude.","3":"356"},{"1":"06502","2":"Rio, Lago, Mar","3":"1"},{"1":"06502","2":"__NA__","3":"27"},{"1":"06502","2":"Vala","3":"7"},{"1":"06601","2":"Rede geral","3":"4"},{"1":"06601","2":"Fossa sép.","3":"12"},{"1":"06601","2":"Fossa rude.","3":"662"},{"1":"06601","2":"Rio, Lago, Mar","3":"NA"},{"1":"06601","2":"__NA__","3":"22"},{"1":"06601","2":"Vala","3":"2"},{"1":"06700","2":"Rede geral","3":"335"},{"1":"06700","2":"Fossa sép.","3":"33"},{"1":"06700","2":"Fossa rude.","3":"193"},{"1":"06700","2":"Rio, Lago, Mar","3":"2"},{"1":"06700","2":"__NA__","3":"26"},{"1":"06700","2":"Vala","3":"1"},{"1":"06809","2":"Rede geral","3":"150"},{"1":"06809","2":"Fossa sép.","3":"NA"},{"1":"06809","2":"Fossa rude.","3":"249"},{"1":"06809","2":"Rio, Lago, Mar","3":"NA"},{"1":"06809","2":"__NA__","3":"37"},{"1":"06809","2":"Vala","3":"5"},{"1":"06908","2":"Rede geral","3":"223"},{"1":"06908","2":"Fossa sép.","3":"43"},{"1":"06908","2":"Fossa rude.","3":"95"},{"1":"06908","2":"Rio, Lago, Mar","3":"NA"},{"1":"06908","2":"__NA__","3":"3"},{"1":"06908","2":"Vala","3":"1"},{"1":"07005","2":"Rede geral","3":"19"},{"1":"07005","2":"Fossa sép.","3":"2"},{"1":"07005","2":"Fossa rude.","3":"405"},{"1":"07005","2":"Rio, Lago, Mar","3":"NA"},{"1":"07005","2":"__NA__","3":"79"},{"1":"07005","2":"Vala","3":"8"},{"1":"07104","2":"Rede geral","3":"140"},{"1":"07104","2":"Fossa sép.","3":"253"},{"1":"07104","2":"Fossa rude.","3":"1420"},{"1":"07104","2":"Rio, Lago, Mar","3":"11"},{"1":"07104","2":"__NA__","3":"54"},{"1":"07104","2":"Vala","3":"31"},{"1":"07203","2":"Rede geral","3":"563"},{"1":"07203","2":"Fossa sép.","3":"34"},{"1":"07203","2":"Fossa rude.","3":"202"},{"1":"07203","2":"Rio, Lago, Mar","3":"5"},{"1":"07203","2":"__NA__","3":"34"},{"1":"07203","2":"Vala","3":"5"},{"1":"07252","2":"Rede geral","3":"7"},{"1":"07252","2":"Fossa sép.","3":"60"},{"1":"07252","2":"Fossa rude.","3":"260"},{"1":"07252","2":"Rio, Lago, Mar","3":"NA"},{"1":"07252","2":"__NA__","3":"4"},{"1":"07252","2":"Vala","3":"1"},{"1":"07302","2":"Rede geral","3":"78"},{"1":"07302","2":"Fossa sép.","3":"66"},{"1":"07302","2":"Fossa rude.","3":"252"},{"1":"07302","2":"Rio, Lago, Mar","3":"5"},{"1":"07302","2":"__NA__","3":"49"},{"1":"07302","2":"Vala","3":"27"},{"1":"07401","2":"Rede geral","3":"NA"},{"1":"07401","2":"Fossa sép.","3":"NA"},{"1":"07401","2":"Fossa rude.","3":"468"},{"1":"07401","2":"Rio, Lago, Mar","3":"NA"},{"1":"07401","2":"__NA__","3":"10"},{"1":"07401","2":"Vala","3":"3"},{"1":"07500","2":"Rede geral","3":"14"},{"1":"07500","2":"Fossa sép.","3":"15"},{"1":"07500","2":"Fossa rude.","3":"476"},{"1":"07500","2":"Rio, Lago, Mar","3":"NA"},{"1":"07500","2":"__NA__","3":"20"},{"1":"07500","2":"Vala","3":"1"},{"1":"07609","2":"Rede geral","3":"NA"},{"1":"07609","2":"Fossa sép.","3":"67"},{"1":"07609","2":"Fossa rude.","3":"299"},{"1":"07609","2":"Rio, Lago, Mar","3":"NA"},{"1":"07609","2":"__NA__","3":"26"},{"1":"07609","2":"Vala","3":"2"},{"1":"07708","2":"Rede geral","3":"6"},{"1":"07708","2":"Fossa sép.","3":"25"},{"1":"07708","2":"Fossa rude.","3":"548"},{"1":"07708","2":"Rio, Lago, Mar","3":"1"},{"1":"07708","2":"__NA__","3":"26"},{"1":"07708","2":"Vala","3":"14"},{"1":"07807","2":"Rede geral","3":"40"},{"1":"07807","2":"Fossa sép.","3":"102"},{"1":"07807","2":"Fossa rude.","3":"392"},{"1":"07807","2":"Rio, Lago, Mar","3":"NA"},{"1":"07807","2":"__NA__","3":"9"},{"1":"07807","2":"Vala","3":"11"},{"1":"07906","2":"Rede geral","3":"80"},{"1":"07906","2":"Fossa sép.","3":"2"},{"1":"07906","2":"Fossa rude.","3":"224"},{"1":"07906","2":"Rio, Lago, Mar","3":"2"},{"1":"07906","2":"__NA__","3":"18"},{"1":"07906","2":"Vala","3":"7"},{"1":"08003","2":"Rede geral","3":"2854"},{"1":"08003","2":"Fossa sép.","3":"1795"},{"1":"08003","2":"Fossa rude.","3":"2315"},{"1":"08003","2":"Rio, Lago, Mar","3":"12"},{"1":"08003","2":"__NA__","3":"215"},{"1":"08003","2":"Vala","3":"29"},{"1":"08102","2":"Rede geral","3":"3631"},{"1":"08102","2":"Fossa sép.","3":"3572"},{"1":"08102","2":"Fossa rude.","3":"3981"},{"1":"08102","2":"Rio, Lago, Mar","3":"68"},{"1":"08102","2":"__NA__","3":"152"},{"1":"08102","2":"Vala","3":"63"},{"1":"08201","2":"Rede geral","3":"5"},{"1":"08201","2":"Fossa sép.","3":"123"},{"1":"08201","2":"Fossa rude.","3":"488"},{"1":"08201","2":"Rio, Lago, Mar","3":"NA"},{"1":"08201","2":"__NA__","3":"67"},{"1":"08201","2":"Vala","3":"3"},{"1":"08300","2":"Rede geral","3":"111"},{"1":"08300","2":"Fossa sép.","3":"31"},{"1":"08300","2":"Fossa rude.","3":"697"},{"1":"08300","2":"Rio, Lago, Mar","3":"11"},{"1":"08300","2":"__NA__","3":"80"},{"1":"08300","2":"Vala","3":"53"},{"1":"08409","2":"Rede geral","3":"8"},{"1":"08409","2":"Fossa sép.","3":"7"},{"1":"08409","2":"Fossa rude.","3":"379"},{"1":"08409","2":"Rio, Lago, Mar","3":"NA"},{"1":"08409","2":"__NA__","3":"38"},{"1":"08409","2":"Vala","3":"NA"},{"1":"08508","2":"Rede geral","3":"75"},{"1":"08508","2":"Fossa sép.","3":"2"},{"1":"08508","2":"Fossa rude.","3":"374"},{"1":"08508","2":"Rio, Lago, Mar","3":"NA"},{"1":"08508","2":"__NA__","3":"8"},{"1":"08508","2":"Vala","3":"5"},{"1":"08607","2":"Rede geral","3":"5"},{"1":"08607","2":"Fossa sép.","3":"3"},{"1":"08607","2":"Fossa rude.","3":"293"},{"1":"08607","2":"Rio, Lago, Mar","3":"1"},{"1":"08607","2":"__NA__","3":"29"},{"1":"08607","2":"Vala","3":"48"},{"1":"08706","2":"Rede geral","3":"44"},{"1":"08706","2":"Fossa sép.","3":"29"},{"1":"08706","2":"Fossa rude.","3":"228"},{"1":"08706","2":"Rio, Lago, Mar","3":"NA"},{"1":"08706","2":"__NA__","3":"36"},{"1":"08706","2":"Vala","3":"37"},{"1":"08805","2":"Rede geral","3":"180"},{"1":"08805","2":"Fossa sép.","3":"1"},{"1":"08805","2":"Fossa rude.","3":"203"},{"1":"08805","2":"Rio, Lago, Mar","3":"NA"},{"1":"08805","2":"__NA__","3":"14"},{"1":"08805","2":"Vala","3":"2"},{"1":"08904","2":"Rede geral","3":"432"},{"1":"08904","2":"Fossa sép.","3":"3"},{"1":"08904","2":"Fossa rude.","3":"160"},{"1":"08904","2":"Rio, Lago, Mar","3":"1"},{"1":"08904","2":"__NA__","3":"11"},{"1":"08904","2":"Vala","3":"3"},{"1":"08953","2":"Rede geral","3":"1"},{"1":"08953","2":"Fossa sép.","3":"2"},{"1":"08953","2":"Fossa rude.","3":"452"},{"1":"08953","2":"Rio, Lago, Mar","3":"NA"},{"1":"08953","2":"__NA__","3":"29"},{"1":"08953","2":"Vala","3":"5"},{"1":"09100","2":"Rede geral","3":"353"},{"1":"09100","2":"Fossa sép.","3":"5"},{"1":"09100","2":"Fossa rude.","3":"240"},{"1":"09100","2":"Rio, Lago, Mar","3":"NA"},{"1":"09100","2":"__NA__","3":"12"},{"1":"09100","2":"Vala","3":"6"},{"1":"09209","2":"Rede geral","3":"19"},{"1":"09209","2":"Fossa sép.","3":"NA"},{"1":"09209","2":"Fossa rude.","3":"259"},{"1":"09209","2":"Rio, Lago, Mar","3":"NA"},{"1":"09209","2":"__NA__","3":"5"},{"1":"09209","2":"Vala","3":"1"},{"1":"09308","2":"Rede geral","3":"40"},{"1":"09308","2":"Fossa sép.","3":"122"},{"1":"09308","2":"Fossa rude.","3":"457"},{"1":"09308","2":"Rio, Lago, Mar","3":"NA"},{"1":"09308","2":"__NA__","3":"57"},{"1":"09308","2":"Vala","3":"51"},{"1":"09332","2":"Rede geral","3":"3"},{"1":"09332","2":"Fossa sép.","3":"1"},{"1":"09332","2":"Fossa rude.","3":"431"},{"1":"09332","2":"Rio, Lago, Mar","3":"NA"},{"1":"09332","2":"__NA__","3":"12"},{"1":"09332","2":"Vala","3":"1"},{"1":"09407","2":"Rede geral","3":"340"},{"1":"09407","2":"Fossa sép.","3":"134"},{"1":"09407","2":"Fossa rude.","3":"294"},{"1":"09407","2":"Rio, Lago, Mar","3":"3"},{"1":"09407","2":"__NA__","3":"31"},{"1":"09407","2":"Vala","3":"15"},{"1":"09506","2":"Rede geral","3":"2"},{"1":"09506","2":"Fossa sép.","3":"7"},{"1":"09506","2":"Fossa rude.","3":"279"},{"1":"09506","2":"Rio, Lago, Mar","3":"NA"},{"1":"09506","2":"__NA__","3":"10"},{"1":"09506","2":"Vala","3":"1"},{"1":"09605","2":"Rede geral","3":"2"},{"1":"09605","2":"Fossa sép.","3":"8"},{"1":"09605","2":"Fossa rude.","3":"165"},{"1":"09605","2":"Rio, Lago, Mar","3":"NA"},{"1":"09605","2":"__NA__","3":"36"},{"1":"09605","2":"Vala","3":"2"},{"1":"09704","2":"Rede geral","3":"264"},{"1":"09704","2":"Fossa sép.","3":"63"},{"1":"09704","2":"Fossa rude.","3":"247"},{"1":"09704","2":"Rio, Lago, Mar","3":"NA"},{"1":"09704","2":"__NA__","3":"29"},{"1":"09704","2":"Vala","3":"27"},{"1":"09803","2":"Rede geral","3":"262"},{"1":"09803","2":"Fossa sép.","3":"6"},{"1":"09803","2":"Fossa rude.","3":"392"},{"1":"09803","2":"Rio, Lago, Mar","3":"1"},{"1":"09803","2":"__NA__","3":"86"},{"1":"09803","2":"Vala","3":"11"},{"1":"09902","2":"Rede geral","3":"235"},{"1":"09902","2":"Fossa sép.","3":"225"},{"1":"09902","2":"Fossa rude.","3":"275"},{"1":"09902","2":"Rio, Lago, Mar","3":"NA"},{"1":"09902","2":"__NA__","3":"13"},{"1":"09902","2":"Vala","3":"NA"},{"1":"10009","2":"Rede geral","3":"13"},{"1":"10009","2":"Fossa sép.","3":"64"},{"1":"10009","2":"Fossa rude.","3":"182"},{"1":"10009","2":"Rio, Lago, Mar","3":"NA"},{"1":"10009","2":"__NA__","3":"25"},{"1":"10009","2":"Vala","3":"40"},{"1":"10108","2":"Rede geral","3":"7"},{"1":"10108","2":"Fossa sép.","3":"48"},{"1":"10108","2":"Fossa rude.","3":"604"},{"1":"10108","2":"Rio, Lago, Mar","3":"NA"},{"1":"10108","2":"__NA__","3":"23"},{"1":"10108","2":"Vala","3":"2"},{"1":"10207","2":"Rede geral","3":"NA"},{"1":"10207","2":"Fossa sép.","3":"12"},{"1":"10207","2":"Fossa rude.","3":"655"},{"1":"10207","2":"Rio, Lago, Mar","3":"NA"},{"1":"10207","2":"__NA__","3":"39"},{"1":"10207","2":"Vala","3":"6"},{"1":"10256","2":"Rede geral","3":"NA"},{"1":"10256","2":"Fossa sép.","3":"NA"},{"1":"10256","2":"Fossa rude.","3":"446"},{"1":"10256","2":"Rio, Lago, Mar","3":"3"},{"1":"10256","2":"__NA__","3":"29"},{"1":"10256","2":"Vala","3":"2"},{"1":"10306","2":"Rede geral","3":"65"},{"1":"10306","2":"Fossa sép.","3":"70"},{"1":"10306","2":"Fossa rude.","3":"300"},{"1":"10306","2":"Rio, Lago, Mar","3":"NA"},{"1":"10306","2":"__NA__","3":"15"},{"1":"10306","2":"Vala","3":"5"},{"1":"10405","2":"Rede geral","3":"3"},{"1":"10405","2":"Fossa sép.","3":"2"},{"1":"10405","2":"Fossa rude.","3":"374"},{"1":"10405","2":"Rio, Lago, Mar","3":"NA"},{"1":"10405","2":"__NA__","3":"24"},{"1":"10405","2":"Vala","3":"24"},{"1":"10504","2":"Rede geral","3":"49"},{"1":"10504","2":"Fossa sép.","3":"47"},{"1":"10504","2":"Fossa rude.","3":"313"},{"1":"10504","2":"Rio, Lago, Mar","3":"1"},{"1":"10504","2":"__NA__","3":"35"},{"1":"10504","2":"Vala","3":"4"},{"1":"10603","2":"Rede geral","3":"1"},{"1":"10603","2":"Fossa sép.","3":"12"},{"1":"10603","2":"Fossa rude.","3":"297"},{"1":"10603","2":"Rio, Lago, Mar","3":"NA"},{"1":"10603","2":"__NA__","3":"11"},{"1":"10603","2":"Vala","3":"NA"},{"1":"10702","2":"Rede geral","3":"130"},{"1":"10702","2":"Fossa sép.","3":"51"},{"1":"10702","2":"Fossa rude.","3":"112"},{"1":"10702","2":"Rio, Lago, Mar","3":"NA"},{"1":"10702","2":"__NA__","3":"13"},{"1":"10702","2":"Vala","3":"1"},{"1":"10801","2":"Rede geral","3":"16"},{"1":"10801","2":"Fossa sép.","3":"48"},{"1":"10801","2":"Fossa rude.","3":"298"},{"1":"10801","2":"Rio, Lago, Mar","3":"NA"},{"1":"10801","2":"__NA__","3":"39"},{"1":"10801","2":"Vala","3":"7"},{"1":"10900","2":"Rede geral","3":"356"},{"1":"10900","2":"Fossa sép.","3":"24"},{"1":"10900","2":"Fossa rude.","3":"234"},{"1":"10900","2":"Rio, Lago, Mar","3":"NA"},{"1":"10900","2":"__NA__","3":"3"},{"1":"10900","2":"Vala","3":"5"},{"1":"11007","2":"Rede geral","3":"36"},{"1":"11007","2":"Fossa sép.","3":"52"},{"1":"11007","2":"Fossa rude.","3":"306"},{"1":"11007","2":"Rio, Lago, Mar","3":"NA"},{"1":"11007","2":"__NA__","3":"20"},{"1":"11007","2":"Vala","3":"NA"},{"1":"11056","2":"Rede geral","3":"3"},{"1":"11056","2":"Fossa sép.","3":"103"},{"1":"11056","2":"Fossa rude.","3":"225"},{"1":"11056","2":"Rio, Lago, Mar","3":"NA"},{"1":"11056","2":"__NA__","3":"14"},{"1":"11056","2":"Vala","3":"1"},{"1":"11106","2":"Rede geral","3":"1"},{"1":"11106","2":"Fossa sép.","3":"1"},{"1":"11106","2":"Fossa rude.","3":"295"},{"1":"11106","2":"Rio, Lago, Mar","3":"1"},{"1":"11106","2":"__NA__","3":"29"},{"1":"11106","2":"Vala","3":"1"},{"1":"11205","2":"Rede geral","3":"760"},{"1":"11205","2":"Fossa sép.","3":"21"},{"1":"11205","2":"Fossa rude.","3":"114"},{"1":"11205","2":"Rio, Lago, Mar","3":"4"},{"1":"11205","2":"__NA__","3":"36"},{"1":"11205","2":"Vala","3":"25"},{"1":"11403","2":"Rede geral","3":"342"},{"1":"11403","2":"Fossa sép.","3":"135"},{"1":"11403","2":"Fossa rude.","3":"170"},{"1":"11403","2":"Rio, Lago, Mar","3":"NA"},{"1":"11403","2":"__NA__","3":"89"},{"1":"11403","2":"Vala","3":"73"},{"1":"11429","2":"Rede geral","3":"155"},{"1":"11429","2":"Fossa sép.","3":"3"},{"1":"11429","2":"Fossa rude.","3":"77"},{"1":"11429","2":"Rio, Lago, Mar","3":"NA"},{"1":"11429","2":"__NA__","3":"1"},{"1":"11429","2":"Vala","3":"NA"},{"1":"11502","2":"Rede geral","3":"125"},{"1":"11502","2":"Fossa sép.","3":"7"},{"1":"11502","2":"Fossa rude.","3":"456"},{"1":"11502","2":"Rio, Lago, Mar","3":"2"},{"1":"11502","2":"__NA__","3":"20"},{"1":"11502","2":"Vala","3":"7"},{"1":"11601","2":"Rede geral","3":"3"},{"1":"11601","2":"Fossa sép.","3":"172"},{"1":"11601","2":"Fossa rude.","3":"76"},{"1":"11601","2":"Rio, Lago, Mar","3":"NA"},{"1":"11601","2":"__NA__","3":"17"},{"1":"11601","2":"Vala","3":"3"},{"1":"11700","2":"Rede geral","3":"188"},{"1":"11700","2":"Fossa sép.","3":"54"},{"1":"11700","2":"Fossa rude.","3":"29"},{"1":"11700","2":"Rio, Lago, Mar","3":"NA"},{"1":"11700","2":"__NA__","3":"61"},{"1":"11700","2":"Vala","3":"13"},{"1":"11809","2":"Rede geral","3":"4"},{"1":"11809","2":"Fossa sép.","3":"127"},{"1":"11809","2":"Fossa rude.","3":"191"},{"1":"11809","2":"Rio, Lago, Mar","3":"NA"},{"1":"11809","2":"__NA__","3":"1"},{"1":"11809","2":"Vala","3":"12"},{"1":"11908","2":"Rede geral","3":"NA"},{"1":"11908","2":"Fossa sép.","3":"NA"},{"1":"11908","2":"Fossa rude.","3":"372"},{"1":"11908","2":"Rio, Lago, Mar","3":"1"},{"1":"11908","2":"__NA__","3":"19"},{"1":"11908","2":"Vala","3":"NA"},{"1":"12005","2":"Rede geral","3":"980"},{"1":"12005","2":"Fossa sép.","3":"581"},{"1":"12005","2":"Fossa rude.","3":"760"},{"1":"12005","2":"Rio, Lago, Mar","3":"3"},{"1":"12005","2":"__NA__","3":"31"},{"1":"12005","2":"Vala","3":"25"},{"1":"12104","2":"Rede geral","3":"26"},{"1":"12104","2":"Fossa sép.","3":"2"},{"1":"12104","2":"Fossa rude.","3":"551"},{"1":"12104","2":"Rio, Lago, Mar","3":"2"},{"1":"12104","2":"__NA__","3":"17"},{"1":"12104","2":"Vala","3":"15"},{"1":"12203","2":"Rede geral","3":"22"},{"1":"12203","2":"Fossa sép.","3":"184"},{"1":"12203","2":"Fossa rude.","3":"820"},{"1":"12203","2":"Rio, Lago, Mar","3":"NA"},{"1":"12203","2":"__NA__","3":"25"},{"1":"12203","2":"Vala","3":"18"},{"1":"12302","2":"Rede geral","3":"196"},{"1":"12302","2":"Fossa sép.","3":"108"},{"1":"12302","2":"Fossa rude.","3":"336"},{"1":"12302","2":"Rio, Lago, Mar","3":"NA"},{"1":"12302","2":"__NA__","3":"50"},{"1":"12302","2":"Vala","3":"5"},{"1":"12401","2":"Rede geral","3":"265"},{"1":"12401","2":"Fossa sép.","3":"2"},{"1":"12401","2":"Fossa rude.","3":"137"},{"1":"12401","2":"Rio, Lago, Mar","3":"NA"},{"1":"12401","2":"__NA__","3":"7"},{"1":"12401","2":"Vala","3":"NA"},{"1":"12500","2":"Rede geral","3":"3"},{"1":"12500","2":"Fossa sép.","3":"18"},{"1":"12500","2":"Fossa rude.","3":"563"},{"1":"12500","2":"Rio, Lago, Mar","3":"NA"},{"1":"12500","2":"__NA__","3":"25"},{"1":"12500","2":"Vala","3":"5"},{"1":"12559","2":"Rede geral","3":"NA"},{"1":"12559","2":"Fossa sép.","3":"10"},{"1":"12559","2":"Fossa rude.","3":"335"},{"1":"12559","2":"Rio, Lago, Mar","3":"NA"},{"1":"12559","2":"__NA__","3":"13"},{"1":"12559","2":"Vala","3":"19"},{"1":"12609","2":"Rede geral","3":"513"},{"1":"12609","2":"Fossa sép.","3":"27"},{"1":"12609","2":"Fossa rude.","3":"325"},{"1":"12609","2":"Rio, Lago, Mar","3":"8"},{"1":"12609","2":"__NA__","3":"23"},{"1":"12609","2":"Vala","3":"10"},{"1":"12708","2":"Rede geral","3":"7"},{"1":"12708","2":"Fossa sép.","3":"10"},{"1":"12708","2":"Fossa rude.","3":"519"},{"1":"12708","2":"Rio, Lago, Mar","3":"1"},{"1":"12708","2":"__NA__","3":"13"},{"1":"12708","2":"Vala","3":"17"},{"1":"12807","2":"Rede geral","3":"269"},{"1":"12807","2":"Fossa sép.","3":"39"},{"1":"12807","2":"Fossa rude.","3":"108"},{"1":"12807","2":"Rio, Lago, Mar","3":"NA"},{"1":"12807","2":"__NA__","3":"65"},{"1":"12807","2":"Vala","3":"4"},{"1":"12906","2":"Rede geral","3":"173"},{"1":"12906","2":"Fossa sép.","3":"6"},{"1":"12906","2":"Fossa rude.","3":"354"},{"1":"12906","2":"Rio, Lago, Mar","3":"1"},{"1":"12906","2":"__NA__","3":"76"},{"1":"12906","2":"Vala","3":"18"},{"1":"13003","2":"Rede geral","3":"293"},{"1":"13003","2":"Fossa sép.","3":"68"},{"1":"13003","2":"Fossa rude.","3":"203"},{"1":"13003","2":"Rio, Lago, Mar","3":"2"},{"1":"13003","2":"__NA__","3":"20"},{"1":"13003","2":"Vala","3":"13"},{"1":"13102","2":"Rede geral","3":"1"},{"1":"13102","2":"Fossa sép.","3":"87"},{"1":"13102","2":"Fossa rude.","3":"383"},{"1":"13102","2":"Rio, Lago, Mar","3":"NA"},{"1":"13102","2":"__NA__","3":"23"},{"1":"13102","2":"Vala","3":"20"},{"1":"13201","2":"Rede geral","3":"2"},{"1":"13201","2":"Fossa sép.","3":"2"},{"1":"13201","2":"Fossa rude.","3":"328"},{"1":"13201","2":"Rio, Lago, Mar","3":"NA"},{"1":"13201","2":"__NA__","3":"11"},{"1":"13201","2":"Vala","3":"2"},{"1":"13300","2":"Rede geral","3":"12"},{"1":"13300","2":"Fossa sép.","3":"53"},{"1":"13300","2":"Fossa rude.","3":"411"},{"1":"13300","2":"Rio, Lago, Mar","3":"NA"},{"1":"13300","2":"__NA__","3":"38"},{"1":"13300","2":"Vala","3":"19"},{"1":"13359","2":"Rede geral","3":"3"},{"1":"13359","2":"Fossa sép.","3":"5"},{"1":"13359","2":"Fossa rude.","3":"521"},{"1":"13359","2":"Rio, Lago, Mar","3":"NA"},{"1":"13359","2":"__NA__","3":"38"},{"1":"13359","2":"Vala","3":"1"},{"1":"13409","2":"Rede geral","3":"410"},{"1":"13409","2":"Fossa sép.","3":"124"},{"1":"13409","2":"Fossa rude.","3":"140"},{"1":"13409","2":"Rio, Lago, Mar","3":"NA"},{"1":"13409","2":"__NA__","3":"25"},{"1":"13409","2":"Vala","3":"25"},{"1":"13508","2":"Rede geral","3":"8"},{"1":"13508","2":"Fossa sép.","3":"12"},{"1":"13508","2":"Fossa rude.","3":"525"},{"1":"13508","2":"Rio, Lago, Mar","3":"NA"},{"1":"13508","2":"__NA__","3":"47"},{"1":"13508","2":"Vala","3":"8"},{"1":"13557","2":"Rede geral","3":"2"},{"1":"13557","2":"Fossa sép.","3":"2"},{"1":"13557","2":"Fossa rude.","3":"425"},{"1":"13557","2":"Rio, Lago, Mar","3":"NA"},{"1":"13557","2":"__NA__","3":"21"},{"1":"13557","2":"Vala","3":"2"},{"1":"13607","2":"Rede geral","3":"15"},{"1":"13607","2":"Fossa sép.","3":"45"},{"1":"13607","2":"Fossa rude.","3":"460"},{"1":"13607","2":"Rio, Lago, Mar","3":"1"},{"1":"13607","2":"__NA__","3":"43"},{"1":"13607","2":"Vala","3":"5"},{"1":"13706","2":"Rede geral","3":"3"},{"1":"13706","2":"Fossa sép.","3":"62"},{"1":"13706","2":"Fossa rude.","3":"392"},{"1":"13706","2":"Rio, Lago, Mar","3":"NA"},{"1":"13706","2":"__NA__","3":"25"},{"1":"13706","2":"Vala","3":"4"},{"1":"13805","2":"Rede geral","3":"2"},{"1":"13805","2":"Fossa sép.","3":"2"},{"1":"13805","2":"Fossa rude.","3":"326"},{"1":"13805","2":"Rio, Lago, Mar","3":"NA"},{"1":"13805","2":"__NA__","3":"17"},{"1":"13805","2":"Vala","3":"1"},{"1":"13904","2":"Rede geral","3":"4"},{"1":"13904","2":"Fossa sép.","3":"33"},{"1":"13904","2":"Fossa rude.","3":"536"},{"1":"13904","2":"Rio, Lago, Mar","3":"NA"},{"1":"13904","2":"__NA__","3":"33"},{"1":"13904","2":"Vala","3":"4"},{"1":"14001","2":"Rede geral","3":"451"},{"1":"14001","2":"Fossa sép.","3":"160"},{"1":"14001","2":"Fossa rude.","3":"130"},{"1":"14001","2":"Rio, Lago, Mar","3":"1"},{"1":"14001","2":"__NA__","3":"32"},{"1":"14001","2":"Vala","3":"19"},{"1":"14100","2":"Rede geral","3":"145"},{"1":"14100","2":"Fossa sép.","3":"14"},{"1":"14100","2":"Fossa rude.","3":"166"},{"1":"14100","2":"Rio, Lago, Mar","3":"51"},{"1":"14100","2":"__NA__","3":"135"},{"1":"14100","2":"Vala","3":"18"},{"1":"14159","2":"Rede geral","3":"22"},{"1":"14159","2":"Fossa sép.","3":"12"},{"1":"14159","2":"Fossa rude.","3":"461"},{"1":"14159","2":"Rio, Lago, Mar","3":"NA"},{"1":"14159","2":"__NA__","3":"16"},{"1":"14159","2":"Vala","3":"3"},{"1":"14209","2":"Rede geral","3":"81"},{"1":"14209","2":"Fossa sép.","3":"48"},{"1":"14209","2":"Fossa rude.","3":"423"},{"1":"14209","2":"Rio, Lago, Mar","3":"NA"},{"1":"14209","2":"__NA__","3":"17"},{"1":"14209","2":"Vala","3":"2"},{"1":"14308","2":"Rede geral","3":"144"},{"1":"14308","2":"Fossa sép.","3":"183"},{"1":"14308","2":"Fossa rude.","3":"7"},{"1":"14308","2":"Rio, Lago, Mar","3":"NA"},{"1":"14308","2":"__NA__","3":"2"},{"1":"14308","2":"Vala","3":"NA"},{"1":"14407","2":"Rede geral","3":"81"},{"1":"14407","2":"Fossa sép.","3":"80"},{"1":"14407","2":"Fossa rude.","3":"550"},{"1":"14407","2":"Rio, Lago, Mar","3":"3"},{"1":"14407","2":"__NA__","3":"46"},{"1":"14407","2":"Vala","3":"15"},{"1":"14456","2":"Rede geral","3":"5"},{"1":"14456","2":"Fossa sép.","3":"NA"},{"1":"14456","2":"Fossa rude.","3":"218"},{"1":"14456","2":"Rio, Lago, Mar","3":"NA"},{"1":"14456","2":"__NA__","3":"79"},{"1":"14456","2":"Vala","3":"2"},{"1":"14506","2":"Rede geral","3":"2"},{"1":"14506","2":"Fossa sép.","3":"33"},{"1":"14506","2":"Fossa rude.","3":"556"},{"1":"14506","2":"Rio, Lago, Mar","3":"NA"},{"1":"14506","2":"__NA__","3":"19"},{"1":"14506","2":"Vala","3":"1"},{"1":"14605","2":"Rede geral","3":"6"},{"1":"14605","2":"Fossa sép.","3":"6"},{"1":"14605","2":"Fossa rude.","3":"614"},{"1":"14605","2":"Rio, Lago, Mar","3":"3"},{"1":"14605","2":"__NA__","3":"40"},{"1":"14605","2":"Vala","3":"72"},{"1":"14704","2":"Rede geral","3":"67"},{"1":"14704","2":"Fossa sép.","3":"NA"},{"1":"14704","2":"Fossa rude.","3":"397"},{"1":"14704","2":"Rio, Lago, Mar","3":"2"},{"1":"14704","2":"__NA__","3":"18"},{"1":"14704","2":"Vala","3":"28"},{"1":"14753","2":"Rede geral","3":"9"},{"1":"14753","2":"Fossa sép.","3":"6"},{"1":"14753","2":"Fossa rude.","3":"269"},{"1":"14753","2":"Rio, Lago, Mar","3":"NA"},{"1":"14753","2":"__NA__","3":"35"},{"1":"14753","2":"Vala","3":"NA"},{"1":"14803","2":"Rede geral","3":"9"},{"1":"14803","2":"Fossa sép.","3":"8"},{"1":"14803","2":"Fossa rude.","3":"484"},{"1":"14803","2":"Rio, Lago, Mar","3":"NA"},{"1":"14803","2":"__NA__","3":"14"},{"1":"14803","2":"Vala","3":"25"},{"1":"14902","2":"Rede geral","3":"172"},{"1":"14902","2":"Fossa sép.","3":"NA"},{"1":"14902","2":"Fossa rude.","3":"59"},{"1":"14902","2":"Rio, Lago, Mar","3":"NA"},{"1":"14902","2":"__NA__","3":"3"},{"1":"14902","2":"Vala","3":"1"},{"1":"15008","2":"Rede geral","3":"3"},{"1":"15008","2":"Fossa sép.","3":"2"},{"1":"15008","2":"Fossa rude.","3":"208"},{"1":"15008","2":"Rio, Lago, Mar","3":"NA"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>Agora, porque iriamos converter de um formato pra outro? Existem muitas razões, uma delas é facilitar computações, por exemplo. Digamos que você queria saber a proporção de domicílios em cada tipo de esgotamento sanitário.</p>
+<div class="sourceCode" id="cb159"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb159-1" title="1"><span class="co"># No formato longo</span></a>
+<a class="sourceLine" id="cb159-2" title="2">x <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(V0002) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">p =</span> n<span class="op">/</span><span class="kw">sum</span>(n)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>()</a></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["V0002"],"name":[1],"type":["chr"],"align":["left"]},{"label":["V0207"],"name":[2],"type":["fctr"],"align":["left"]},{"label":["n"],"name":[3],"type":["int"],"align":["right"]},{"label":["p"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"00109","2":"Rede geral","3":"522","4":"0.78260870"},{"1":"00109","2":"Fossa sép.","3":"26","4":"0.03898051"},{"1":"00109","2":"Fossa rude.","3":"98","4":"0.14692654"},{"1":"00109","2":"Rio, Lago, Mar","3":"1","4":"0.00149925"},{"1":"00109","2":"NA","3":"20","4":"0.02998501"},{"1":"00208","2":"Rede geral","3":"23","4":"0.01537433"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<div class="sourceCode" id="cb160"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb160-1" title="1"><span class="co"># No formato largo</span></a>
+<a class="sourceLine" id="cb160-2" title="2">y <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">total =</span> <span class="st">`</span><span class="dt">Rede geral</span><span class="st">`</span> <span class="op">+</span><span class="st"> `</span><span class="dt">Fossa sép.</span><span class="st">`</span> <span class="op">+</span><span class="st"> `</span><span class="dt">Fossa rude.</span><span class="st">`</span> <span class="op">+</span><span class="st"> `</span><span class="dt">Rio, Lago, Mar</span><span class="st">`</span> <span class="op">+</span><span class="st"> </span>Vala <span class="op">+</span><span class="st"> `</span><span class="dt">NA</span><span class="st">`</span>,</a>
+<a class="sourceLine" id="cb160-3" title="3">             <span class="dt">p_rede_geral =</span> <span class="st">`</span><span class="dt">Rede geral</span><span class="st">`</span><span class="op">/</span>total,</a>
+<a class="sourceLine" id="cb160-4" title="4">             <span class="dt">p_fossa_sep =</span> <span class="st">`</span><span class="dt">Fossa sép.</span><span class="st">`</span><span class="op">/</span>total,</a>
+<a class="sourceLine" id="cb160-5" title="5">             <span class="dt">p_fossa_rude =</span> <span class="st">`</span><span class="dt">Fossa rude.</span><span class="st">`</span><span class="op">/</span>total,</a>
+<a class="sourceLine" id="cb160-6" title="6">             <span class="dt">p_rio_lago_mar =</span> <span class="st">`</span><span class="dt">Rio, Lago, Mar</span><span class="st">`</span><span class="op">/</span>total,</a>
+<a class="sourceLine" id="cb160-7" title="7">             <span class="dt">p_vala =</span> Vala<span class="op">/</span>total,</a>
+<a class="sourceLine" id="cb160-8" title="8">             <span class="dt">p_na =</span> <span class="st">`</span><span class="dt">NA</span><span class="st">`</span><span class="op">/</span>total) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb160-9" title="9"><span class="st">  </span><span class="kw">head</span>()</a></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["V0002"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Rede geral"],"name":[2],"type":["int"],"align":["right"]},{"label":["Fossa sép."],"name":[3],"type":["int"],"align":["right"]},{"label":["Fossa rude."],"name":[4],"type":["int"],"align":["right"]},{"label":["Rio, Lago, Mar"],"name":[5],"type":["int"],"align":["right"]},{"label":["NA"],"name":[6],"type":["int"],"align":["right"]},{"label":["Vala"],"name":[7],"type":["int"],"align":["right"]},{"label":["total"],"name":[8],"type":["int"],"align":["right"]},{"label":["p_rede_geral"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["p_fossa_sep"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["p_fossa_rude"],"name":[11],"type":["dbl"],"align":["right"]},{"label":["p_rio_lago_mar"],"name":[12],"type":["dbl"],"align":["right"]},{"label":["p_vala"],"name":[13],"type":["dbl"],"align":["right"]},{"label":["p_na"],"name":[14],"type":["dbl"],"align":["right"]}],"data":[{"1":"00109","2":"522","3":"26","4":"98","5":"1","6":"20","7":"NA","8":"NA","9":"NA","10":"NA","11":"NA","12":"NA","13":"NA","14":"NA"},{"1":"00208","2":"23","3":"172","4":"1194","5":"NA","6":"89","7":"18","8":"NA","9":"NA","10":"NA","11":"NA","12":"NA","13":"NA","14":"NA"},{"1":"00307","2":"228","3":"66","4":"197","5":"NA","6":"53","7":"9","8":"NA","9":"NA","10":"NA","11":"NA","12":"NA","13":"NA","14":"NA"},{"1":"00406","2":"18","3":"1","4":"228","5":"NA","6":"14","7":"NA","8":"NA","9":"NA","10":"NA","11":"NA","12":"NA","13":"NA","14":"NA"},{"1":"00505","2":"402","3":"56","4":"174","5":"1","6":"111","7":"29","8":"773","9":"0.5200517","10":"0.07244502","11":"0.225097","12":"0.001293661","13":"0.03751617","14":"0.1435964"},{"1":"00604","2":"2","3":"56","4":"399","5":"NA","6":"19","7":"1","8":"NA","9":"NA","10":"NA","11":"NA","12":"NA","13":"NA","14":"NA"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>Além do trabalho extra, ainda precisaríamos resolver os <code>NA</code>s que bagunçam nossa divisão. Então, nesse caso específico, o formato longo simplifica bastante o serviço. Em outras circunstâncias, o formato largo pode ser mais recomendado.</p>
+</div>
+<div id="variáveis-derivadas-e-medidas-resumo" class="section level2">
+<h2>Variáveis derivadas e medidas resumo</h2>
+<p>É praticamente impossível que você alguma vez conduza uma análise de dados a partir do dado cru, ou bruto. Uma parte significativa do processo envolve a categorização dos dados a partir de conceitos obtidos fora do escopo do software e do banco em si. Para operacionalizar seus conceitos teóricos e tornar sua pesquisa possível, você vai precisar de dois tipos de ferramenta:</p>
+<div id="funções-janela" class="section level3">
+<h3>Funções <em>janela</em></h3>
+<p>Uma função janela executa uma operação em cada linha e devolve um valor novo com igual número de casos. No dplyr, isso é operacionalizado com <code>mutate</code>. Em geral, isso é o que chamaríamos de uma variável derivada.</p>
+<div class="sourceCode" id="cb161"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb161-1" title="1"><span class="co"># Qual é a renda per capita do domicílio?</span></a>
+<a class="sourceLine" id="cb161-2" title="2"><span class="co"># V0401 = Número de moradores</span></a>
+<a class="sourceLine" id="cb161-3" title="3"><span class="co"># V6529 = Rendimento mensal domiciliar</span></a>
+<a class="sourceLine" id="cb161-4" title="4">com_rpc &lt;-<span class="st"> </span>censo_dom_rn <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">renda_percapita =</span> V6529 <span class="op">/</span><span class="st"> </span>V0401)</a>
+<a class="sourceLine" id="cb161-5" title="5"><span class="kw">head</span>(com_rpc)</a></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["V0001"],"name":[1],"type":["chr"],"align":["left"]},{"label":["V0002"],"name":[2],"type":["chr"],"align":["left"]},{"label":["V0011"],"name":[3],"type":["chr"],"align":["left"]},{"label":["V0300"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["V0010"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["V1006"],"name":[6],"type":["chr"],"align":["left"]},{"label":["V2011"],"name":[7],"type":["dbl"],"align":["right"]},{"label":["V0207"],"name":[8],"type":["chr"],"align":["left"]},{"label":["V0208"],"name":[9],"type":["chr"],"align":["left"]},{"label":["V0401"],"name":[10],"type":["dbl"],"align":["right"]},{"label":["V6529"],"name":[11],"type":["dbl"],"align":["right"]},{"label":["renda_percapita"],"name":[12],"type":["dbl"],"align":["right"]}],"data":[{"1":"24","2":"00109","3":"2400109001001","4":"7444","5":"4.898864","6":"1","7":"NA","8":"1","9":"01","10":"4","11":"1020","12":"255.0000"},{"1":"24","2":"00109","3":"2400109001001","4":"7473","5":"5.851140","6":"1","7":"100","8":"1","9":"01","10":"3","11":"700","12":"233.3333"},{"1":"24","2":"00109","3":"2400109001001","4":"20879","5":"5.732053","6":"1","7":"NA","8":"1","9":"01","10":"1","11":"60","12":"60.0000"},{"1":"24","2":"00109","3":"2400109001001","4":"29535","5":"4.022684","6":"1","7":"NA","8":"1","9":"01","10":"2","11":"1020","12":"510.0000"},{"1":"24","2":"00109","3":"2400109001001","4":"31361","5":"4.584575","6":"1","7":"NA","8":"1","9":"01","10":"2","11":"0","12":"0.0000"},{"1":"24","2":"00109","3":"2400109001001","4":"53641","5":"4.503748","6":"2","7":"NA","8":"3","9":"02","10":"3","11":"1390","12":"463.3333"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p><code>com_rpc</code> Agora tem uma nova variável para cada domicílio, derivada de duas outras variáveis, presente em cada linha do banco.</p>
+</div>
+<div id="funções-sumário" class="section level3">
+<h3>Funções <em>sumário</em></h3>
+<p>O outro tipo de função crucial são as funções sumário. Elas recebem qualquer número de observações, mas devolvem apenas um valor. Também as chamamos de medidas resumo. São exemplos dela médias, contagens, variâncias, desvio padrão, medianas, máximos e mínimos. No dplyr, elas são implementadas com <code>summaris(z)e</code></p>
+<div class="sourceCode" id="cb162"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb162-1" title="1"><span class="co"># Qual a média do número de moradores por domicílio = V0401</span></a>
+<a class="sourceLine" id="cb162-2" title="2">n_mora_dom &lt;-<span class="st"> </span>censo_dom_rn <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">media =</span> <span class="kw">mean</span>(V0401))</a>
+<a class="sourceLine" id="cb162-3" title="3">n_mora_dom</a></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["media"],"name":[1],"type":["dbl"],"align":["right"]}],"data":[{"1":"3.540961"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<div id="operações-por-grupo" class="section level3">
+<h3>Operações por grupo</h3>
+<p>Muitas vezes, não queremos uma medida resumo ou variável categórica global, mas sim uma medida para cada grupo ou “domínio”, na língua dos estatísticos. Por exemplo, podemos voltar para nosso exemplo das contagens de casos por tipo de esgotamento sanitário. No dplyr, o verbo é <code>group_by</code> seguido de outro, como <code>mutate</code> ou <code>summarise</code></p>
+<div class="sourceCode" id="cb163"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb163-1" title="1"><span class="co"># Contagens</span></a>
+<a class="sourceLine" id="cb163-2" title="2">x &lt;-<span class="st"> </span>censo_dom_rn <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(V0002, V0207) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">n =</span> <span class="kw">n</span>())</a></code></pre></div>
+<pre><code>## `summarise()` regrouping output by &#39;V0002&#39; (override with `.groups` argument)</code></pre>
+<div class="sourceCode" id="cb165"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb165-1" title="1"><span class="kw">head</span>(x)</a></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["V0002"],"name":[1],"type":["chr"],"align":["left"]},{"label":["V0207"],"name":[2],"type":["chr"],"align":["left"]},{"label":["n"],"name":[3],"type":["int"],"align":["right"]}],"data":[{"1":"00109","2":"","3":"14"},{"1":"00109","2":"1","3":"522"},{"1":"00109","2":"2","3":"26"},{"1":"00109","2":"3","3":"98"},{"1":"00109","2":"5","3":"1"},{"1":"00109","2":"6","3":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb166-1" title="1"><span class="co"># Média</span></a>
+<a class="sourceLine" id="cb166-2" title="2">y &lt;-<span class="st"> </span>censo_dom_rn <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(V0002) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">summarise</span>(<span class="dt">alug_medio =</span> <span class="kw">mean</span>(V2011, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>))</a></code></pre></div>
+<pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
+<div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb168-1" title="1"><span class="kw">head</span>(y)</a></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["V0002"],"name":[1],"type":["chr"],"align":["left"]},{"label":["alug_medio"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"00109","2":"149.90805"},{"1":"00208","2":"209.17476"},{"1":"00307","2":"140.42553"},{"1":"00406","2":"85.26316"},{"1":"00505","2":"135.00000"},{"1":"00604","2":"82.60417"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb169-1" title="1"><span class="co"># Exemplo com mutate: proporção de tipos por município = V0002</span></a>
+<a class="sourceLine" id="cb169-2" title="2"><span class="kw">head</span>(x)</a></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["V0002"],"name":[1],"type":["chr"],"align":["left"]},{"label":["V0207"],"name":[2],"type":["chr"],"align":["left"]},{"label":["n"],"name":[3],"type":["int"],"align":["right"]}],"data":[{"1":"00109","2":"","3":"14"},{"1":"00109","2":"1","3":"522"},{"1":"00109","2":"2","3":"26"},{"1":"00109","2":"3","3":"98"},{"1":"00109","2":"5","3":"1"},{"1":"00109","2":"6","3":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb170-1" title="1">x <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(V0002) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">p =</span> n<span class="op">/</span><span class="kw">sum</span>(n)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>()</a></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["V0002"],"name":[1],"type":["chr"],"align":["left"]},{"label":["V0207"],"name":[2],"type":["chr"],"align":["left"]},{"label":["n"],"name":[3],"type":["int"],"align":["right"]},{"label":["p"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"00109","2":"","3":"14","4":"0.020989505"},{"1":"00109","2":"1","3":"522","4":"0.782608696"},{"1":"00109","2":"2","3":"26","4":"0.038980510"},{"1":"00109","2":"3","3":"98","4":"0.146926537"},{"1":"00109","2":"5","3":"1","4":"0.001499250"},{"1":"00109","2":"6","3":"6","4":"0.008995502"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb171-1" title="1"><span class="co"># Exemplo com filter: Tipo com maior número de casos por município</span></a>
+<a class="sourceLine" id="cb171-2" title="2">x <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">group_by</span>(V0002) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">filter</span>(n <span class="op">==</span><span class="st"> </span><span class="kw">max</span>(n)) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">head</span>()</a></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["V0002"],"name":[1],"type":["chr"],"align":["left"]},{"label":["V0207"],"name":[2],"type":["chr"],"align":["left"]},{"label":["n"],"name":[3],"type":["int"],"align":["right"]}],"data":[{"1":"00109","2":"1","3":"522"},{"1":"00208","2":"3","3":"1194"},{"1":"00307","2":"1","3":"228"},{"1":"00406","2":"3","3":"228"},{"1":"00505","2":"1","3":"402"},{"1":"00604","2":"3","3":"399"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+</div>
+</div>
+<div id="exportação-de-dados" class="section level1">
+<h1>Exportação de dados</h1>
+<p>Nossos dados chegaram ao R, mas agora precisamos pensar em duas situações:</p>
+<ol style="list-style-type: lower-alpha">
+<li>Os dados processados vão ser guardados para análises futuras (storage)</li>
+<li>Os dados processados vão ser distribuídos para outras pessoas (sharing)</li>
+</ol>
+<p>No caso “a” estamos em geral preocupados com evitar o retrabalho. O ideal é guardar em um formato que eu possa simplesmente importar de volta e fim, o banco está pronto para análise.</p>
+<p>Mp casp “b”, estamos preocupados com interoperabilidade: meu colaborador pode trabalhar em SAS, SPSS, Stata ou outra linguagem de programação, então faz sentido eu querer exportar em outros formatos, embora eu não esteja super preocupado em evitar o retrabalho. Talvez meu colaborador precise ralar um pouco.</p>
+<p>Input/Output ou I/O ou IO é você se preocupar e pensar um pouco sobre esse processo. Vou oferecer uma solução simplificada operacional pra gente.</p>
+<div id="caso-a-storage" class="section level3">
+<h3>Caso “a”: storage</h3>
+<p>Salve tudo em formato <code>.Rds</code> ou <code>.Rda</code>.</p>
+<div class="sourceCode" id="cb172"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb172-1" title="1"><span class="co"># Para salvar um único objeto: .rds</span></a>
+<a class="sourceLine" id="cb172-2" title="2"><span class="kw">saveRDS</span>(<span class="dt">object =</span> pnadc, <span class="dt">file =</span> <span class="st">&quot;pnadc_pronta_pro_combate.rds&quot;</span>)</a>
+<a class="sourceLine" id="cb172-3" title="3"></a>
+<a class="sourceLine" id="cb172-4" title="4"><span class="co"># Para ler um .rds, readRDS()</span></a>
+<a class="sourceLine" id="cb172-5" title="5"><span class="kw">readRDS</span>(<span class="st">&quot;pnadc_pronta_pro_combate.rds&quot;</span>)</a>
+<a class="sourceLine" id="cb172-6" title="6"></a>
+<a class="sourceLine" id="cb172-7" title="7"><span class="co"># Para salvar vários objetos: .rda</span></a>
+<a class="sourceLine" id="cb172-8" title="8">dic_pnad &lt;-<span class="st"> </span><span class="kw">get_import_dictionary</span>(<span class="st">&quot;PNAD&quot;</span>, <span class="dv">2015</span>, <span class="st">&quot;domicilios&quot;</span>)</a>
+<a class="sourceLine" id="cb172-9" title="9"><span class="kw">save</span>(dic_pnad, pnad_design, <span class="dt">file =</span> <span class="st">&quot;pnad_2015_com_dicionario.rda&quot;</span>)</a>
+<a class="sourceLine" id="cb172-10" title="10"></a>
+<a class="sourceLine" id="cb172-11" title="11"><span class="co"># Para ler um .rda, load()</span></a>
+<a class="sourceLine" id="cb172-12" title="12"><span class="kw">load</span>(<span class="st">&quot;pnad_2015_com_dicionario.rda&quot;</span>)</a></code></pre></div>
+</div>
+<div id="caso-b-sharing" class="section level3">
+<h3>Caso “b”: sharing</h3>
+<p>Alguns pacotes como <code>foreign</code> e <code>haven</code> pode importar e exportar vários formatos utilizados por outros softwares.</p>
+<div class="sourceCode" id="cb173"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb173-1" title="1"><span class="co"># Apenas exemplo, não precisa rodar!</span></a>
+<a class="sourceLine" id="cb173-2" title="2"><span class="kw">install.packages</span>(<span class="st">&quot;haven&quot;</span>)</a>
+<a class="sourceLine" id="cb173-3" title="3"><span class="kw">library</span>(haven)</a>
+<a class="sourceLine" id="cb173-4" title="4"><span class="co"># SPSS</span></a>
+<a class="sourceLine" id="cb173-5" title="5"><span class="kw">read_spss</span>(<span class="dt">file =</span> <span class="st">&quot;&lt;seu arquivo&gt;&quot;</span>, <span class="dt">user_na =</span> <span class="ot">FALSE</span>, <span class="dt">col_select =</span> <span class="ot">NULL</span>, <span class="dt">skip =</span> <span class="dv">0</span>, <span class="dt">n_max =</span> <span class="ot">Inf</span>, <span class="dt">.name_repair =</span> <span class="st">&quot;unique&quot;</span>)</a>
+<a class="sourceLine" id="cb173-6" title="6"></a>
+<a class="sourceLine" id="cb173-7" title="7"><span class="kw">write_sav</span>(<span class="dt">data =</span> seu_objeto, <span class="dt">path =</span> <span class="st">&quot;&lt;arquivo&gt;.sav&quot;</span>, <span class="dt">compress =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb173-8" title="8"></a>
+<a class="sourceLine" id="cb173-9" title="9"><span class="co"># SAS</span></a>
+<a class="sourceLine" id="cb173-10" title="10"><span class="kw">read_sas</span>(<span class="dt">data_file =</span> <span class="st">&quot;&lt;seu arquivo&gt;&quot;</span>,</a>
+<a class="sourceLine" id="cb173-11" title="11">         <span class="dt">catalog_file =</span> <span class="st">&quot;&lt;seu catálogo&gt;&quot;</span>,</a>
+<a class="sourceLine" id="cb173-12" title="12">         <span class="dt">encoding =</span> <span class="ot">NULL</span>,</a>
+<a class="sourceLine" id="cb173-13" title="13">         <span class="dt">catalog_encoding =</span> encoding,</a>
+<a class="sourceLine" id="cb173-14" title="14">         <span class="dt">col_select =</span> <span class="ot">NULL</span>,</a>
+<a class="sourceLine" id="cb173-15" title="15">         <span class="dt">skip =</span> 0L,</a>
+<a class="sourceLine" id="cb173-16" title="16">         <span class="dt">n_max =</span> <span class="ot">Inf</span>)</a>
+<a class="sourceLine" id="cb173-17" title="17"></a>
+<a class="sourceLine" id="cb173-18" title="18"><span class="kw">write_sas</span>(<span class="dt">data =</span> seu_objeto, <span class="dt">path =</span> <span class="st">&quot;&lt;arquivo&gt;.sas7bdat&quot;</span>)</a>
+<a class="sourceLine" id="cb173-19" title="19"></a>
+<a class="sourceLine" id="cb173-20" title="20"><span class="co"># Stata</span></a>
+<a class="sourceLine" id="cb173-21" title="21"><span class="kw">read_dta</span>(<span class="dt">file =</span> <span class="st">&quot;&lt;seu arquivo&quot;</span>,</a>
+<a class="sourceLine" id="cb173-22" title="22">         <span class="dt">encoding =</span> <span class="ot">NULL</span>,</a>
+<a class="sourceLine" id="cb173-23" title="23">         <span class="dt">col_select =</span> <span class="ot">NULL</span>,</a>
+<a class="sourceLine" id="cb173-24" title="24">         <span class="dt">skip =</span> <span class="dv">0</span>,</a>
+<a class="sourceLine" id="cb173-25" title="25">         <span class="dt">n_max =</span> <span class="ot">Inf</span>,</a>
+<a class="sourceLine" id="cb173-26" title="26">         <span class="dt">.name_repair =</span> <span class="st">&quot;unique&quot;</span>)</a>
+<a class="sourceLine" id="cb173-27" title="27"></a>
+<a class="sourceLine" id="cb173-28" title="28"><span class="kw">write_dta</span>(<span class="dt">data =</span> seu_objeto,</a>
+<a class="sourceLine" id="cb173-29" title="29">          <span class="dt">path =</span> <span class="st">&quot;&lt;arquivo&gt;.dta&quot;</span>,</a>
+<a class="sourceLine" id="cb173-30" title="30">          <span class="dt">version =</span> <span class="dv">14</span>,</a>
+<a class="sourceLine" id="cb173-31" title="31">          <span class="dt">label =</span> <span class="ot">NULL</span>)</a>
+<a class="sourceLine" id="cb173-32" title="32"></a>
+<a class="sourceLine" id="cb173-33" title="33"><span class="co"># CSV: write_csv ou write_csv2</span></a>
+<a class="sourceLine" id="cb173-34" title="34"><span class="co"># write_csv = separador &quot;,&quot;, decimal &quot;.&quot;</span></a>
+<a class="sourceLine" id="cb173-35" title="35"><span class="kw">write_csv</span>(<span class="dt">x =</span> seu_objeto,</a>
+<a class="sourceLine" id="cb173-36" title="36">          <span class="dt">path =</span> <span class="st">&quot;&lt;arquivo&gt;.csv&quot;</span>,</a>
+<a class="sourceLine" id="cb173-37" title="37">          <span class="dt">na =</span> <span class="st">&quot;NA&quot;</span>,</a>
+<a class="sourceLine" id="cb173-38" title="38">          <span class="dt">append =</span> <span class="ot">FALSE</span>,</a>
+<a class="sourceLine" id="cb173-39" title="39">          <span class="dt">col_names =</span> <span class="op">!</span>append,</a>
+<a class="sourceLine" id="cb173-40" title="40">          <span class="dt">quote_escape =</span> <span class="st">&quot;double&quot;</span>)</a>
+<a class="sourceLine" id="cb173-41" title="41"></a>
+<a class="sourceLine" id="cb173-42" title="42"><span class="co"># write_csv2 = separador &quot;;&quot;, decimal &quot;,&quot;</span></a>
+<a class="sourceLine" id="cb173-43" title="43"><span class="kw">write_csv2</span>(<span class="dt">x =</span> seu_objeto,</a>
+<a class="sourceLine" id="cb173-44" title="44">           <span class="dt">path =</span> <span class="st">&quot;&lt;arquivo&gt;.csv&quot;</span>,</a>
+<a class="sourceLine" id="cb173-45" title="45">           <span class="dt">na =</span> <span class="st">&quot;NA&quot;</span>,</a>
+<a class="sourceLine" id="cb173-46" title="46">           <span class="dt">append =</span> <span class="ot">FALSE</span>,</a>
+<a class="sourceLine" id="cb173-47" title="47">           <span class="dt">col_names =</span> <span class="op">!</span>append,</a>
+<a class="sourceLine" id="cb173-48" title="48">           <span class="dt">quote_escape =</span> <span class="st">&quot;double&quot;</span>)</a></code></pre></div>
+</div>
+</div>
+<div id="questões-transversais" class="section level1">
+<h1>Questões transversais</h1>
+<div id="projetos-e-pastas" class="section level2">
+<h2>Projetos e pastas</h2>
+<p>Em geral, não queremos ficar muito tempo trabalhando com caminhos de arquivos muito complicados. O ideal é você ter sua pasta do R perto do diretório raíz e lá dentro você criar pastas com nomes curtos e fáceis de lembrar. Exemplo</p>
+<div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb174-1" title="1"><span class="co"># Bom diretório:</span></a>
+<a class="sourceLine" id="cb174-2" title="2"><span class="st">&quot;C:/R/oficina&quot;</span></a></code></pre></div>
+<pre><code>## [1] &quot;C:/R/oficina&quot;</code></pre>
+<div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb176-1" title="1"><span class="co"># Mau diretório:</span></a>
+<a class="sourceLine" id="cb176-2" title="2"><span class="st">&quot;C:/Arquivos de Programas (x86)/Demografia/Segundo Semestre/Programação/Curso R2/&quot;</span></a></code></pre></div>
+<pre><code>## [1] &quot;C:/Arquivos de Programas (x86)/Demografia/Segundo Semestre/Programação/Curso R2/&quot;</code></pre>
+<p>O RStudio nos oferece algumas ferramentas pra gerenciar diretórios. Vou apresentar duas: o caminho <code>~</code> e os Projetos.</p>
+<div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb178-1" title="1"><span class="kw">include_graphics</span>(<span class="st">&quot;Defaultwd.png&quot;</span>)</a></code></pre></div>
+<p><img src="Defaultwd.png" /><!-- --></p>
+<p>O <code>~</code> é um atalho pra sua pasta pessoal de documentos, e é um forma de encurtar o longo caminho entre a raíz C: do Windows e a sua pasta pessoal, caso você não queira deixar uma pasta na raíz do computador (por exemplo, em computadores compartilhados do NEPO).</p>
+<div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb179-1" title="1"><span class="co"># Bom diretório:</span></a>
+<a class="sourceLine" id="cb179-2" title="2"><span class="st">&quot;~/R/oficina&quot;</span></a></code></pre></div>
+<pre><code>## [1] &quot;~/R/oficina&quot;</code></pre>
+<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb181-1" title="1"><span class="co"># Mau diretório:</span></a>
+<a class="sourceLine" id="cb181-2" title="2"><span class="st">&quot;~/Curso/Oficina/Segundo Semestre/Programação/R&quot;</span></a></code></pre></div>
+<pre><code>## [1] &quot;~/Curso/Oficina/Segundo Semestre/Programação/R&quot;</code></pre>
+<p>Os <strong>Projetos</strong> são uma parte da interface do RStudio que muda automagicamente sua pasta de trabalho pra pasta do projeto.</p>
+<div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb183-1" title="1"><span class="kw">include_graphics</span>(<span class="st">&quot;projetos.png&quot;</span>)</a></code></pre></div>
+<p><img src="projetos.png" /><!-- --></p>
+<p>Ao criar um novo projeto, e abrir uma sessão no RStudio em um projeto, ele muda a pasta de trabalho para a pasta do projeto. Essa feature tem um potencial enorme para outras coisas também, mas só pelo fato dela já mudar a pasta de trabalho, ela já é útil imediatamente pra quem tá começando.</p>
+<p>Vocês podem inclusive criar um projeto para o curso:</p>
+<div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb184-1" title="1"><span class="kw">include_graphics</span>(<span class="st">&quot;create_project.png&quot;</span>)</a></code></pre></div>
+<p><img src="create_project.png" width="50%" /></p>
+<div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb185-1" title="1"><span class="kw">include_graphics</span>(<span class="st">&quot;project-name.png&quot;</span>)</a></code></pre></div>
+<p><img src="project-name.png" width="50%" /></p>
+</div>
+<div id="survey-objects-e-amostragem" class="section level2">
+<h2>Survey objects e amostragem</h2>
+<p>Os objetos survey tem uma família de funções específicas pra trabalhar com eles, que começam com <code>svy</code>. São bem tranquilas de usar uma vez que você conhece a síntaxe, mas em geral, elas são muito mais lentas que funções comuns, porque calculam as fontes de erro amostral junto com os resultados.</p>
+<p>O pacote survey foi inventado por Thomas Lumley, que escreveu um <a href="https://r-survey.r-forge.r-project.org/svybook/">livro apenas sobre cálculo amostral</a>, que eu entendi uns 5% quando li. É um assunto sôfrego, acho que até quem sabe fica triste só de pensar nisso. De todo jeito, a referência que usei pra aula é o script do <a href="http://asdfree.com/pesquisa-nacional-por-amostra-de-domicilios-pnad.html">Damico</a>.</p>
+</div>
+<div id="listas" class="section level2">
+<h2>Listas</h2>
+<p>Listas são uma forma de armazenar dados com estruturas não retangulares em R. Em geral, a gente evita trabalhar com elas, pois são complexas e pouco intuitivas. Porém, se você for obrigado, <a href="https://adv-r.hadley.nz/vectors-chap.html#lists">esse material aqui</a> dá um show.</p>
+</div>
+<div id="a-sala-de-jantar-o-que-vêm-depois-da-cozinha" class="section level2">
+<h2>A sala de jantar: o que vêm depois da cozinha</h2>
+<p>É um pouco estranho interromper um tutorial de R “no meio” do processo de análise de dados, torna tudo meio abstrato e parece que não estamos indo a lugar nenhum, mas pra poder construir gráficos e tabulações complexas amanhã, precisamos dominar alguns conceitos básicos imprescindíveis que foram introduzidos hoje. Quem ficou com gostinho de quero mais, por favor siga para os tutoriais sobre <a href="https://zlkrvsm.github.io/Oficina-de-R/14_visualizacoes-em-R.html">visualização</a>, <a href="https://zlkrvsm.github.io/Oficina-de-R/15_manipulacao-dplyr.html">manipulação</a> e <a href="https://zlkrvsm.github.io/Oficina-de-R/16_tidy_data.html">reformatação</a> do meu site.</p>
+</div>
+<div id="uma-crítica-ao-modelo-de-ciência-de-dados-e-o-ofício-de-um-cientista-de-dados" class="section level2">
+<h2>Uma crítica ao modelo de ciência de dados e o ofício de um cientista de dados</h2>
+<p>(desenvolver)</p>
+</div>
+</div>
+<div id="exercício" class="section level1">
+<h1>Exercício</h1>
+<p>Utilizando a PNAD contínua</p>
+<ul>
+<li>Importação e tratamento inicial dos dados</li>
+<li>Criação do objeto survey</li>
+<li>Conversão para factors</li>
+<li>Tratamento dos missings</li>
+<li>Conversão de long para wide data</li>
+</ul>
+</div>
+
+<p>Copyright &copy; 2020 Vinícius Maia. Nenhum Direito a menos.</p>
+
+
+</div>
+</div>
+
+</div>
+
+<script>
+
+// add bootstrap table styles to pandoc tables
+function bootstrapStylePandocTables() {
+  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
+}
+$(document).ready(function () {
+  bootstrapStylePandocTables();
+});
+
+
+</script>
+
+<!-- tabsets -->
+
+<script>
+$(document).ready(function () {
+  window.buildTabsets("TOC");
+});
+
+$(document).ready(function () {
+  $('.tabset-dropdown > .nav-tabs > li').click(function () {
+    $(this).parent().toggleClass('nav-tabs-open')
+  });
+});
+</script>
+
+<!-- code folding -->
+
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

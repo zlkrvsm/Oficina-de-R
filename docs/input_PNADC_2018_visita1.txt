@@ -1,0 +1,296 @@
+/* PROGRAMA DE LEITURA EM SAS DO ARQUIVO DE MICRODADOS DA PNAD CONTÍNUA */
+
+/* Obs.1: As duas primeiras posições da UPA (Unidade Primária de Amostragem) são o código da UF (Unidade da Federação)
+
+   Obs.2: Ajuste o endereço do arquivo \PNADC_xxxx.txt no comando INFILE */
+
+
+data pnadc_xxxxxx;
+infile "...\Dados\PNADC_xxxxxx.txt" lrecl=700 Missover;
+input
+@0001 Ano      $4.    /* Ano de referência */
+@0005 Trimestre      $1.    /* Trimestre de referência */
+@0006 UF      $2.    /* Unidade da Federação */
+@0008 Capital      $2.    /* Município da Capital */
+@0010 RM_RIDE      $2.    /* Reg. Metr. e Reg. Adm. Int. Des. */
+@0012 UPA      $9.    /* Unidade Primária de Amostragem */
+@0021 Estrato      $7.    /* Estrato */
+@0028 V1008      $2.    /* Número de seleção do domicílio */
+@0030 V1014      $2.    /* Painel */
+@0032 V1022      $1.    /* Tipo de situação da região */
+@0033 V1023      $1.    /* Tipo de área */
+@0034 V1030       9.    /* Projeção da população */
+@0043 V1031       15.    /* Peso SEM pós estratificação */
+@0058 V1032       15.    /* Peso COM pós estratificação */
+@0073 posest      $3.    /* Domínios de projeção */
+@0076 V2001       2.    /* Número de pessoas no domicílio */
+@0078 V2003      $2.    /* Número de ordem */
+@0080 V2005      $2.    /* Condição no domicílio */
+@0082 V2007      $1.    /* Sexo */
+@0083 V2008      $2.    /* Dia de nascimento */
+@0085 V20081      $2.    /* Mês de nascimento */
+@0087 V20082      $4.    /* Ano de nascimento */
+@0091 V2009       3.    /* Idade na data de referência */
+@0094 V2010      $1.    /* Cor ou raça */
+@0095 V3001      $1.    /* Sabe ler e escrever */
+@0096 V3002      $1.    /* Frequenta escola */
+@0097 V3002A      $1.    /* A escola que ... frequenta é de */
+@0098 V3003A      $2.    /* Qual é o curso que frequenta */
+@0100 V3005A      $1.    /* Curso que freq é organizado em: */
+@0101 V3006      $2.    /* Qual é o ano/série que frequenta */
+@0103 V3006A      $1.    /* Qual é a etapa que frequenta */
+@0104 V3007      $1.    /* Concluiu outro curso de graduação */
+@0105 V3008      $1.    /* Anteriormente frequentou escola */
+@0106 V3009A      $2.    /* Curso mais elevado que frequentou */
+@0108 V3010      $1.    /* Duração do curso que frequentou */
+@0109 V3011A      $1.    /* Curso que freq é organizado em: */
+@0110 V3012      $1.    /* Aprovado na prim. série do curso */
+@0111 V3013      $2.    /* Último ano/série que concluiu */
+@0113 V3013A      $1.    /* Qual é a etapa que frequentou */
+@0114 V3013B      $1.    /* Cursou os anos iniciais deste curso */
+@0115 V3014      $1.    /* Concluiu o curso que frequentou */
+@0116 V4001      $1.    /* Trabalhou 1 hr em ativ. remunerd. */
+@0117 V4002      $1.    /* Trabalhou 1 hr em produtos etc... */
+@0118 V4003      $1.    /* Fez algum bico pelo menos de 1 hr */
+@0119 V4004      $1.    /* Ajudou sem receber no domic. 1 hr */
+@0120 V4005      $1.    /* Afastado trabalho remunerado */
+@0121 V4006A      $1.    /* Motivo de estar afastado */
+@0122 V4008      $1.    /* Quanto tempo que estava afastado */
+@0123 V40081      $2.    /* Tempo de afastamenento até 1 ano */
+@0125 V40082      $2.    /* Tempo de afastamen. de 1 a 2 anos */
+@0127 V40083      $2.    /* Tempo de afastamen. mais d 2 anos */
+@0129 V4009      $1.    /* Quantos trabalhos tinhana semana */
+@0130 V4010      $4.    /* Ocupação no trab. principal */
+@0134 V4012      $1.    /* Posição na ocupação */
+@0135 V40121      $1.    /* Tipo trabalhador não remunerado */
+@0136 V4013      $5.    /* Atividade no trab. principal */
+@0141 V40132A      $1.    /* Seção da atividade */
+@0142 V4014      $1.    /* Esse trabalho era na área */
+@0143 V4015      $1.    /* Teve ajuda de pelo menos um trabalhador não remunerado */
+@0144 V40151      $1.    /* Qnts trabalhadores não remunerados */
+@0145 V401511      $1.    /* 1 a 5 trabalhadores não remunerados */
+@0146 V401512      $2.    /* 6 a 10 trabalhadores não remunerados */
+@0148 V4016      $1.    /* Qnts empregados trabalhavam nesse negócio/empresa*/
+@0149 V40161      $1.    /* 1 a 5 empregados */
+@0150 V40162      $2.    /* 6 a 10 empregados */
+@0152 V40163      $2.    /* 11 a 50 empregados */
+@0154 V4017      $1.    /* Tinha pelo menos um sócio que trab. nesse negócio/empresa*/
+@0155 V40171      $1.    /* Quantos sócios */
+@0156 V401711      $1.    /* 1 a 5 sócios */
+@0157 V4018      $1.    /* Qnts pessoas trabalhavam nesse negócio/empresa */
+@0158 V40181      $1.    /* 1 a 5pessoas */
+@0159 V40182      $2.    /* 6 a 10pessoas */
+@0161 V40183      $2.    /* 11 a 50pessoas */
+@0163 V4019      $1.    /* Negócio/empresa registrado no CNPJ*/
+@0164 V4020      $1.    /* Em que tipo de local funcionava esse negócio/empresa*/
+@0165 V4021      $1.    /* Exercia o trabalho em estabelecimento desse negócio/empresa*/ 
+@0166 V4022      $1.    /* Onde exercia normalmente esse trabalho*/
+@0167 V4024      $1.    /* Serv. domést. em mais de 1 domic. */
+@0168 V4025      $1.    /* Contratado como empreg. temporário*/
+@0169 V4026      $1.    /* Era contratado somente por pessoa responsável pelo negócio */
+@0170 V4027      $1.    /* Era contratado somente por intermediário */
+@0171 V4028      $1.    /* Servidor público estatutário */
+@0172 V4029      $1.    /* Carteira de trabalho assinada */
+@0173 V4030      $1.    /* Era assoc. a coop. de trab. ou associação de produção */
+@0174 V4031      $1.    /* Condição em relação ao negócio/empresa */
+@0175 V4032      $1.    /* Contribuinte de instit. d previd. */
+@0176 V4033      $1.    /* Rendimento habitual var. auxil. */
+@0177 V40331      $1.    /* Rendimento habitual em dinheiro */
+@0178 V403311      $1.    /* Faixa do valor do rendimento hab. */
+@0179 V403312       8.    /* Valor do rend. hab. em dinheiro */
+@0187 V40332      $1.    /* Rendimento habitual em produtos */
+@0188 V403321      $1.    /* Faixa do valor do rendimento hab. */
+@0189 V403322       8.    /* Valor do rend. hab. em produtos */
+@0197 V40333      $1.    /* Rendimento habitual em benefícios */
+@0198 V403331      $1.    /* Tipo rend. habitual em benefícios */
+@0199 V4034      $1.    /* Rendimento efetivo var. auxil. */
+@0200 V40341      $1.    /* Rendimento efetivo em dinheiro */
+@0201 V403411      $1.    /* Faixa do valor do rendimento efe. */
+@0202 V403412       8.    /* Valor do rend. efe. em dinheiro */
+@0210 V40342      $1.    /* Rendimento efetivo em produtos */
+@0211 V403421      $1.    /* Faixa do valor do rendimento efe. */
+@0212 V403422       8.    /* Valor do rend. efe. em produtos */
+@0220 V4035      $1.    /* Jornada de trab. das 5 da manhã as 10 da noite */ 
+@0221 V4036      $1.    /* Jornada de trab. das 10 da noite as 5 da manhã*/ 
+@0222 V4039       3.    /* Hrs habituais no trab. princ. */
+@0225 V4039C       3.    /* Hrs efetivas no trab. princ. */
+@0228 V4040      $1.    /* Tempo que estava nesse trabalho */
+@0229 V40401       2.    /* De 1 mês a menos de 1 ano */
+@0231 V40402       2.    /* De 1 ano a menos de 2 anos */
+@0233 V40403       2.    /* De 2 anos ou mais tempo */
+@0235 V4041      $4.    /* Ocupação no trab. secundário */
+@0239 V4043      $1.    /* Posição na ocupação */
+@0240 V40431      $1.    /* Tipo trabalhador não remunerado */
+@0241 V4044      $5.    /* Atividade no trab. secundário */
+@0246 V4045      $1.    /* Esse trabalho era na área */
+@0247 V4046      $1.    /* Negócio/empresa registrado no CNPJ*/
+@0248 V4047      $1.    /* Servidor público estatutário */
+@0249 V4048      $1.    /* Carteira de trabalho assinada */
+@0250 V4049      $1.    /* Contribuinte de instit. d previd. */
+@0251 V4050      $1.    /* Rendimento habitual var. auxil. */
+@0252 V40501      $1.    /* Rendimento habitual em dinheiro */
+@0253 V405011      $1.    /* Faixa do valor do rendimento hab. */
+@0254 V405012       8.    /* Valor do rend. hab. em dinheiro */
+@0262 V40502      $1.    /* Rendimento habitual em produtos */
+@0263 V405021      $1.    /* Faixa do valor do rendimento hab. */
+@0264 V405022       8.    /* Valor do rend. hab. em produtos */
+@0272 V40503      $1.    /* Rendimento habitual em benefícios */
+@0273 V405031      $1.    /* Tipo rend. habitual em benefícios */
+@0274 V4051      $1.    /* Rendimento efetivo var. auxil. */
+@0275 V40511      $1.    /* Rendimento efetivo em dinheiro */
+@0276 V405111      $1.    /* Faixa do valor do rendimento efe. */
+@0277 V405112       8.    /* Valor do rend. efe. em dinheiro */
+@0285 V40512      $1.    /* Rendimento efetivo em produtos */
+@0286 V405121      $1.    /* Faixa do valor do rendimento efe. */
+@0287 V405122       8.    /* Valor do rend. efe. em produtos */
+@0295 V4052      $1.    /* Jornada de trab. das 5 da manhã as 10 da noite */ 
+@0296 V4053      $1.    /* Jornada de trab. das 10 da noite as 5 da manhã*/ 
+@0297 V4056       3.    /* Hrs habituais no trab. secun. */
+@0300 V4056C       3.    /* Hrs efetivas no trab. secun. */
+@0303 V4057      $1.    /* Contribuinte de instit. d previd. */
+@0304 V4058      $1.    /* Rendimento habitual var. auxil. */
+@0305 V40581      $1.    /* Rendimento habitual em dinheiro */
+@0306 V405811      $1.    /* Faixa do valor do rendimento hab. */
+@0307 V405812       8.    /* Valor do rend. hab. em dinheiro */
+@0315 V40582      $1.    /* Rendimento habitual em produtos */
+@0316 V405821      $1.    /* Faixa do valor do rendimento hab. */
+@0317 V405822       8.    /* Valor do rend. hab. em produtos */
+@0325 V40583      $1.    /* Rendimento habitual em benefícios */
+@0326 V405831      $1.    /* Tipo rend. habitual em benefícios */
+@0327 V40584      $1.    /* Não remunerado */
+@0328 V4059      $1.    /* Rendimento efetivo var. auxil. */
+@0329 V40591      $1.    /* Rendimento efetivo em dinheiro */
+@0330 V405911      $1.    /* Faixa do valor do rendimento efe. */
+@0331 V405912       8.    /* Valor do rend. efe. em dinheiro */
+@0339 V40592      $1.    /* Rendimento efetivo em produtos */
+@0340 V405921      $1.    /* Faixa do valor do rendimento efe. */
+@0341 V405922       8.    /* Valor do rend. efe. em produtos */
+@0349 V4062       3.    /* Hrs habituais no(s) outro(s) trab.*/
+@0352 V4062C       3.    /* Hrs efetivas no(s) outro(s) trab .*/
+@0355 V4063A      $1.    /* Gostaria trabalhar + hrs habituais*/
+@0356 V4064A      $1.    /* Dispon. trabalhar + hrs habituais */
+@0357 V4071      $1.    /* Providência p/ conseg. trab.(30d) */
+@0358 V4072A      $1.    /* Principal provid. p/conseg. trab. */
+@0359 V4073      $1.    /* Gostaria de ter trabalhado */
+@0360 V4074A      $2.    /* Motivo de não ter tomado provid. */
+@0362 V4075A      $1.    /* Tempo em que irá começar o trab. */
+@0363 V4075A1      $2.    /* Meses em que irá começar o trab. */
+@0365 V4076      $1.    /* Tempo tentando conseguir trabalho */
+@0366 V40761       2.    /* Tempo tentando trab. 1 mes-1 ano */
+@0368 V40762       2.    /* Tempo tentando trab. 1 ano-2 anos */
+@0370 V40763       2.    /* Tempo tentando trab. + de 2 anos */
+@0372 V4077      $1.    /* Poderia ter começado a trabalhar */
+@0373 V4078A      $1.    /* Motivo p /ñ querer/começar a trab. */
+@0374 V4082      $1.    /* Trab por pelo menos 1 hora em 1 ano*/
+@0375 V4097      $1.    /* Era associado a algum sindicato*/
+@0376 V5001A      $1.    /* Recebeu BPC-LOAS */ 
+@0377 V5001A2       8.    /* Rend recebido de BPC-LOAS */
+@0385 V5002A      $1.    /* Recebeu bolsa família */ 
+@0386 V5002A2       8.    /* Rend recebido de bolsa familia */
+@0394 V5003A      $1.    /* Recebeu outro prog social */
+@0395 V5003A2       8.    /* Rend recebido de outro prog social */
+@0403 V5004A      $1.    /* Recebeu aposentadoria e pensão */
+@0404 V5004A2       8.    /* Rend recebido de aposentadoria e pensão */
+@0412 V5005A      $1.    /* Recebeu rendimentos de seguro-desemprego, seguro-defeso */
+@0413 V5005A2       8.    /* Rend recebido de seguro-desemprego, seguro-defeso */
+@0421 V5006A      $1.    /* Recebeu pensão alimentícia, doação, etc */
+@0422 V5006A2       8.    /* Rend recebido por pensão alimentícia, doação, etc */
+@0430 V5007A      $1.    /* Recebeu aluguel e arrendamento */
+@0431 V5007A2       8.    /* Rend recebido aluguel e arrendamento */
+@0439 V5008A      $1.    /* Recebeu outros rendimentos (bolsa de estudos, rendimento de poupança, aplic finan, etc.) */
+@0440 V5008A2       8.    /* Rend recebido de outros rendimentos (bolsa de estudos, rendimento de poupança, aplic finan, etc.) */
+@0448 S01001      $1.    /* Domicílio é do tipo: */
+@0449 S01002      $1.    /* Material predominante na construção das paredes externas */
+@0450 S01003      $1.    /* Material predominante na cobertura (telhado) */
+@0451 S01004      $1.    /* Material predominante no piso */
+@0452 S01005       2.    /* Número de cômodos */
+@0454 S01006       2.    /* Número de cômodos servem permanentemente de dormitório para os moradores */
+@0456 S01007      $1.    /* Principal forma de abastecimento de água utilizada */
+@0457 S01008      $1.    /* Frequência que a água proveniente de rede geral esteve disponível */
+@0458 S01009      $1.    /* Possui ou faz uso de reservatório, caixa d'água, cisterna, para armazenar a água */
+@0459 S01010      $1.    /* A água utilizada neste domicílio chega: */
+@0460 S01011A       2.    /* Numero de banheiros (com chuveiro e vaso sanitário) de uso exclusivo dos moradores no domicílio */
+@0462 S01011B       2.    /* Numero de banheiros  (com chuveiro e vaso sanitário) de uso comum dos moradores existem neste domicílio */
+@0464 S01011C      $1.    /* Usa sanitário ou buraco para dejeções (cercado por paredes de qualquer material) */
+@0465 S01012      $1.    /* Forma que é feito o escoadouro deste(s) banheiro(s) ou sanitário(s) ou buracos */
+@0466 S01013      $1.    /* Qual é o (principal) destino dado ao lixo? */
+@0467 S01014      $1.    /* Origem da energia elétrica utilizada */
+@0468 S010141      $1.    /* A origem da energia eletrica é de rede geral? */
+@0469 S010142      $1.    /* Há outra origem de energia eletrica (gerador, placa solar, eólica)? */
+@0470 S01015      $1.    /* Frequência que a energia elétrica, proveniente de rede geral, está habitualmente disponível */
+@0471 S01016      $1.    /* Combustível(is) são utilizados neste domicílio na preparação dos alimentos? */
+@0472 S010161      $1.    /* Utiliza gás de botijão ou encanado na preparação de alimentos? */
+@0473 S010162      $1.    /* Utiliza lenha ou carvão na preparação de alimentos? */
+@0474 S010163      $1.    /* Utiliza energia eletrica na preparação de alimentos? */
+@0475 S010164      $1.    /* Utiliza outro combustivel na preparação de alimentos? */
+@0476 S01017      $1.    /* Este domicílio é: */
+@0477 S01018       8.    /* Valor da prestação paga, ou que deveria ter sido paga, no mês de referência */
+@0485 S01019       8.    /* Valor do aluguel pago, ou que deveria ter sido pago, no mês de referência */
+@0493 S01020      $1.    /* O terreno onde está localizado este domicílio é próprio? */
+@0494 S01021       2.    /* Número de moradores que têm telefone móvel celular para uso pessoal */
+@0496 S01022      $1.    /* Este domicílio tem telefone fixo convencional? */
+@0497 S01023      $1.    /* Este domicílio tem geladeira? */
+@0498 S01024      $1.    /* Este domicílio tem máquina de lavar roupa? */
+@0499 S01025      $1.    /* Este domicílio tem televisão? */
+@0500 S01026      $1.    /* Possui serviço de televisão por assinatura */
+@0501 S01027      $1.    /* Tem televisão com antena parabólica */
+@0502 S01028      $1.    /* Tem microcomputador (considere inclusive os portáteis) */
+@0503 S01029      $1.    /* Acessa à Internet por meio de microcomputador, tablet, celular, televisão ou outro equipamento? */
+@0504 S01030      $1.    /* Utiliza para acessar à Internet: */
+@0505 S010301      $1.    /* Utiliza microcomputador (de mesa ou portátil) para acessar à Internet */
+@0506 S010302      $1.    /* Utiliza tablet para acessar à Internet */
+@0507 S010303      $1.    /* Utiliza telefone móvel celular para acessar à Internet */
+@0508 S010304      $1.    /* Utiliza televisão para acessar à Internet */
+@0509 S010305      $1.    /* Utiliza outro equipamento eletrônico para acessar à Internet */
+@0510 S01031      $1.    /* Possui automóvel ou motocicleta de uso pessoal? */
+@0511 S010311      $1.    /* Possui automóvel para uso pessoal? */
+@0512 S010312      $1.    /* Possui motocicleta para uso pessoal? */
+@0513 VD2002      $2.    /* Condição no domicílio */
+@0515 VD2003       2.    /* Número de componentes do domic. */
+@0517 VD2004      $1.    /* Espécie da unidade doméstica*/
+@0518 VD3004      $1.    /* Nível de instrução mais elevado alcançado (5 anos ou mais de idade) */
+@0519 VD3005      $2.    /* Anos de estudo (5 anos ou mais de idade) para fundamental de 9 anos */
+@0521 VD3006      $1.    /* Grupamento de anos de estudo (pessoas de 5 anos ou mais de idade) para fundamental de 9 anos */
+@0522 VD4001      $1.    /* Condição em relação força d trab. */
+@0523 VD4002      $1.    /* Condição de ocupação */
+@0524 VD4003      $1.    /* Força de trabalho potencial */
+@0525 VD4004A      $1.    /* Subocupação por insuficiên. de hrs hab*/
+@0526 VD4005      $1.    /* Pessoas desalentadas */
+@0527 VD4007      $1.    /* Posição na ocupação trab. princ. */
+@0528 VD4008      $1.    /* Posição na ocupação trab. princ. */
+@0529 VD4009      $2.    /* Posição na ocupação trab. princ. */
+@0531 VD4010      $2.    /* Grupamen. d ativid. trab. princ. */
+@0533 VD4011      $2.    /* Grupamen. ocupacion. trab. Princ. */
+@0535 VD4012      $1.    /* Contrib. instit. previd. qq trab. */
+@0536 VD4013      $1.    /* Faixa hrs habituais em todos trab. */
+@0537 VD4014      $1.    /* Faixa hrs efetivas em todos trab. */
+@0538 VD4015      $1.    /* Tipo d remuneração trab. princ. */
+@0539 VD4016       8.    /* Rendim. habitual trab. princ. */
+@0547 VD4017       8.    /* Rendim. efetivo trab. princ. */
+@0555 VD4018      $1.    /* Tipo d remuneração em qq trabalho */
+@0556 VD4019       8.    /* Rendim. habitual qq trabalho */
+@0564 VD4020       8.    /* Rendim. efetivo qq trabalho */
+@0572 VD4022       8.    /* Rendim. Efetivo tds fontes */
+@0580 VD4030      $1.    /* Pq ñ proc./ñ gost./ñ disp.p/trab. */
+@0581 VD4031       3.    /* Hrs habituais em todos trab. */
+@0584 VD4035       3.    /* Hrs efetivas em todos trab. */
+@0587 VD4036      $1.    /* Faixa hrs habituais trab. princ. */
+@0588 VD4037      $1.    /* Faixa hrs efetivas trab. princ. */
+@0589 VD4046       8.    /* Rendim. habitual tds fontes */
+@0597 VD4047       8.    /* Rend efetivo de progr sociais, seguro-desemprego, etc */
+@0605 VD4048       8.    /* Rend efetivo recebido de outras fontes */
+@0613 VD4052       8.    /* Rendim. habitual tds fontes  com ticket*/
+@0621 VD5001       8.    /* Rend efetivo domiciliar */
+@0629 VD5002       8.    /* Rend efetivo domiciliar per capita */
+@0637 VD5003      $1.    /* Faixa de rend efetivo domiciliar per capita */
+@0638 VD5004       8.    /* Rend efetivo domiciliar */
+@0646 VD5005       8.    /* Rend efetivo domiciliar per capita */
+@0654 VD5006      $1.    /* Faixa de rend efetivo domiciliar per capita */
+@0655 VD5007       8.    /* Rend habitual domiciliar */
+@0663 VD5008       8.    /* Rend habitual domiciliar per capita */
+@0671 VD5009      $1.    /* Faixa de rend habital domiciliar per capita */
+@0672 VD5010       8.    /* Rend habitual domiciliar */
+@0680 VD5011       8.    /* Rend habitual domiciliar per capita */
+@0688 VD5012      $1.    /* Faixa de rend habitual domiciliar per capita */
+;
+run;

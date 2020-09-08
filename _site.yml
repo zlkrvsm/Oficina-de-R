@@ -23,8 +23,10 @@ navbar:
       menu:
         - text: "Aula 1: Introdução"
           href: 00_aula-1.html
+        - text: "Aula 2: Importação e cozinha"
 output:
   html_document:
+    df_print: paged
     toc: true
     toc_float: true
     toc_depth: 2
