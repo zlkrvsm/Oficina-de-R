@@ -185,7 +185,7 @@ A tabela é meio longa, com muitas e muitas variáveis que agente acaba não uti
 
 A UN Data já tem uma API, mas ainda não existe interface pro R, então a solução é baixar os CSVs do site. 
 
-```{r}
+```{r, echo=FALSE}
 include_graphics("injury.png")
 ```
 
@@ -620,7 +620,7 @@ Em geral, não queremos ficar muito tempo trabalhando com caminhos de arquivos m
 
 O RStudio nos oferece algumas ferramentas pra gerenciar diretórios. Vou apresentar duas: o caminho `~` e os Projetos.
 
-```{r}
+```{r, echo=FALSE}
 include_graphics("Defaultwd.png")
 ```
 
@@ -636,7 +636,7 @@ O `~` é um atalho pra sua pasta pessoal de documentos, e é um forma de encurta
 
 Os **Projetos** são uma parte da interface do RStudio que muda automagicamente sua pasta de trabalho pra pasta do projeto.
 
-```{r}
+```{r, echo=FALSE}
 include_graphics("projetos.png")
 ```
 
@@ -644,7 +644,7 @@ Ao criar um novo projeto, e abrir uma sessão no RStudio em um projeto, ele muda
 
 Vocês podem inclusive criar um projeto para o curso:
 
-```{r, out.width='50%'}
+```{r, out.width='50%', echo=FALSE}
 include_graphics("create_project.png")
 include_graphics("project-name.png")
 ```
