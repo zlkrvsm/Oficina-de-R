@@ -42,7 +42,7 @@ ggplot(imdb)
 
 A segunda camada, de geometria, já nos retorna um gráfico simples. Vamos usar um gráfico de pontos de exemplo. Note que nós empilhamos nossas camadas com '+'.
 
-```{r ggplot_2}
+```{r ggplot-2}
 ggplot(imdb) +
   geom_point(aes(x = orcamento, y = receita))
 ```
@@ -62,7 +62,7 @@ Alguns dos geoms mais utilizados são:
 
 Podemos colocar mais camadas no mesmo gráfico, se isso for interessante:
 
-```{r ggplot_3}
+```{r ggplot-3}
 ggplot(imdb) +
   geom_point(mapping = aes(x = orcamento, y = receita)) +
   geom_abline(intercept = 0, slope = 1, color = "red")
@@ -72,7 +72,7 @@ O `geom_abline` recebe um valor para alpha (intercepto) de 0 e um valor para bet
 
 A partir daqui, precisamos transformar um pouco nosso banco de dados, o que faremos utilizando o `dplyr`. Não vamos entrar em detalhes no funcionamento deste pacote, mas se interessar, siga este  [link](http://material.curso-r.com/manip/).
 
-```{r ggplot_4, message=FALSE}
+```{r ggplot-4, message=FALSE}
 library(dplyr)
 imdb %>% # Operador 'pipe', é como se fosse uma tubulação
   # Primeiro argumento de mutate é "data", 
@@ -95,7 +95,7 @@ Vejam que ele até criou uma legenda automática ali, à direta.
 
 A terceira coisa com a qual podemos mexer, são as fírulas para apresentação do gráfico, como títulos de eixos, da legenda, etc. Fazemos isso adicionando mais uma camada ao nosso gráfico.
 
-```{r ggplot_5}
+```{r ggplot-5}
 imdb %>%
   mutate(
     lucro = receita - orcamento,
@@ -122,7 +122,7 @@ Note que quando utilizou-se `color = lucro`, estava-se relacionando os atributos
     
 Um detalhe importante é que se você chamar um desses dentro de `aes()`, ele vai ter um comportamento, mas fora dela, ele tem outro. Veja o seguinte exemplo:
 
-```{r ggplot_6}
+```{r ggplot-6}
 
 # Errado
 ggplot(imdb) +
@@ -181,7 +181,7 @@ ggplot() +
 
 Há dois tipos de gráfico de barras no ggplot, um é parecido com o histograma, pois apresenta contagens de casos:
 
-```{r barras_1}
+```{r barras-1}
 # Joga o imdb no cano
 imdb %>% 
   # Só os filmes que saíram depois de 1990
@@ -194,7 +194,7 @@ imdb %>%
 
 O outro tipo de gráfico recebe valores mesmo para o eixo Y.
 
-```{r barras_2}
+```{r barras-2}
 # Joga imdb no cano
 imdb %>% 
   # Conta quantos filmes cada diretor fez
@@ -223,7 +223,7 @@ Veja que ele pegou 6 e não 5, porque?
 
 Podemos desenhar vários tipos de geometria no mesmo painel, desde que respeitemos um pouco de bom senso em relação à poluição visual e que isto represente alguma relação entre o que está sendo representado.
 
-```{r var_geom}
+```{r var-geom}
 ggplot(imdb) +
   geom_point(aes(x = orcamento, y = receita)) +
   # Desenha uma linha a partir de um procedimento estatístico
@@ -234,7 +234,7 @@ ggplot(imdb) +
 
 Podemos desenhar o mesmo gráfico anterior, mas economizar um pouco a digitação, passando os nossos critérios estéticos diretamente na chamada da função `ggplot()`. Fica assim:
 
-```{r diret_ggplot}
+```{r diret-ggplot}
 # Note onde está aes()
 ggplot(imdb, aes(x = orcamento, y = receita)) +
   geom_point() +
@@ -264,7 +264,7 @@ Cada pedaço do banco de dados foi plotado em um gráfico diferente, o primeiro 
 
 Aqui vocês podem ver o mesmo gráfico, mas ao invés de usar `nrow` na faceta, usou-se `ncol`:
 
-```{r facet_2}
+```{r facet-2}
 imdb %>%
   filter(classificacao %in% c("Livre", "A partir de 13 anos")) %>%
   ggplot() +
@@ -308,7 +308,7 @@ Mesmo os gráficos sendo diferentes, o patchwork imprime eles na mesma fígura. 
 
 Por fim, precisamos personalizar os nossos gráficos, para que eles fiquem bonitos e autoexplicativos. Vamos partir de um gráfico base que vai ser alterado paulatinamente. Vejam que se vocês olharem para o código final, pode parecer que é um bixo de sete-cabeças, mas lembrem-se da "gramática" do ggplot, são camadas que vão sendo adicionadas pouco a pouco, como um bolo de confeiteiro bem complexo, feito passo a passo.
 
-```{r graf_base}
+```{r graf-base}
 imdb %>% 
   filter(diretor %in% c("Steven Spielberg", "Quentin Tarantino", "Woody Allen")) %>%
   ggplot() + 
@@ -319,7 +319,7 @@ imdb %>%
 
 Veja dentro de geom_boxplot, ele passa o argumento `show.legend = FALSE`.
 
-```{r sem_legenda}
+```{r sem-legenda}
 imdb %>% 
   filter(diretor %in% c("Steven Spielberg", "Quentin Tarantino", "Woody Allen")) %>%
   ggplot() + 
@@ -375,7 +375,7 @@ imdb %>%
 
 Você pode querer alterar visualmente seu gráfico ainda mais, e aqui entramos num território praticamente infinito de customização, mas apenas como exemplo, ele quis remover tanto os nomes, quanto as marcações do eixo X.
 
-```{r sem_eixo_x}
+```{r sem-eixo-x}
 imdb %>% 
   filter(diretor %in% c("Steven Spielberg", "Quentin Tarantino", "Woody Allen")) %>%
   ggplot() + 
@@ -392,7 +392,7 @@ Todos os elementos do gráfico no ggplot são construídos a partir de "elemento
 
 ## Posição da legenda
 
-```{r legend_pos}
+```{r legend-pos}
 imdb %>% 
   filter(diretor %in% c("Steven Spielberg", "Quentin Tarantino", "Woody Allen")) %>%
   ggplot() + 
@@ -543,7 +543,7 @@ ggplot(rmc) +
 
 1. Considerando o código:
 
-```{r exercicio_1, eval = FALSE}
+```{r exercicio-1, eval = FALSE}
 ggplot(rmc) +
   geom_bar(aes(x = NASC_NESTE_MUN, fill = "blue"))
 ```

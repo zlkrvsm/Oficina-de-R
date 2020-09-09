@@ -50,7 +50,7 @@ tipos <- cols(
 )
 
 pnad <- read_fwf(
-  file = "pnad2015/Dados/PES2015.gz", 
+  file = "_pnad2015/Dados/PES2015.gz", 
   col_positions = colunas,
   col_types = tipos
 )

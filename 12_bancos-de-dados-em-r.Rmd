@@ -330,7 +330,7 @@ dado
 
 Juntando um pouco esta seção a anterior, podemos calcular medidas resumo para casos selecionados. Por exemplo, podemos calcular a renda média para cada nível educacional distinto e por sexo (agora com pesos).
 
-```{r media_grupos}
+```{r media-grupos}
 library(questionr)
 
 # Educação

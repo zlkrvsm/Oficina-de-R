@@ -23,6 +23,8 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 
 
 <style type="text/css">code{white-space: pre;}</style>
@@ -457,6 +459,9 @@ div.tocify {
     <li>
       <a href="00_aula-1.html">Aula 1: Introdução</a>
     </li>
+    <li>
+      <a href="02_aula-2.html">Aula 2: Importação e cozinha</a>
+    </li>
   </ul>
 </li>
       </ul>
@@ -501,8 +506,7 @@ div.tocify {
 <p>A segunda camada, de geometria, já nos retorna um gráfico simples. Vamos usar um gráfico de pontos de exemplo. Note que nós empilhamos nossas camadas com ‘+’.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" title="1"><span class="kw">ggplot</span>(imdb) <span class="op">+</span></a>
 <a class="sourceLine" id="cb3-2" title="2"><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> orcamento, <span class="dt">y =</span> receita))</a></code></pre></div>
-<pre><code>## Warning: Removed 733 rows containing missing values (geom_point).</code></pre>
-<p><img src="14_visualizacoes-em-R_files/figure-html/ggplot_2-1.png" width="672" /></p>
+<p><img src="14_visualizacoes-em-R_files/figure-html/ggplot-2-1.png" width="672" /></p>
 <p>Note que cada ponto representa o encontro entre o valor do orçamento (x) e o valor da receita (y) de um filme. A função <code>aes()</code> é a nossa forma de comunicar ao ggplot que variáveis ficam responsáveis por quais aspectos estéticos (<strong>aes</strong>thetics).</p>
 <p>Alguns dos geoms mais utilizados são:</p>
 <pre><code>- geom_line - para linhas definidas por pares (x,y).
@@ -514,42 +518,41 @@ div.tocify {
 - geom_density - para densidades.
 - geom_area - para áreas.</code></pre>
 <p>Podemos colocar mais camadas no mesmo gráfico, se isso for interessante:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="kw">ggplot</span>(imdb) <span class="op">+</span></a>
-<a class="sourceLine" id="cb6-2" title="2"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> orcamento, <span class="dt">y =</span> receita)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb6-3" title="3"><span class="st">  </span><span class="kw">geom_abline</span>(<span class="dt">intercept =</span> <span class="dv">0</span>, <span class="dt">slope =</span> <span class="dv">1</span>, <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>)</a></code></pre></div>
-<pre><code>## Warning: Removed 733 rows containing missing values (geom_point).</code></pre>
-<p><img src="14_visualizacoes-em-R_files/figure-html/ggplot_3-1.png" width="672" /></p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" title="1"><span class="kw">ggplot</span>(imdb) <span class="op">+</span></a>
+<a class="sourceLine" id="cb5-2" title="2"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> orcamento, <span class="dt">y =</span> receita)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb5-3" title="3"><span class="st">  </span><span class="kw">geom_abline</span>(<span class="dt">intercept =</span> <span class="dv">0</span>, <span class="dt">slope =</span> <span class="dv">1</span>, <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>)</a></code></pre></div>
+<p><img src="14_visualizacoes-em-R_files/figure-html/ggplot-3-1.png" width="672" /></p>
 <p>O <code>geom_abline</code> recebe um valor para alpha (intercepto) de 0 e um valor para beta (inclinação) da curva de 1. Assim, a linha divide os pontos entre aqueles que se pagaram ou não. Ele também especificou que a cor da linha deveria ser vermelha <code>(color = "red")</code>.</p>
 <p>A partir daqui, precisamos transformar um pouco nosso banco de dados, o que faremos utilizando o <code>dplyr</code>. Não vamos entrar em detalhes no funcionamento deste pacote, mas se interessar, siga este <a href="http://material.curso-r.com/manip/">link</a>.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" title="1"><span class="kw">library</span>(dplyr)</a>
-<a class="sourceLine" id="cb8-2" title="2">imdb <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Operador &#39;pipe&#39;, é como se fosse uma tubulação</span></a>
-<a class="sourceLine" id="cb8-3" title="3"><span class="st">  </span><span class="co"># Primeiro argumento de mutate é &quot;data&quot;, </span></a>
-<a class="sourceLine" id="cb8-4" title="4"><span class="st">  </span><span class="co"># mas pela tubulação já veio imdb, </span></a>
-<a class="sourceLine" id="cb8-5" title="5"><span class="st">  </span><span class="co"># então não precisa digitar</span></a>
-<a class="sourceLine" id="cb8-6" title="6"><span class="st">   </span><span class="kw">mutate</span>( <span class="co"># mutate serve para criar ou alterar variáveis</span></a>
-<a class="sourceLine" id="cb8-7" title="7">     <span class="dt">lucro =</span> receita <span class="op">-</span><span class="st"> </span>orcamento,  </a>
-<a class="sourceLine" id="cb8-8" title="8">     <span class="dt">lucro =</span> <span class="kw">ifelse</span>(lucro <span class="op">&lt;=</span><span class="st"> </span><span class="dv">0</span>, <span class="st">&quot;Não&quot;</span>, <span class="st">&quot;Sim&quot;</span>) <span class="co"># filmes que deram lucro</span></a>
-<a class="sourceLine" id="cb8-9" title="9">   ) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Resultado do mutate passa pra frente</span></a>
-<a class="sourceLine" id="cb8-10" title="10"><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(lucro)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># filter é tipo &#39;[]&#39; pros casos</span></a>
-<a class="sourceLine" id="cb8-11" title="11"><span class="st">  </span><span class="co"># ggplot já recebeu o resultado pela tubulação</span></a>
-<a class="sourceLine" id="cb8-12" title="12"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb8-13" title="13"><span class="st">  </span><span class="co"># Veja que agora, além de especificar que variáveis são x ou y,</span></a>
-<a class="sourceLine" id="cb8-14" title="14"><span class="st">  </span><span class="co"># específica ainda uma variável que controla a cor do ponto</span></a>
-<a class="sourceLine" id="cb8-15" title="15"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> orcamento, <span class="dt">y =</span> receita, <span class="dt">color =</span> lucro))</a></code></pre></div>
-<p><img src="14_visualizacoes-em-R_files/figure-html/ggplot_4-1.png" width="672" /></p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" title="1"><span class="kw">library</span>(dplyr)</a>
+<a class="sourceLine" id="cb6-2" title="2">imdb <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Operador &#39;pipe&#39;, é como se fosse uma tubulação</span></a>
+<a class="sourceLine" id="cb6-3" title="3"><span class="st">  </span><span class="co"># Primeiro argumento de mutate é &quot;data&quot;, </span></a>
+<a class="sourceLine" id="cb6-4" title="4"><span class="st">  </span><span class="co"># mas pela tubulação já veio imdb, </span></a>
+<a class="sourceLine" id="cb6-5" title="5"><span class="st">  </span><span class="co"># então não precisa digitar</span></a>
+<a class="sourceLine" id="cb6-6" title="6"><span class="st">   </span><span class="kw">mutate</span>( <span class="co"># mutate serve para criar ou alterar variáveis</span></a>
+<a class="sourceLine" id="cb6-7" title="7">     <span class="dt">lucro =</span> receita <span class="op">-</span><span class="st"> </span>orcamento,  </a>
+<a class="sourceLine" id="cb6-8" title="8">     <span class="dt">lucro =</span> <span class="kw">ifelse</span>(lucro <span class="op">&lt;=</span><span class="st"> </span><span class="dv">0</span>, <span class="st">&quot;Não&quot;</span>, <span class="st">&quot;Sim&quot;</span>) <span class="co"># filmes que deram lucro</span></a>
+<a class="sourceLine" id="cb6-9" title="9">   ) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Resultado do mutate passa pra frente</span></a>
+<a class="sourceLine" id="cb6-10" title="10"><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(lucro)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># filter é tipo &#39;[]&#39; pros casos</span></a>
+<a class="sourceLine" id="cb6-11" title="11"><span class="st">  </span><span class="co"># ggplot já recebeu o resultado pela tubulação</span></a>
+<a class="sourceLine" id="cb6-12" title="12"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb6-13" title="13"><span class="st">  </span><span class="co"># Veja que agora, além de especificar que variáveis são x ou y,</span></a>
+<a class="sourceLine" id="cb6-14" title="14"><span class="st">  </span><span class="co"># específica ainda uma variável que controla a cor do ponto</span></a>
+<a class="sourceLine" id="cb6-15" title="15"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> orcamento, <span class="dt">y =</span> receita, <span class="dt">color =</span> lucro))</a></code></pre></div>
+<p><img src="14_visualizacoes-em-R_files/figure-html/ggplot-4-1.png" width="672" /></p>
 <p>Vejam que ele até criou uma legenda automática ali, à direta.</p>
 <p>A terceira coisa com a qual podemos mexer, são as fírulas para apresentação do gráfico, como títulos de eixos, da legenda, etc. Fazemos isso adicionando mais uma camada ao nosso gráfico.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1">imdb <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb9-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(</a>
-<a class="sourceLine" id="cb9-3" title="3">    <span class="dt">lucro =</span> receita <span class="op">-</span><span class="st"> </span>orcamento,</a>
-<a class="sourceLine" id="cb9-4" title="4">    <span class="dt">lucro =</span> <span class="kw">ifelse</span>(lucro <span class="op">&lt;=</span><span class="st"> </span><span class="dv">0</span>, <span class="st">&quot;Não&quot;</span>, <span class="st">&quot;Sim&quot;</span>)</a>
-<a class="sourceLine" id="cb9-5" title="5">  )  <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb9-6" title="6"><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(lucro)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb9-7" title="7"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb9-8" title="8"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> orcamento, <span class="dt">y =</span> receita, <span class="dt">color =</span> lucro)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb9-9" title="9"><span class="st">  </span><span class="co"># Nova camada, o resto é igual</span></a>
-<a class="sourceLine" id="cb9-10" title="10"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Orçamento&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Arrecadação&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;Houve lucro?&quot;</span>) </a></code></pre></div>
-<p><img src="14_visualizacoes-em-R_files/figure-html/ggplot_5-1.png" width="672" /></p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" title="1">imdb <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb7-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(</a>
+<a class="sourceLine" id="cb7-3" title="3">    <span class="dt">lucro =</span> receita <span class="op">-</span><span class="st"> </span>orcamento,</a>
+<a class="sourceLine" id="cb7-4" title="4">    <span class="dt">lucro =</span> <span class="kw">ifelse</span>(lucro <span class="op">&lt;=</span><span class="st"> </span><span class="dv">0</span>, <span class="st">&quot;Não&quot;</span>, <span class="st">&quot;Sim&quot;</span>)</a>
+<a class="sourceLine" id="cb7-5" title="5">  )  <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb7-6" title="6"><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(lucro)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb7-7" title="7"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb7-8" title="8"><span class="st">  </span><span class="kw">geom_point</span>(<span class="dt">mapping =</span> <span class="kw">aes</span>(<span class="dt">x =</span> orcamento, <span class="dt">y =</span> receita, <span class="dt">color =</span> lucro)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb7-9" title="9"><span class="st">  </span><span class="co"># Nova camada, o resto é igual</span></a>
+<a class="sourceLine" id="cb7-10" title="10"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">x =</span> <span class="st">&quot;Orçamento&quot;</span>, <span class="dt">y =</span> <span class="st">&quot;Arrecadação&quot;</span>, <span class="dt">color =</span> <span class="st">&quot;Houve lucro?&quot;</span>) </a></code></pre></div>
+<p><img src="14_visualizacoes-em-R_files/figure-html/ggplot-5-1.png" width="672" /></p>
 <p>Com <code>labs()</code>, podemos especificamos as etiquetas (<strong>lab</strong>el<strong>s</strong>) dos eixos, título, subtítulo, título da legenda, etc.</p>
 </div>
 <div id="atributos-estéticos-aes" class="section level1">
@@ -561,90 +564,86 @@ div.tocify {
 - type=: altera o tipo da forma, geralmente usada para pontos.
 - linetype=: altera o tipo da linha.</code></pre>
 <p>Um detalhe importante é que se você chamar um desses dentro de <code>aes()</code>, ele vai ter um comportamento, mas fora dela, ele tem outro. Veja o seguinte exemplo:</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="co"># Errado</span></a>
-<a class="sourceLine" id="cb11-2" title="2"><span class="kw">ggplot</span>(imdb) <span class="op">+</span></a>
-<a class="sourceLine" id="cb11-3" title="3"><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> orcamento, <span class="dt">y =</span> receita, <span class="dt">color =</span> <span class="st">&quot;blue&quot;</span>))</a></code></pre></div>
-<pre><code>## Warning: Removed 733 rows containing missing values (geom_point).</code></pre>
-<p><img src="14_visualizacoes-em-R_files/figure-html/ggplot_6-1.png" width="672" /></p>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1"><span class="co"># Correto</span></a>
-<a class="sourceLine" id="cb13-2" title="2"><span class="kw">ggplot</span>(imdb) <span class="op">+</span></a>
-<a class="sourceLine" id="cb13-3" title="3"><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> orcamento, <span class="dt">y =</span> receita), <span class="dt">color =</span> <span class="st">&quot;blue&quot;</span>)</a></code></pre></div>
-<pre><code>## Warning: Removed 733 rows containing missing values (geom_point).</code></pre>
-<p><img src="14_visualizacoes-em-R_files/figure-html/ggplot_6-2.png" width="672" /></p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="co"># Errado</span></a>
+<a class="sourceLine" id="cb9-2" title="2"><span class="kw">ggplot</span>(imdb) <span class="op">+</span></a>
+<a class="sourceLine" id="cb9-3" title="3"><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> orcamento, <span class="dt">y =</span> receita, <span class="dt">color =</span> <span class="st">&quot;blue&quot;</span>))</a></code></pre></div>
+<p><img src="14_visualizacoes-em-R_files/figure-html/ggplot-6-1.png" width="672" /></p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" title="1"><span class="co"># Correto</span></a>
+<a class="sourceLine" id="cb10-2" title="2"><span class="kw">ggplot</span>(imdb) <span class="op">+</span></a>
+<a class="sourceLine" id="cb10-3" title="3"><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> orcamento, <span class="dt">y =</span> receita), <span class="dt">color =</span> <span class="st">&quot;blue&quot;</span>)</a></code></pre></div>
+<p><img src="14_visualizacoes-em-R_files/figure-html/ggplot-6-2.png" width="672" /></p>
 <p>Isso ocorre porque em aes() ele espera encontrar <strong>variáveis</strong> com valores múltiplos, e isso divide o gráfico de acordo com a estética selecionada. Mas fora de aes() ele espera encontrar <strong>valores</strong>, que servem para modificar diretamente apenas a apresentação do gráfico.</p>
 </div>
 <div id="exemplos-de-gráficos-diferentes" class="section level1">
 <h1>Exemplos de gráficos diferentes</h1>
 <div id="linhas" class="section level2">
 <h2>Linhas</h2>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1"><span class="co"># Joga imdb no cano</span></a>
-<a class="sourceLine" id="cb15-2" title="2">imdb <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb15-3" title="3"><span class="st">  </span><span class="co"># Filtra os casos em que o diretor é o Spielberg</span></a>
-<a class="sourceLine" id="cb15-4" title="4"><span class="st">  </span><span class="kw">filter</span>(diretor <span class="op">==</span><span class="st"> &quot;Steven Spielberg&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb15-5" title="5"><span class="st">  </span><span class="co"># Agrupa esses casos por ano</span></a>
-<a class="sourceLine" id="cb15-6" title="6"><span class="st">  </span><span class="kw">group_by</span>(ano) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb15-7" title="7"><span class="st">  </span><span class="co"># Calcula uma nota média para cada ano</span></a>
-<a class="sourceLine" id="cb15-8" title="8"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">nota_media =</span> <span class="kw">mean</span>(nota_imdb, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb15-9" title="9"><span class="st">  </span><span class="co"># Joga o resultado no cano</span></a>
-<a class="sourceLine" id="cb15-10" title="10"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb15-11" title="11"><span class="st">  </span><span class="co"># Faz uma linha com o ano no eixo X e a nota média no eixo y</span></a>
-<a class="sourceLine" id="cb15-12" title="12"><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">x =</span> ano, <span class="dt">y =</span> nota_media))</a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1"><span class="co"># Joga imdb no cano</span></a>
+<a class="sourceLine" id="cb11-2" title="2">imdb <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb11-3" title="3"><span class="st">  </span><span class="co"># Filtra os casos em que o diretor é o Spielberg</span></a>
+<a class="sourceLine" id="cb11-4" title="4"><span class="st">  </span><span class="kw">filter</span>(diretor <span class="op">==</span><span class="st"> &quot;Steven Spielberg&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb11-5" title="5"><span class="st">  </span><span class="co"># Agrupa esses casos por ano</span></a>
+<a class="sourceLine" id="cb11-6" title="6"><span class="st">  </span><span class="kw">group_by</span>(ano) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb11-7" title="7"><span class="st">  </span><span class="co"># Calcula uma nota média para cada ano</span></a>
+<a class="sourceLine" id="cb11-8" title="8"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">nota_media =</span> <span class="kw">mean</span>(nota_imdb, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb11-9" title="9"><span class="st">  </span><span class="co"># Joga o resultado no cano</span></a>
+<a class="sourceLine" id="cb11-10" title="10"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb11-11" title="11"><span class="st">  </span><span class="co"># Faz uma linha com o ano no eixo X e a nota média no eixo y</span></a>
+<a class="sourceLine" id="cb11-12" title="12"><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">x =</span> ano, <span class="dt">y =</span> nota_media))</a></code></pre></div>
 <pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
 <p><img src="14_visualizacoes-em-R_files/figure-html/linhas-1.png" width="672" /></p>
 </div>
 <div id="histograma" class="section level2">
 <h2>Histograma</h2>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1"><span class="kw">ggplot</span>(imdb) <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb17-2" title="2"><span class="st">  </span><span class="co"># Note que as especificações de cor e preenchimento estão fora de aes()</span></a>
-<a class="sourceLine" id="cb17-3" title="3"><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="kw">aes</span>(<span class="dt">x =</span> orcamento), <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" title="1"><span class="kw">ggplot</span>(imdb) <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb13-2" title="2"><span class="st">  </span><span class="co"># Note que as especificações de cor e preenchimento estão fora de aes()</span></a>
+<a class="sourceLine" id="cb13-3" title="3"><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="kw">aes</span>(<span class="dt">x =</span> orcamento), <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;white&quot;</span>)</a></code></pre></div>
 <pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-<pre><code>## Warning: Removed 298 rows containing non-finite values (stat_bin).</code></pre>
 <p><img src="14_visualizacoes-em-R_files/figure-html/histo-1.png" width="672" /></p>
 <p>Histogramas só pedem o eixo x, pois o eixo y é a contagem dos casos em cada categoria de X.</p>
 </div>
 <div id="boxplot" class="section level2">
 <h2>Boxplot</h2>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1"><span class="co"># Joga o imdb no cano</span></a>
-<a class="sourceLine" id="cb20-2" title="2">imdb <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb20-3" title="3"><span class="st">  </span><span class="co"># Só os casos em que os diretores são um desses 3</span></a>
-<a class="sourceLine" id="cb20-4" title="4"><span class="st">  </span><span class="kw">filter</span>(diretor <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Steven Spielberg&quot;</span>, <span class="st">&quot;Quentin Tarantino&quot;</span>, <span class="st">&quot;Woody Allen&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Joga esse resultado no cano</span></a>
-<a class="sourceLine" id="cb20-5" title="5"><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb20-6" title="6"><span class="st">  </span><span class="co"># Faça um boxplot da variável &quot;receita&quot; </span></a>
-<a class="sourceLine" id="cb20-7" title="7"><span class="st">  </span><span class="co"># para cada valor da variável &quot;diretor&quot;</span></a>
-<a class="sourceLine" id="cb20-8" title="8"><span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> diretor, <span class="dt">y =</span> receita))</a></code></pre></div>
-<pre><code>## Warning: Removed 4 rows containing non-finite values (stat_boxplot).</code></pre>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" title="1"><span class="co"># Joga o imdb no cano</span></a>
+<a class="sourceLine" id="cb15-2" title="2">imdb <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb15-3" title="3"><span class="st">  </span><span class="co"># Só os casos em que os diretores são um desses 3</span></a>
+<a class="sourceLine" id="cb15-4" title="4"><span class="st">  </span><span class="kw">filter</span>(diretor <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Steven Spielberg&quot;</span>, <span class="st">&quot;Quentin Tarantino&quot;</span>, <span class="st">&quot;Woody Allen&quot;</span>)) <span class="op">%&gt;%</span><span class="st"> </span><span class="co"># Joga esse resultado no cano</span></a>
+<a class="sourceLine" id="cb15-5" title="5"><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb15-6" title="6"><span class="st">  </span><span class="co"># Faça um boxplot da variável &quot;receita&quot; </span></a>
+<a class="sourceLine" id="cb15-7" title="7"><span class="st">  </span><span class="co"># para cada valor da variável &quot;diretor&quot;</span></a>
+<a class="sourceLine" id="cb15-8" title="8"><span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> diretor, <span class="dt">y =</span> receita))</a></code></pre></div>
 <p><img src="14_visualizacoes-em-R_files/figure-html/boxp-1.png" width="672" /></p>
 </div>
 <div id="gráfico-de-barras" class="section level2">
 <h2>Gráfico de barras</h2>
 <p>Há dois tipos de gráfico de barras no ggplot, um é parecido com o histograma, pois apresenta contagens de casos:</p>
-<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1"><span class="co"># Joga o imdb no cano</span></a>
-<a class="sourceLine" id="cb22-2" title="2">imdb <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb22-3" title="3"><span class="st">  </span><span class="co"># Só os filmes que saíram depois de 1990</span></a>
-<a class="sourceLine" id="cb22-4" title="4"><span class="st">  </span><span class="kw">filter</span>(ano <span class="op">&gt;</span><span class="st"> </span><span class="dv">1990</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb22-5" title="5"><span class="st">  </span><span class="co"># Joga os resultados no cano</span></a>
-<a class="sourceLine" id="cb22-6" title="6"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb22-7" title="7"><span class="st">  </span><span class="co"># Como no histograma, só o X, o resto é estético</span></a>
-<a class="sourceLine" id="cb22-8" title="8"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="kw">aes</span>(<span class="dt">x =</span> ano), <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;light blue&quot;</span>)</a></code></pre></div>
-<p><img src="14_visualizacoes-em-R_files/figure-html/barras_1-1.png" width="672" /></p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" title="1"><span class="co"># Joga o imdb no cano</span></a>
+<a class="sourceLine" id="cb16-2" title="2">imdb <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb16-3" title="3"><span class="st">  </span><span class="co"># Só os filmes que saíram depois de 1990</span></a>
+<a class="sourceLine" id="cb16-4" title="4"><span class="st">  </span><span class="kw">filter</span>(ano <span class="op">&gt;</span><span class="st"> </span><span class="dv">1990</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb16-5" title="5"><span class="st">  </span><span class="co"># Joga os resultados no cano</span></a>
+<a class="sourceLine" id="cb16-6" title="6"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb16-7" title="7"><span class="st">  </span><span class="co"># Como no histograma, só o X, o resto é estético</span></a>
+<a class="sourceLine" id="cb16-8" title="8"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="kw">aes</span>(<span class="dt">x =</span> ano), <span class="dt">color =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">fill =</span> <span class="st">&quot;light blue&quot;</span>)</a></code></pre></div>
+<p><img src="14_visualizacoes-em-R_files/figure-html/barras-1-1.png" width="672" /></p>
 <p>O outro tipo de gráfico recebe valores mesmo para o eixo Y.</p>
-<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" title="1"><span class="co"># Joga imdb no cano</span></a>
-<a class="sourceLine" id="cb23-2" title="2">imdb <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb23-3" title="3"><span class="st">  </span><span class="co"># Conta quantos filmes cada diretor fez</span></a>
-<a class="sourceLine" id="cb23-4" title="4"><span class="st">  </span><span class="kw">count</span>(diretor) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb23-5" title="5"><span class="st">  </span><span class="co"># Filtra os diretores que não fizeram nenhum filme</span></a>
-<a class="sourceLine" id="cb23-6" title="6"><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(diretor)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb23-7" title="7"><span class="st">  </span><span class="co"># Pega os 5 mais prolíficos</span></a>
-<a class="sourceLine" id="cb23-8" title="8"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">top_n</span>(<span class="dv">5</span>, n) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb23-9" title="9"><span class="st">  </span><span class="co"># Joga o resultado no cano</span></a>
-<a class="sourceLine" id="cb23-10" title="10"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb23-11" title="11"><span class="st">  </span><span class="kw">geom_bar</span>(</a>
-<a class="sourceLine" id="cb23-12" title="12">    <span class="kw">aes</span>(<span class="dt">x =</span> diretor, <span class="dt">y =</span> n), </a>
-<a class="sourceLine" id="cb23-13" title="13">    <span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="co"># Não faça nenhuma operação estatística</span></a>
-<a class="sourceLine" id="cb23-14" title="14">    <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>, </a>
-<a class="sourceLine" id="cb23-15" title="15">    <span class="dt">fill =</span> <span class="st">&quot;pink&quot;</span></a>
-<a class="sourceLine" id="cb23-16" title="16">  )</a></code></pre></div>
-<p><img src="14_visualizacoes-em-R_files/figure-html/barras_2-1.png" width="672" /></p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" title="1"><span class="co"># Joga imdb no cano</span></a>
+<a class="sourceLine" id="cb17-2" title="2">imdb <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb17-3" title="3"><span class="st">  </span><span class="co"># Conta quantos filmes cada diretor fez</span></a>
+<a class="sourceLine" id="cb17-4" title="4"><span class="st">  </span><span class="kw">count</span>(diretor) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb17-5" title="5"><span class="st">  </span><span class="co"># Filtra os diretores que não fizeram nenhum filme</span></a>
+<a class="sourceLine" id="cb17-6" title="6"><span class="st">  </span><span class="kw">filter</span>(<span class="op">!</span><span class="kw">is.na</span>(diretor)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb17-7" title="7"><span class="st">  </span><span class="co"># Pega os 5 mais prolíficos</span></a>
+<a class="sourceLine" id="cb17-8" title="8"><span class="st">  </span>dplyr<span class="op">::</span><span class="kw">top_n</span>(<span class="dv">5</span>, n) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb17-9" title="9"><span class="st">  </span><span class="co"># Joga o resultado no cano</span></a>
+<a class="sourceLine" id="cb17-10" title="10"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb17-11" title="11"><span class="st">  </span><span class="kw">geom_bar</span>(</a>
+<a class="sourceLine" id="cb17-12" title="12">    <span class="kw">aes</span>(<span class="dt">x =</span> diretor, <span class="dt">y =</span> n), </a>
+<a class="sourceLine" id="cb17-13" title="13">    <span class="dt">stat =</span> <span class="st">&quot;identity&quot;</span>, <span class="co"># Não faça nenhuma operação estatística</span></a>
+<a class="sourceLine" id="cb17-14" title="14">    <span class="dt">color =</span> <span class="st">&quot;red&quot;</span>, </a>
+<a class="sourceLine" id="cb17-15" title="15">    <span class="dt">fill =</span> <span class="st">&quot;pink&quot;</span></a>
+<a class="sourceLine" id="cb17-16" title="16">  )</a></code></pre></div>
+<p><img src="14_visualizacoes-em-R_files/figure-html/barras-2-1.png" width="672" /></p>
 <p>Veja que ele pegou 6 e não 5, porque?</p>
 </div>
 </div>
@@ -654,78 +653,71 @@ div.tocify {
 <div id="vários-geoms-no-mesmo-gráfico" class="section level2">
 <h2>Vários geoms no mesmo gráfico</h2>
 <p>Podemos desenhar vários tipos de geometria no mesmo painel, desde que respeitemos um pouco de bom senso em relação à poluição visual e que isto represente alguma relação entre o que está sendo representado.</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" title="1"><span class="kw">ggplot</span>(imdb) <span class="op">+</span></a>
-<a class="sourceLine" id="cb24-2" title="2"><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> orcamento, <span class="dt">y =</span> receita)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb24-3" title="3"><span class="st">  </span><span class="co"># Desenha uma linha a partir de um procedimento estatístico</span></a>
-<a class="sourceLine" id="cb24-4" title="4"><span class="st">  </span><span class="co"># No caso, um modelo linear de regressão - &#39;method = &quot;lm&quot;&#39;</span></a>
-<a class="sourceLine" id="cb24-5" title="5"><span class="st">  </span><span class="co"># &#39;se = FALSE&#39; é para que ele não desenhe o intervalo de confiança</span></a>
-<a class="sourceLine" id="cb24-6" title="6"><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="kw">aes</span>(<span class="dt">x =</span> orcamento, <span class="dt">y =</span> receita), <span class="dt">se =</span> <span class="ot">FALSE</span>, <span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" title="1"><span class="kw">ggplot</span>(imdb) <span class="op">+</span></a>
+<a class="sourceLine" id="cb18-2" title="2"><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> orcamento, <span class="dt">y =</span> receita)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb18-3" title="3"><span class="st">  </span><span class="co"># Desenha uma linha a partir de um procedimento estatístico</span></a>
+<a class="sourceLine" id="cb18-4" title="4"><span class="st">  </span><span class="co"># No caso, um modelo linear de regressão - &#39;method = &quot;lm&quot;&#39;</span></a>
+<a class="sourceLine" id="cb18-5" title="5"><span class="st">  </span><span class="co"># &#39;se = FALSE&#39; é para que ele não desenhe o intervalo de confiança</span></a>
+<a class="sourceLine" id="cb18-6" title="6"><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="kw">aes</span>(<span class="dt">x =</span> orcamento, <span class="dt">y =</span> receita), <span class="dt">se =</span> <span class="ot">FALSE</span>, <span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>)</a></code></pre></div>
 <pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
-<pre><code>## Warning: Removed 733 rows containing non-finite values (stat_smooth).</code></pre>
-<pre><code>## Warning: Removed 733 rows containing missing values (geom_point).</code></pre>
-<p><img src="14_visualizacoes-em-R_files/figure-html/var_geom-1.png" width="672" /></p>
+<p><img src="14_visualizacoes-em-R_files/figure-html/var-geom-1.png" width="672" /></p>
 <p>Podemos desenhar o mesmo gráfico anterior, mas economizar um pouco a digitação, passando os nossos critérios estéticos diretamente na chamada da função <code>ggplot()</code>. Fica assim:</p>
-<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" title="1"><span class="co"># Note onde está aes()</span></a>
-<a class="sourceLine" id="cb28-2" title="2"><span class="kw">ggplot</span>(imdb, <span class="kw">aes</span>(<span class="dt">x =</span> orcamento, <span class="dt">y =</span> receita)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb28-3" title="3"><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb28-4" title="4"><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">se =</span> <span class="ot">FALSE</span>, <span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" title="1"><span class="co"># Note onde está aes()</span></a>
+<a class="sourceLine" id="cb20-2" title="2"><span class="kw">ggplot</span>(imdb, <span class="kw">aes</span>(<span class="dt">x =</span> orcamento, <span class="dt">y =</span> receita)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb20-3" title="3"><span class="st">  </span><span class="kw">geom_point</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb20-4" title="4"><span class="st">  </span><span class="kw">geom_smooth</span>(<span class="dt">se =</span> <span class="ot">FALSE</span>, <span class="dt">method =</span> <span class="st">&quot;lm&quot;</span>)</a></code></pre></div>
 <pre><code>## `geom_smooth()` using formula &#39;y ~ x&#39;</code></pre>
-<pre><code>## Warning: Removed 733 rows containing non-finite values (stat_smooth).</code></pre>
-<pre><code>## Warning: Removed 733 rows containing missing values (geom_point).</code></pre>
-<p><img src="14_visualizacoes-em-R_files/figure-html/diret_ggplot-1.png" width="672" /></p>
+<p><img src="14_visualizacoes-em-R_files/figure-html/diret-ggplot-1.png" width="672" /></p>
 <p>Assim, todos os geoms vão seguir os mesmos critérios <strong>aes</strong>téticos, à menos que você especifique o contrário.</p>
 </div>
 <div id="utilizando-uma-variável-para-dividir-o-seu-dado-em-facetas" class="section level2">
 <h2>Utilizando uma variável para dividir o seu dado em <strong>facet</strong>as</h2>
 <p>Facetas (facets) são painéis distintos para o mesmo banco de dados, assim ele vai plotar um gráfico para cada valor da variável que foi “facetada”.</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" title="1"><span class="co"># Imdb no cano</span></a>
-<a class="sourceLine" id="cb32-2" title="2">imdb <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb32-3" title="3"><span class="st">  </span><span class="co"># Só os casos com classificação livre ou 13+</span></a>
-<a class="sourceLine" id="cb32-4" title="4"><span class="st">  </span><span class="kw">filter</span>(classificacao <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Livre&quot;</span>, <span class="st">&quot;A partir de 13 anos&quot;</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb32-5" title="5"><span class="st">  </span><span class="co"># Joga no cano</span></a>
-<a class="sourceLine" id="cb32-6" title="6"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb32-7" title="7"><span class="st">  </span><span class="co"># gráfico de orçamento por nota</span></a>
-<a class="sourceLine" id="cb32-8" title="8"><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> orcamento, <span class="dt">y =</span> nota_imdb)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb32-9" title="9"><span class="st">  </span><span class="co"># uma faceta para cada classificação</span></a>
-<a class="sourceLine" id="cb32-10" title="10"><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>classificacao, <span class="dt">nrow =</span> <span class="dv">2</span>)</a></code></pre></div>
-<pre><code>## Warning: Removed 85 rows containing missing values (geom_point).</code></pre>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" title="1"><span class="co"># Imdb no cano</span></a>
+<a class="sourceLine" id="cb22-2" title="2">imdb <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb22-3" title="3"><span class="st">  </span><span class="co"># Só os casos com classificação livre ou 13+</span></a>
+<a class="sourceLine" id="cb22-4" title="4"><span class="st">  </span><span class="kw">filter</span>(classificacao <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Livre&quot;</span>, <span class="st">&quot;A partir de 13 anos&quot;</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb22-5" title="5"><span class="st">  </span><span class="co"># Joga no cano</span></a>
+<a class="sourceLine" id="cb22-6" title="6"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb22-7" title="7"><span class="st">  </span><span class="co"># gráfico de orçamento por nota</span></a>
+<a class="sourceLine" id="cb22-8" title="8"><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> orcamento, <span class="dt">y =</span> nota_imdb)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb22-9" title="9"><span class="st">  </span><span class="co"># uma faceta para cada classificação</span></a>
+<a class="sourceLine" id="cb22-10" title="10"><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>classificacao, <span class="dt">nrow =</span> <span class="dv">2</span>)</a></code></pre></div>
 <p><img src="14_visualizacoes-em-R_files/figure-html/facet-1.png" width="672" /></p>
 <p>Cada pedaço do banco de dados foi plotado em um gráfico diferente, o primeiro tem só os casos de filmes para adolescentes, o segundo tem os filmes de classificação livre.</p>
 <p>Aqui vocês podem ver o mesmo gráfico, mas ao invés de usar <code>nrow</code> na faceta, usou-se <code>ncol</code>:</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" title="1">imdb <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb34-2" title="2"><span class="st">  </span><span class="kw">filter</span>(classificacao <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Livre&quot;</span>, <span class="st">&quot;A partir de 13 anos&quot;</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb34-3" title="3"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb34-4" title="4"><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> orcamento, <span class="dt">y =</span> nota_imdb)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb34-5" title="5"><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>classificacao, <span class="dt">ncol =</span> <span class="dv">2</span>)</a></code></pre></div>
-<pre><code>## Warning: Removed 85 rows containing missing values (geom_point).</code></pre>
-<p><img src="14_visualizacoes-em-R_files/figure-html/facet_2-1.png" width="672" /></p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" title="1">imdb <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb23-2" title="2"><span class="st">  </span><span class="kw">filter</span>(classificacao <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Livre&quot;</span>, <span class="st">&quot;A partir de 13 anos&quot;</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb23-3" title="3"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb23-4" title="4"><span class="st">  </span><span class="kw">geom_point</span>(<span class="kw">aes</span>(<span class="dt">x =</span> orcamento, <span class="dt">y =</span> nota_imdb)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb23-5" title="5"><span class="st">  </span><span class="kw">facet_wrap</span>(<span class="op">~</span>classificacao, <span class="dt">ncol =</span> <span class="dv">2</span>)</a></code></pre></div>
+<p><img src="14_visualizacoes-em-R_files/figure-html/facet-2-1.png" width="672" /></p>
 <p>No primeiro caso, ele pediu que as facetas fossem organizadas em linhas (rows) e no segundo, em colunas (cols).</p>
 </div>
 <div id="juntando-gráficos-diferentes-no-mesmo-painel" class="section level2">
 <h2>Juntando gráficos diferentes no mesmo painel</h2>
 <p>As vezes, por uma exigência estética ou de espaço na folha, você quer colocar vários gráficos dividindo o mesmo espaço. Então, recorra a alguns pacotes que ampliam a funcionalidade do ggplot.</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" title="1"><span class="kw">library</span>(patchwork)</a>
-<a class="sourceLine" id="cb36-2" title="2"></a>
-<a class="sourceLine" id="cb36-3" title="3">p1 &lt;-<span class="st"> </span>imdb <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb36-4" title="4"><span class="st">  </span><span class="kw">filter</span>(diretor <span class="op">==</span><span class="st"> &quot;Steven Spielberg&quot;</span>) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb36-5" title="5"><span class="st">  </span><span class="kw">group_by</span>(ano) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb36-6" title="6"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">nota_media =</span> <span class="kw">mean</span>(nota_imdb, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb36-7" title="7"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb36-8" title="8"><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">x =</span> ano, <span class="dt">y =</span> nota_media))</a></code></pre></div>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" title="1"><span class="kw">library</span>(patchwork)</a>
+<a class="sourceLine" id="cb24-2" title="2"></a>
+<a class="sourceLine" id="cb24-3" title="3">p1 &lt;-<span class="st"> </span>imdb <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb24-4" title="4"><span class="st">  </span><span class="kw">filter</span>(diretor <span class="op">==</span><span class="st"> &quot;Steven Spielberg&quot;</span>) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb24-5" title="5"><span class="st">  </span><span class="kw">group_by</span>(ano) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb24-6" title="6"><span class="st">  </span><span class="kw">summarise</span>(<span class="dt">nota_media =</span> <span class="kw">mean</span>(nota_imdb, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb24-7" title="7"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb24-8" title="8"><span class="st">  </span><span class="kw">geom_line</span>(<span class="kw">aes</span>(<span class="dt">x =</span> ano, <span class="dt">y =</span> nota_media))</a></code></pre></div>
 <pre><code>## `summarise()` ungrouping output (override with `.groups` argument)</code></pre>
-<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" title="1">p2 &lt;-<span class="st"> </span>imdb <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb38-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">lucro =</span> receita <span class="op">-</span><span class="st"> </span>orcamento) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb38-3" title="3"><span class="st">  </span><span class="kw">filter</span>(diretor <span class="op">==</span><span class="st"> &quot;Steven Spielberg&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb38-4" title="4"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb38-5" title="5"><span class="st">  </span><span class="kw">geom_histogram</span>(</a>
-<a class="sourceLine" id="cb38-6" title="6">    <span class="kw">aes</span>(<span class="dt">x =</span> lucro),</a>
-<a class="sourceLine" id="cb38-7" title="7">    <span class="dt">fill =</span> <span class="st">&quot;lightblue&quot;</span>, </a>
-<a class="sourceLine" id="cb38-8" title="8">    <span class="dt">color =</span> <span class="st">&quot;darkblue&quot;</span>, </a>
-<a class="sourceLine" id="cb38-9" title="9">    <span class="dt">binwidth =</span> <span class="dv">100000000</span></a>
-<a class="sourceLine" id="cb38-10" title="10">  )</a>
-<a class="sourceLine" id="cb38-11" title="11"></a>
-<a class="sourceLine" id="cb38-12" title="12">p1 <span class="op">+</span><span class="st"> </span>p2</a></code></pre></div>
-<pre><code>## Warning: Removed 1 rows containing non-finite values (stat_bin).</code></pre>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" title="1">p2 &lt;-<span class="st"> </span>imdb <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb26-2" title="2"><span class="st">  </span><span class="kw">mutate</span>(<span class="dt">lucro =</span> receita <span class="op">-</span><span class="st"> </span>orcamento) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb26-3" title="3"><span class="st">  </span><span class="kw">filter</span>(diretor <span class="op">==</span><span class="st"> &quot;Steven Spielberg&quot;</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb26-4" title="4"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb26-5" title="5"><span class="st">  </span><span class="kw">geom_histogram</span>(</a>
+<a class="sourceLine" id="cb26-6" title="6">    <span class="kw">aes</span>(<span class="dt">x =</span> lucro),</a>
+<a class="sourceLine" id="cb26-7" title="7">    <span class="dt">fill =</span> <span class="st">&quot;lightblue&quot;</span>, </a>
+<a class="sourceLine" id="cb26-8" title="8">    <span class="dt">color =</span> <span class="st">&quot;darkblue&quot;</span>, </a>
+<a class="sourceLine" id="cb26-9" title="9">    <span class="dt">binwidth =</span> <span class="dv">100000000</span></a>
+<a class="sourceLine" id="cb26-10" title="10">  )</a>
+<a class="sourceLine" id="cb26-11" title="11"></a>
+<a class="sourceLine" id="cb26-12" title="12">p1 <span class="op">+</span><span class="st"> </span>p2</a></code></pre></div>
 <p><img src="14_visualizacoes-em-R_files/figure-html/patchwork-1.png" width="672" /></p>
 <p>Mesmo os gráficos sendo diferentes, o patchwork imprime eles na mesma fígura. Na documentação do patchwork você pode descobrir mais sobre como ajustar os detalhes.</p>
 </div>
@@ -733,171 +725,159 @@ div.tocify {
 <div id="personalização" class="section level1">
 <h1>Personalização</h1>
 <p>Por fim, precisamos personalizar os nossos gráficos, para que eles fiquem bonitos e autoexplicativos. Vamos partir de um gráfico base que vai ser alterado paulatinamente. Vejam que se vocês olharem para o código final, pode parecer que é um bixo de sete-cabeças, mas lembrem-se da “gramática” do ggplot, são camadas que vão sendo adicionadas pouco a pouco, como um bolo de confeiteiro bem complexo, feito passo a passo.</p>
-<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" title="1">imdb <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb40-2" title="2"><span class="st">  </span><span class="kw">filter</span>(diretor <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Steven Spielberg&quot;</span>, <span class="st">&quot;Quentin Tarantino&quot;</span>, <span class="st">&quot;Woody Allen&quot;</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb40-3" title="3"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb40-4" title="4"><span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> diretor, <span class="dt">y =</span> receita, <span class="dt">fill =</span> diretor))</a></code></pre></div>
-<pre><code>## Warning: Removed 4 rows containing non-finite values (stat_boxplot).</code></pre>
-<p><img src="14_visualizacoes-em-R_files/figure-html/graf_base-1.png" width="672" /></p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" title="1">imdb <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb27-2" title="2"><span class="st">  </span><span class="kw">filter</span>(diretor <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Steven Spielberg&quot;</span>, <span class="st">&quot;Quentin Tarantino&quot;</span>, <span class="st">&quot;Woody Allen&quot;</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb27-3" title="3"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb27-4" title="4"><span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> diretor, <span class="dt">y =</span> receita, <span class="dt">fill =</span> diretor))</a></code></pre></div>
+<p><img src="14_visualizacoes-em-R_files/figure-html/graf-base-1.png" width="672" /></p>
 <div id="removendo-a-legenda" class="section level2">
 <h2>Removendo a legenda:</h2>
 <p>Veja dentro de geom_boxplot, ele passa o argumento <code>show.legend = FALSE</code>.</p>
-<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" title="1">imdb <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb42-2" title="2"><span class="st">  </span><span class="kw">filter</span>(diretor <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Steven Spielberg&quot;</span>, <span class="st">&quot;Quentin Tarantino&quot;</span>, <span class="st">&quot;Woody Allen&quot;</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb42-3" title="3"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb42-4" title="4"><span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> diretor, <span class="dt">y =</span> receita, <span class="dt">fill =</span> diretor), <span class="dt">show.legend =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
-<pre><code>## Warning: Removed 4 rows containing non-finite values (stat_boxplot).</code></pre>
-<p><img src="14_visualizacoes-em-R_files/figure-html/sem_legenda-1.png" width="672" /></p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" title="1">imdb <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb28-2" title="2"><span class="st">  </span><span class="kw">filter</span>(diretor <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Steven Spielberg&quot;</span>, <span class="st">&quot;Quentin Tarantino&quot;</span>, <span class="st">&quot;Woody Allen&quot;</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb28-3" title="3"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb28-4" title="4"><span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> diretor, <span class="dt">y =</span> receita, <span class="dt">fill =</span> diretor), <span class="dt">show.legend =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<p><img src="14_visualizacoes-em-R_files/figure-html/sem-legenda-1.png" width="672" /></p>
 </div>
 <div id="escalas" class="section level2">
 <h2>Escalas</h2>
 <p>Para mudar qualquer aspecto das escalas, utiliza-se a família de funções <code>scale_X_Y()</code>.</p>
 <p>Aqui, ao chamar <code>scale_y_continuous</code>, ele especifíca que as etiquetas no eixo y (que é uma variável <strong>contínua</strong>) devem ser escritas como um valor em dólares.</p>
-<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" title="1">imdb <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb44-2" title="2"><span class="st">  </span><span class="kw">filter</span>(diretor <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Steven Spielberg&quot;</span>, <span class="st">&quot;Quentin Tarantino&quot;</span>, <span class="st">&quot;Woody Allen&quot;</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb44-3" title="3"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb44-4" title="4"><span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> diretor, <span class="dt">y =</span> receita, <span class="dt">fill =</span> diretor), <span class="dt">show.legend =</span> <span class="ot">FALSE</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb44-5" title="5"><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">labels =</span> scales<span class="op">::</span>dollar)</a></code></pre></div>
-<pre><code>## Warning: Removed 4 rows containing non-finite values (stat_boxplot).</code></pre>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" title="1">imdb <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb29-2" title="2"><span class="st">  </span><span class="kw">filter</span>(diretor <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Steven Spielberg&quot;</span>, <span class="st">&quot;Quentin Tarantino&quot;</span>, <span class="st">&quot;Woody Allen&quot;</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb29-3" title="3"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb29-4" title="4"><span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> diretor, <span class="dt">y =</span> receita, <span class="dt">fill =</span> diretor), <span class="dt">show.legend =</span> <span class="ot">FALSE</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb29-5" title="5"><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">labels =</span> scales<span class="op">::</span>dollar)</a></code></pre></div>
 <p><img src="14_visualizacoes-em-R_files/figure-html/escala-1.png" width="672" /></p>
 </div>
 <div id="mudando-a-ordem-das-categorias" class="section level2">
 <h2>Mudando a ordem das categorias</h2>
 <p>Agora, a função <code>scale_x_discrete</code> está alterando as <strong>categorias</strong> no eixo x, o objeto é reordená-las.</p>
-<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" title="1">imdb <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb46-2" title="2"><span class="st">  </span><span class="kw">filter</span>(diretor <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Steven Spielberg&quot;</span>, <span class="st">&quot;Quentin Tarantino&quot;</span>, <span class="st">&quot;Woody Allen&quot;</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb46-3" title="3"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb46-4" title="4"><span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> diretor, <span class="dt">y =</span> receita, <span class="dt">fill =</span> diretor), <span class="dt">show.legend =</span> <span class="ot">FALSE</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb46-5" title="5"><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">labels =</span> scales<span class="op">::</span>dollar) <span class="op">+</span></a>
-<a class="sourceLine" id="cb46-6" title="6"><span class="st">  </span><span class="kw">scale_x_discrete</span>(</a>
-<a class="sourceLine" id="cb46-7" title="7">    <span class="dt">limits =</span> <span class="kw">c</span>(<span class="st">&quot;Woody Allen&quot;</span>, <span class="st">&quot;Quentin Tarantino&quot;</span>, <span class="st">&quot;Steven Spielberg&quot;</span>)</a>
-<a class="sourceLine" id="cb46-8" title="8">  )</a></code></pre></div>
-<pre><code>## Warning: Removed 4 rows containing non-finite values (stat_boxplot).</code></pre>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" title="1">imdb <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb30-2" title="2"><span class="st">  </span><span class="kw">filter</span>(diretor <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Steven Spielberg&quot;</span>, <span class="st">&quot;Quentin Tarantino&quot;</span>, <span class="st">&quot;Woody Allen&quot;</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb30-3" title="3"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb30-4" title="4"><span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> diretor, <span class="dt">y =</span> receita, <span class="dt">fill =</span> diretor), <span class="dt">show.legend =</span> <span class="ot">FALSE</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb30-5" title="5"><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">labels =</span> scales<span class="op">::</span>dollar) <span class="op">+</span></a>
+<a class="sourceLine" id="cb30-6" title="6"><span class="st">  </span><span class="kw">scale_x_discrete</span>(</a>
+<a class="sourceLine" id="cb30-7" title="7">    <span class="dt">limits =</span> <span class="kw">c</span>(<span class="st">&quot;Woody Allen&quot;</span>, <span class="st">&quot;Quentin Tarantino&quot;</span>, <span class="st">&quot;Steven Spielberg&quot;</span>)</a>
+<a class="sourceLine" id="cb30-8" title="8">  )</a></code></pre></div>
 <p><img src="14_visualizacoes-em-R_files/figure-html/ordem-1.png" width="672" /></p>
 </div>
 <div id="alteração-das-cores" class="section level2">
 <h2>Alteração das cores</h2>
 <p>Geralmente, no ggplot2 há maneiras de especificar escalas de cores para seus dados, mas é comum a gente querer passar as cores manualmente mesmo. Nesse caso, ele está utilizando códigos de cor em valores hexadecimais (veja este <a href="https://images.app.goo.gl/mya1RuW1Hi8hfm2M9">exemplo</a>.</p>
-<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" title="1">imdb <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb48-2" title="2"><span class="st">  </span><span class="kw">filter</span>(diretor <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Steven Spielberg&quot;</span>, <span class="st">&quot;Quentin Tarantino&quot;</span>, <span class="st">&quot;Woody Allen&quot;</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb48-3" title="3"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb48-4" title="4"><span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> diretor, <span class="dt">y =</span> receita, <span class="dt">fill =</span> diretor), <span class="dt">show.legend =</span> <span class="ot">FALSE</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb48-5" title="5"><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">labels =</span> scales<span class="op">::</span>dollar) <span class="op">+</span></a>
-<a class="sourceLine" id="cb48-6" title="6"><span class="st">  </span><span class="kw">scale_x_discrete</span>(</a>
-<a class="sourceLine" id="cb48-7" title="7">    <span class="dt">limits =</span> <span class="kw">c</span>(<span class="st">&quot;Woody Allen&quot;</span>, <span class="st">&quot;Quentin Tarantino&quot;</span>, <span class="st">&quot;Steven Spielberg&quot;</span>)</a>
-<a class="sourceLine" id="cb48-8" title="8">  ) <span class="op">+</span></a>
-<a class="sourceLine" id="cb48-9" title="9"><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;#999999&quot;</span>, <span class="st">&quot;#E69F00&quot;</span>, <span class="st">&quot;#56B4E9&quot;</span>))</a></code></pre></div>
-<pre><code>## Warning: Removed 4 rows containing non-finite values (stat_boxplot).</code></pre>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" title="1">imdb <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb31-2" title="2"><span class="st">  </span><span class="kw">filter</span>(diretor <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Steven Spielberg&quot;</span>, <span class="st">&quot;Quentin Tarantino&quot;</span>, <span class="st">&quot;Woody Allen&quot;</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb31-3" title="3"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb31-4" title="4"><span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> diretor, <span class="dt">y =</span> receita, <span class="dt">fill =</span> diretor), <span class="dt">show.legend =</span> <span class="ot">FALSE</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb31-5" title="5"><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">labels =</span> scales<span class="op">::</span>dollar) <span class="op">+</span></a>
+<a class="sourceLine" id="cb31-6" title="6"><span class="st">  </span><span class="kw">scale_x_discrete</span>(</a>
+<a class="sourceLine" id="cb31-7" title="7">    <span class="dt">limits =</span> <span class="kw">c</span>(<span class="st">&quot;Woody Allen&quot;</span>, <span class="st">&quot;Quentin Tarantino&quot;</span>, <span class="st">&quot;Steven Spielberg&quot;</span>)</a>
+<a class="sourceLine" id="cb31-8" title="8">  ) <span class="op">+</span></a>
+<a class="sourceLine" id="cb31-9" title="9"><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;#999999&quot;</span>, <span class="st">&quot;#E69F00&quot;</span>, <span class="st">&quot;#56B4E9&quot;</span>))</a></code></pre></div>
 <p><img src="14_visualizacoes-em-R_files/figure-html/cores-1.png" width="672" /></p>
 </div>
 <div id="modificando-elementos-do-gráfico" class="section level2">
 <h2>Modificando elementos do gráfico</h2>
 <p>Você pode querer alterar visualmente seu gráfico ainda mais, e aqui entramos num território praticamente infinito de customização, mas apenas como exemplo, ele quis remover tanto os nomes, quanto as marcações do eixo X.</p>
-<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb50-1" title="1">imdb <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb50-2" title="2"><span class="st">  </span><span class="kw">filter</span>(diretor <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Steven Spielberg&quot;</span>, <span class="st">&quot;Quentin Tarantino&quot;</span>, <span class="st">&quot;Woody Allen&quot;</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb50-3" title="3"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb50-4" title="4"><span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> diretor, <span class="dt">y =</span> receita, <span class="dt">fill =</span> diretor)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb50-5" title="5"><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">labels =</span> scales<span class="op">::</span>dollar) <span class="op">+</span></a>
-<a class="sourceLine" id="cb50-6" title="6"><span class="st">  </span><span class="kw">scale_x_discrete</span>(</a>
-<a class="sourceLine" id="cb50-7" title="7">    <span class="dt">limits =</span> <span class="kw">c</span>(<span class="st">&quot;Woody Allen&quot;</span>, <span class="st">&quot;Quentin Tarantino&quot;</span>, <span class="st">&quot;Steven Spielberg&quot;</span>)</a>
-<a class="sourceLine" id="cb50-8" title="8">  ) <span class="op">+</span></a>
-<a class="sourceLine" id="cb50-9" title="9"><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;#999999&quot;</span>, <span class="st">&quot;#E69F00&quot;</span>, <span class="st">&quot;#56B4E9&quot;</span>)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb50-10" title="10"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_blank</span>(), <span class="dt">axis.ticks.x =</span> <span class="kw">element_blank</span>())</a></code></pre></div>
-<pre><code>## Warning: Removed 4 rows containing non-finite values (stat_boxplot).</code></pre>
-<p><img src="14_visualizacoes-em-R_files/figure-html/sem_eixo_x-1.png" width="672" /></p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" title="1">imdb <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb32-2" title="2"><span class="st">  </span><span class="kw">filter</span>(diretor <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Steven Spielberg&quot;</span>, <span class="st">&quot;Quentin Tarantino&quot;</span>, <span class="st">&quot;Woody Allen&quot;</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb32-3" title="3"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb32-4" title="4"><span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> diretor, <span class="dt">y =</span> receita, <span class="dt">fill =</span> diretor)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb32-5" title="5"><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">labels =</span> scales<span class="op">::</span>dollar) <span class="op">+</span></a>
+<a class="sourceLine" id="cb32-6" title="6"><span class="st">  </span><span class="kw">scale_x_discrete</span>(</a>
+<a class="sourceLine" id="cb32-7" title="7">    <span class="dt">limits =</span> <span class="kw">c</span>(<span class="st">&quot;Woody Allen&quot;</span>, <span class="st">&quot;Quentin Tarantino&quot;</span>, <span class="st">&quot;Steven Spielberg&quot;</span>)</a>
+<a class="sourceLine" id="cb32-8" title="8">  ) <span class="op">+</span></a>
+<a class="sourceLine" id="cb32-9" title="9"><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;#999999&quot;</span>, <span class="st">&quot;#E69F00&quot;</span>, <span class="st">&quot;#56B4E9&quot;</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb32-10" title="10"><span class="st">  </span><span class="kw">theme</span>(<span class="dt">axis.text.x =</span> <span class="kw">element_blank</span>(), <span class="dt">axis.ticks.x =</span> <span class="kw">element_blank</span>())</a></code></pre></div>
+<p><img src="14_visualizacoes-em-R_files/figure-html/sem-eixo-x-1.png" width="672" /></p>
 <p>Todos os elementos do gráfico no ggplot são construídos a partir de “elementos”, e se você souber o que está fazendo, pode manipular estes elementos diretamente. Nese caso, ele apenas removeu alguns elementos do gráfico, mas você pode alterar praticamente tudo e criar gráficos totalmente customizados que não são possíveis em softwares proprietários, como Excel, SAS, SPSS, etc.</p>
 </div>
 <div id="posição-da-legenda" class="section level2">
 <h2>Posição da legenda</h2>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb52-1" title="1">imdb <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb52-2" title="2"><span class="st">  </span><span class="kw">filter</span>(diretor <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Steven Spielberg&quot;</span>, <span class="st">&quot;Quentin Tarantino&quot;</span>, <span class="st">&quot;Woody Allen&quot;</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb52-3" title="3"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb52-4" title="4"><span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> diretor, <span class="dt">y =</span> receita, <span class="dt">fill =</span> diretor)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb52-5" title="5"><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">labels =</span> scales<span class="op">::</span>dollar) <span class="op">+</span></a>
-<a class="sourceLine" id="cb52-6" title="6"><span class="st">  </span><span class="kw">scale_x_discrete</span>(</a>
-<a class="sourceLine" id="cb52-7" title="7">    <span class="dt">limits =</span> <span class="kw">c</span>(<span class="st">&quot;Woody Allen&quot;</span>, <span class="st">&quot;Quentin Tarantino&quot;</span>, <span class="st">&quot;Steven Spielberg&quot;</span>)</a>
-<a class="sourceLine" id="cb52-8" title="8">  ) <span class="op">+</span></a>
-<a class="sourceLine" id="cb52-9" title="9"><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;#999999&quot;</span>, <span class="st">&quot;#E69F00&quot;</span>, <span class="st">&quot;#56B4E9&quot;</span>)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb52-10" title="10"><span class="st">  </span><span class="kw">theme</span>(</a>
-<a class="sourceLine" id="cb52-11" title="11">    <span class="dt">axis.text.x =</span> <span class="kw">element_blank</span>(), </a>
-<a class="sourceLine" id="cb52-12" title="12">    <span class="dt">axis.ticks.x =</span> <span class="kw">element_blank</span>(),</a>
-<a class="sourceLine" id="cb52-13" title="13">    <span class="dt">legend.position =</span> <span class="st">&quot;bottom&quot;</span></a>
-<a class="sourceLine" id="cb52-14" title="14">  )</a></code></pre></div>
-<pre><code>## Warning: Removed 4 rows containing non-finite values (stat_boxplot).</code></pre>
-<p><img src="14_visualizacoes-em-R_files/figure-html/legend_pos-1.png" width="672" /></p>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" title="1">imdb <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb33-2" title="2"><span class="st">  </span><span class="kw">filter</span>(diretor <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Steven Spielberg&quot;</span>, <span class="st">&quot;Quentin Tarantino&quot;</span>, <span class="st">&quot;Woody Allen&quot;</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb33-3" title="3"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb33-4" title="4"><span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> diretor, <span class="dt">y =</span> receita, <span class="dt">fill =</span> diretor)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb33-5" title="5"><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">labels =</span> scales<span class="op">::</span>dollar) <span class="op">+</span></a>
+<a class="sourceLine" id="cb33-6" title="6"><span class="st">  </span><span class="kw">scale_x_discrete</span>(</a>
+<a class="sourceLine" id="cb33-7" title="7">    <span class="dt">limits =</span> <span class="kw">c</span>(<span class="st">&quot;Woody Allen&quot;</span>, <span class="st">&quot;Quentin Tarantino&quot;</span>, <span class="st">&quot;Steven Spielberg&quot;</span>)</a>
+<a class="sourceLine" id="cb33-8" title="8">  ) <span class="op">+</span></a>
+<a class="sourceLine" id="cb33-9" title="9"><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;#999999&quot;</span>, <span class="st">&quot;#E69F00&quot;</span>, <span class="st">&quot;#56B4E9&quot;</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb33-10" title="10"><span class="st">  </span><span class="kw">theme</span>(</a>
+<a class="sourceLine" id="cb33-11" title="11">    <span class="dt">axis.text.x =</span> <span class="kw">element_blank</span>(), </a>
+<a class="sourceLine" id="cb33-12" title="12">    <span class="dt">axis.ticks.x =</span> <span class="kw">element_blank</span>(),</a>
+<a class="sourceLine" id="cb33-13" title="13">    <span class="dt">legend.position =</span> <span class="st">&quot;bottom&quot;</span></a>
+<a class="sourceLine" id="cb33-14" title="14">  )</a></code></pre></div>
+<p><img src="14_visualizacoes-em-R_files/figure-html/legend-pos-1.png" width="672" /></p>
 <p>A única mudança é o <code>legend.position</code>.</p>
 </div>
 <div id="temas-pré-definidos" class="section level2">
 <h2>Temas pré-definidos</h2>
 <p>Pra dar um estilão diferente pro seu gráfico, você pode especificar um desses temas, só tome cuidado pois dependendo de onde você chama o tema (começo, meio, fim, ele pode bagunçar outras alterações que você já fez).</p>
-<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb54-1" title="1">imdb <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb54-2" title="2"><span class="st">  </span><span class="kw">filter</span>(diretor <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Steven Spielberg&quot;</span>, <span class="st">&quot;Quentin Tarantino&quot;</span>, <span class="st">&quot;Woody Allen&quot;</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb54-3" title="3"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb54-4" title="4"><span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> diretor, <span class="dt">y =</span> receita, <span class="dt">fill =</span> diretor), <span class="dt">show.legend =</span> <span class="ot">FALSE</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb54-5" title="5"><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">labels =</span> scales<span class="op">::</span>dollar) <span class="op">+</span></a>
-<a class="sourceLine" id="cb54-6" title="6"><span class="st">  </span><span class="kw">scale_x_discrete</span>(</a>
-<a class="sourceLine" id="cb54-7" title="7">    <span class="dt">limits =</span> <span class="kw">c</span>(<span class="st">&quot;Woody Allen&quot;</span>, <span class="st">&quot;Quentin Tarantino&quot;</span>, <span class="st">&quot;Steven Spielberg&quot;</span>)</a>
-<a class="sourceLine" id="cb54-8" title="8">  ) <span class="op">+</span></a>
-<a class="sourceLine" id="cb54-9" title="9"><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;#999999&quot;</span>, <span class="st">&quot;#E69F00&quot;</span>, <span class="st">&quot;#56B4E9&quot;</span>)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb54-10" title="10"><span class="st">  </span><span class="kw">theme_bw</span>()</a></code></pre></div>
-<pre><code>## Warning: Removed 4 rows containing non-finite values (stat_boxplot).</code></pre>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" title="1">imdb <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb34-2" title="2"><span class="st">  </span><span class="kw">filter</span>(diretor <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Steven Spielberg&quot;</span>, <span class="st">&quot;Quentin Tarantino&quot;</span>, <span class="st">&quot;Woody Allen&quot;</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb34-3" title="3"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb34-4" title="4"><span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> diretor, <span class="dt">y =</span> receita, <span class="dt">fill =</span> diretor), <span class="dt">show.legend =</span> <span class="ot">FALSE</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb34-5" title="5"><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">labels =</span> scales<span class="op">::</span>dollar) <span class="op">+</span></a>
+<a class="sourceLine" id="cb34-6" title="6"><span class="st">  </span><span class="kw">scale_x_discrete</span>(</a>
+<a class="sourceLine" id="cb34-7" title="7">    <span class="dt">limits =</span> <span class="kw">c</span>(<span class="st">&quot;Woody Allen&quot;</span>, <span class="st">&quot;Quentin Tarantino&quot;</span>, <span class="st">&quot;Steven Spielberg&quot;</span>)</a>
+<a class="sourceLine" id="cb34-8" title="8">  ) <span class="op">+</span></a>
+<a class="sourceLine" id="cb34-9" title="9"><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;#999999&quot;</span>, <span class="st">&quot;#E69F00&quot;</span>, <span class="st">&quot;#56B4E9&quot;</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb34-10" title="10"><span class="st">  </span><span class="kw">theme_bw</span>()</a></code></pre></div>
 <p><img src="14_visualizacoes-em-R_files/figure-html/temas-1.png" width="672" /></p>
 <p>O <code>theme_bw</code> deixa o gráfico num constrate legal de preto e branco, tirando aquele fundo cinza-claro padrão.</p>
-<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb56-1" title="1">imdb <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb56-2" title="2"><span class="st">  </span><span class="kw">filter</span>(diretor <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Steven Spielberg&quot;</span>, <span class="st">&quot;Quentin Tarantino&quot;</span>, <span class="st">&quot;Woody Allen&quot;</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb56-3" title="3"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb56-4" title="4"><span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> diretor, <span class="dt">y =</span> receita, <span class="dt">fill =</span> diretor), <span class="dt">show.legend =</span> <span class="ot">FALSE</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb56-5" title="5"><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">labels =</span> scales<span class="op">::</span>dollar) <span class="op">+</span></a>
-<a class="sourceLine" id="cb56-6" title="6"><span class="st">  </span><span class="kw">scale_x_discrete</span>(</a>
-<a class="sourceLine" id="cb56-7" title="7">    <span class="dt">limits =</span> <span class="kw">c</span>(<span class="st">&quot;Woody Allen&quot;</span>, <span class="st">&quot;Quentin Tarantino&quot;</span>, <span class="st">&quot;Steven Spielberg&quot;</span>)</a>
-<a class="sourceLine" id="cb56-8" title="8">  ) <span class="op">+</span></a>
-<a class="sourceLine" id="cb56-9" title="9"><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;#999999&quot;</span>, <span class="st">&quot;#E69F00&quot;</span>, <span class="st">&quot;#56B4E9&quot;</span>)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb56-10" title="10"><span class="st">  </span><span class="kw">theme_minimal</span>()</a></code></pre></div>
-<pre><code>## Warning: Removed 4 rows containing non-finite values (stat_boxplot).</code></pre>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" title="1">imdb <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb35-2" title="2"><span class="st">  </span><span class="kw">filter</span>(diretor <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Steven Spielberg&quot;</span>, <span class="st">&quot;Quentin Tarantino&quot;</span>, <span class="st">&quot;Woody Allen&quot;</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb35-3" title="3"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb35-4" title="4"><span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> diretor, <span class="dt">y =</span> receita, <span class="dt">fill =</span> diretor), <span class="dt">show.legend =</span> <span class="ot">FALSE</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb35-5" title="5"><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">labels =</span> scales<span class="op">::</span>dollar) <span class="op">+</span></a>
+<a class="sourceLine" id="cb35-6" title="6"><span class="st">  </span><span class="kw">scale_x_discrete</span>(</a>
+<a class="sourceLine" id="cb35-7" title="7">    <span class="dt">limits =</span> <span class="kw">c</span>(<span class="st">&quot;Woody Allen&quot;</span>, <span class="st">&quot;Quentin Tarantino&quot;</span>, <span class="st">&quot;Steven Spielberg&quot;</span>)</a>
+<a class="sourceLine" id="cb35-8" title="8">  ) <span class="op">+</span></a>
+<a class="sourceLine" id="cb35-9" title="9"><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;#999999&quot;</span>, <span class="st">&quot;#E69F00&quot;</span>, <span class="st">&quot;#56B4E9&quot;</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb35-10" title="10"><span class="st">  </span><span class="kw">theme_minimal</span>()</a></code></pre></div>
 <p><img src="14_visualizacoes-em-R_files/figure-html/temas2-1.png" width="672" /></p>
 <p>O <code>theme_minimal()</code> é para aquele hipster minimalista que mora com você (ou em você).</p>
-<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb58-1" title="1">imdb <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb58-2" title="2"><span class="st">  </span><span class="kw">filter</span>(diretor <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Steven Spielberg&quot;</span>, <span class="st">&quot;Quentin Tarantino&quot;</span>, <span class="st">&quot;Woody Allen&quot;</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb58-3" title="3"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb58-4" title="4"><span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> diretor, <span class="dt">y =</span> receita, <span class="dt">fill =</span> diretor), <span class="dt">show.legend =</span> <span class="ot">FALSE</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb58-5" title="5"><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">labels =</span> scales<span class="op">::</span>dollar) <span class="op">+</span></a>
-<a class="sourceLine" id="cb58-6" title="6"><span class="st">  </span><span class="kw">scale_x_discrete</span>(</a>
-<a class="sourceLine" id="cb58-7" title="7">    <span class="dt">limits =</span> <span class="kw">c</span>(<span class="st">&quot;Woody Allen&quot;</span>, <span class="st">&quot;Quentin Tarantino&quot;</span>, <span class="st">&quot;Steven Spielberg&quot;</span>)</a>
-<a class="sourceLine" id="cb58-8" title="8">  ) <span class="op">+</span></a>
-<a class="sourceLine" id="cb58-9" title="9"><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;#999999&quot;</span>, <span class="st">&quot;#E69F00&quot;</span>, <span class="st">&quot;#56B4E9&quot;</span>)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb58-10" title="10"><span class="st">  </span><span class="kw">theme_dark</span>()</a></code></pre></div>
-<pre><code>## Warning: Removed 4 rows containing non-finite values (stat_boxplot).</code></pre>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" title="1">imdb <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb36-2" title="2"><span class="st">  </span><span class="kw">filter</span>(diretor <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Steven Spielberg&quot;</span>, <span class="st">&quot;Quentin Tarantino&quot;</span>, <span class="st">&quot;Woody Allen&quot;</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb36-3" title="3"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb36-4" title="4"><span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> diretor, <span class="dt">y =</span> receita, <span class="dt">fill =</span> diretor), <span class="dt">show.legend =</span> <span class="ot">FALSE</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb36-5" title="5"><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">labels =</span> scales<span class="op">::</span>dollar) <span class="op">+</span></a>
+<a class="sourceLine" id="cb36-6" title="6"><span class="st">  </span><span class="kw">scale_x_discrete</span>(</a>
+<a class="sourceLine" id="cb36-7" title="7">    <span class="dt">limits =</span> <span class="kw">c</span>(<span class="st">&quot;Woody Allen&quot;</span>, <span class="st">&quot;Quentin Tarantino&quot;</span>, <span class="st">&quot;Steven Spielberg&quot;</span>)</a>
+<a class="sourceLine" id="cb36-8" title="8">  ) <span class="op">+</span></a>
+<a class="sourceLine" id="cb36-9" title="9"><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;#999999&quot;</span>, <span class="st">&quot;#E69F00&quot;</span>, <span class="st">&quot;#56B4E9&quot;</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb36-10" title="10"><span class="st">  </span><span class="kw">theme_dark</span>()</a></code></pre></div>
 <p><img src="14_visualizacoes-em-R_files/figure-html/temas3-1.png" width="672" /></p>
 <p>O <code>theme_dark()</code> é pra quando você quer deixar seu gráfico mais amigável pra quem tem fotofobia e acaba zerando seu cartucho de tinta preta.</p>
 </div>
 <div id="título-do-gráfico" class="section level2">
 <h2>Título do gráfico</h2>
-<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb60-1" title="1">imdb <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb60-2" title="2"><span class="st">  </span><span class="kw">filter</span>(diretor <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Steven Spielberg&quot;</span>, <span class="st">&quot;Quentin Tarantino&quot;</span>, <span class="st">&quot;Woody Allen&quot;</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb60-3" title="3"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb60-4" title="4"><span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> diretor, <span class="dt">y =</span> receita, <span class="dt">fill =</span> diretor), <span class="dt">show.legend =</span> <span class="ot">FALSE</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb60-5" title="5"><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">labels =</span> scales<span class="op">::</span>dollar) <span class="op">+</span></a>
-<a class="sourceLine" id="cb60-6" title="6"><span class="st">  </span><span class="kw">scale_x_discrete</span>(</a>
-<a class="sourceLine" id="cb60-7" title="7">    <span class="dt">limits =</span> <span class="kw">c</span>(<span class="st">&quot;Woody Allen&quot;</span>, <span class="st">&quot;Quentin Tarantino&quot;</span>, <span class="st">&quot;Steven Spielberg&quot;</span>)</a>
-<a class="sourceLine" id="cb60-8" title="8">  ) <span class="op">+</span></a>
-<a class="sourceLine" id="cb60-9" title="9"><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;#999999&quot;</span>, <span class="st">&quot;#E69F00&quot;</span>, <span class="st">&quot;#56B4E9&quot;</span>)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb60-10" title="10"><span class="st">  </span><span class="kw">theme_minimal</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb60-11" title="11"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Meu boxplot bonitão&quot;</span>)</a></code></pre></div>
-<pre><code>## Warning: Removed 4 rows containing non-finite values (stat_boxplot).</code></pre>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" title="1">imdb <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb37-2" title="2"><span class="st">  </span><span class="kw">filter</span>(diretor <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Steven Spielberg&quot;</span>, <span class="st">&quot;Quentin Tarantino&quot;</span>, <span class="st">&quot;Woody Allen&quot;</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb37-3" title="3"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb37-4" title="4"><span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> diretor, <span class="dt">y =</span> receita, <span class="dt">fill =</span> diretor), <span class="dt">show.legend =</span> <span class="ot">FALSE</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb37-5" title="5"><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">labels =</span> scales<span class="op">::</span>dollar) <span class="op">+</span></a>
+<a class="sourceLine" id="cb37-6" title="6"><span class="st">  </span><span class="kw">scale_x_discrete</span>(</a>
+<a class="sourceLine" id="cb37-7" title="7">    <span class="dt">limits =</span> <span class="kw">c</span>(<span class="st">&quot;Woody Allen&quot;</span>, <span class="st">&quot;Quentin Tarantino&quot;</span>, <span class="st">&quot;Steven Spielberg&quot;</span>)</a>
+<a class="sourceLine" id="cb37-8" title="8">  ) <span class="op">+</span></a>
+<a class="sourceLine" id="cb37-9" title="9"><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;#999999&quot;</span>, <span class="st">&quot;#E69F00&quot;</span>, <span class="st">&quot;#56B4E9&quot;</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb37-10" title="10"><span class="st">  </span><span class="kw">theme_minimal</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb37-11" title="11"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Meu boxplot bonitão&quot;</span>)</a></code></pre></div>
 <p><img src="14_visualizacoes-em-R_files/figure-html/titulo-1.png" width="672" /></p>
 <p>Também dá pra fazer o mesmo em <code>labs()</code></p>
-<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb62-1" title="1">imdb <span class="op">%&gt;%</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb62-2" title="2"><span class="st">  </span><span class="kw">filter</span>(diretor <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Steven Spielberg&quot;</span>, <span class="st">&quot;Quentin Tarantino&quot;</span>, <span class="st">&quot;Woody Allen&quot;</span>)) <span class="op">%&gt;%</span></a>
-<a class="sourceLine" id="cb62-3" title="3"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span></a>
-<a class="sourceLine" id="cb62-4" title="4"><span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> diretor, <span class="dt">y =</span> receita, <span class="dt">fill =</span> diretor), <span class="dt">show.legend =</span> <span class="ot">FALSE</span>) <span class="op">+</span></a>
-<a class="sourceLine" id="cb62-5" title="5"><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">labels =</span> scales<span class="op">::</span>dollar) <span class="op">+</span></a>
-<a class="sourceLine" id="cb62-6" title="6"><span class="st">  </span><span class="kw">scale_x_discrete</span>(</a>
-<a class="sourceLine" id="cb62-7" title="7">    <span class="dt">limits =</span> <span class="kw">c</span>(<span class="st">&quot;Woody Allen&quot;</span>, <span class="st">&quot;Quentin Tarantino&quot;</span>, <span class="st">&quot;Steven Spielberg&quot;</span>)</a>
-<a class="sourceLine" id="cb62-8" title="8">  ) <span class="op">+</span></a>
-<a class="sourceLine" id="cb62-9" title="9"><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;#999999&quot;</span>, <span class="st">&quot;#E69F00&quot;</span>, <span class="st">&quot;#56B4E9&quot;</span>)) <span class="op">+</span></a>
-<a class="sourceLine" id="cb62-10" title="10"><span class="st">  </span><span class="kw">theme_minimal</span>() <span class="op">+</span></a>
-<a class="sourceLine" id="cb62-11" title="11"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Meu boxplot bonitão&quot;</span>)</a></code></pre></div>
-<pre><code>## Warning: Removed 4 rows containing non-finite values (stat_boxplot).</code></pre>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" title="1">imdb <span class="op">%&gt;%</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb38-2" title="2"><span class="st">  </span><span class="kw">filter</span>(diretor <span class="op">%in%</span><span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Steven Spielberg&quot;</span>, <span class="st">&quot;Quentin Tarantino&quot;</span>, <span class="st">&quot;Woody Allen&quot;</span>)) <span class="op">%&gt;%</span></a>
+<a class="sourceLine" id="cb38-3" title="3"><span class="st">  </span><span class="kw">ggplot</span>() <span class="op">+</span><span class="st"> </span></a>
+<a class="sourceLine" id="cb38-4" title="4"><span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="kw">aes</span>(<span class="dt">x =</span> diretor, <span class="dt">y =</span> receita, <span class="dt">fill =</span> diretor), <span class="dt">show.legend =</span> <span class="ot">FALSE</span>) <span class="op">+</span></a>
+<a class="sourceLine" id="cb38-5" title="5"><span class="st">  </span><span class="kw">scale_y_continuous</span>(<span class="dt">labels =</span> scales<span class="op">::</span>dollar) <span class="op">+</span></a>
+<a class="sourceLine" id="cb38-6" title="6"><span class="st">  </span><span class="kw">scale_x_discrete</span>(</a>
+<a class="sourceLine" id="cb38-7" title="7">    <span class="dt">limits =</span> <span class="kw">c</span>(<span class="st">&quot;Woody Allen&quot;</span>, <span class="st">&quot;Quentin Tarantino&quot;</span>, <span class="st">&quot;Steven Spielberg&quot;</span>)</a>
+<a class="sourceLine" id="cb38-8" title="8">  ) <span class="op">+</span></a>
+<a class="sourceLine" id="cb38-9" title="9"><span class="st">  </span><span class="kw">scale_fill_manual</span>(<span class="dt">values =</span> <span class="kw">c</span>(<span class="st">&quot;#999999&quot;</span>, <span class="st">&quot;#E69F00&quot;</span>, <span class="st">&quot;#56B4E9&quot;</span>)) <span class="op">+</span></a>
+<a class="sourceLine" id="cb38-10" title="10"><span class="st">  </span><span class="kw">theme_minimal</span>() <span class="op">+</span></a>
+<a class="sourceLine" id="cb38-11" title="11"><span class="st">  </span><span class="kw">labs</span>(<span class="dt">title =</span> <span class="st">&quot;Meu boxplot bonitão&quot;</span>)</a></code></pre></div>
 <p><img src="14_visualizacoes-em-R_files/figure-html/titulo2-1.png" width="672" /></p>
 </div>
 </div>
@@ -915,8 +895,8 @@ div.tocify {
 <ol style="list-style-type: decimal">
 <li>Considerando o código:</li>
 </ol>
-<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb64-1" title="1"><span class="kw">ggplot</span>(rmc) <span class="op">+</span></a>
-<a class="sourceLine" id="cb64-2" title="2"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="kw">aes</span>(<span class="dt">x =</span> NASC_NESTE_MUN, <span class="dt">fill =</span> <span class="st">&quot;blue&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" title="1"><span class="kw">ggplot</span>(rmc) <span class="op">+</span></a>
+<a class="sourceLine" id="cb39-2" title="2"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="kw">aes</span>(<span class="dt">x =</span> NASC_NESTE_MUN, <span class="dt">fill =</span> <span class="st">&quot;blue&quot;</span>))</a></code></pre></div>
 <p>Porque ele não imprimiu corretamente a cor azul?</p>
 <ol start="2" style="list-style-type: decimal">
 <li><p>O que aconteceu se você rodar <code>ggplot(data = rmc)</code>.</p></li>

@@ -23,6 +23,8 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 
 
 <style type="text/css">code{white-space: pre;}</style>
@@ -457,6 +459,9 @@ div.tocify {
     <li>
       <a href="00_aula-1.html">Aula 1: Introdução</a>
     </li>
+    <li>
+      <a href="02_aula-2.html">Aula 2: Importação e cozinha</a>
+    </li>
   </ul>
 </li>
       </ul>
@@ -639,37 +644,28 @@ div.tocify {
 ## cols(
 ##   V0001 = col_double()
 ## )</code></pre>
-<pre><code>## # A tibble: 25 x 1
-##    V0001
-##    &lt;dbl&gt;
-##  1    14
-##  2    14
-##  3    14
-##  4    14
-##  5    14
-##  6    14
-##  7    14
-##  8    14
-##  9    14
-## 10    14
-## # ... with 15 more rows</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["V0001"],"name":[1],"type":["dbl"],"align":["right"]}],"data":[{"1":"14"},{"1":"14"},{"1":"14"},{"1":"14"},{"1":"14"},{"1":"14"},{"1":"14"},{"1":"14"},{"1":"14"},{"1":"14"},{"1":"14"},{"1":"14"},{"1":"14"},{"1":"14"},{"1":"14"},{"1":"14"},{"1":"14"},{"1":"14"},{"1":"14"},{"1":"14"},{"1":"14"},{"1":"14"},{"1":"14"},{"1":"14"},{"1":"14"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 <p>Vejam que os códigos são idênticos, mas no primeiro caso, o R não consegue encontrar a função <code>read_fwf</code>, pois ele não está no <strong>Namespace</strong>. O comando <code>library()</code> carrega o pacote <code>readr</code> e permite que o R encontre a função.</p>
 <p>Para que esta função leia o nosso banco, precisamos especificar a posição das variáveis no banco, que está descrito no arquivo de leiaute. Como exemplo, vamos ler as primeiras 3 variáveis que encontramos nos nossos arquivos delimitados, UF, MUNICÍPIO e PESO AMOSTRAL.</p>
-<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" title="1">dado &lt;-<span class="st"> </span><span class="kw">read_fwf</span>(</a>
-<a class="sourceLine" id="cb29-2" title="2">  <span class="dt">file =</span> <span class="st">&quot;Amostra_Pessoas_14.txt&quot;</span>,</a>
-<a class="sourceLine" id="cb29-3" title="3">  <span class="kw">fwf_cols</span>(</a>
-<a class="sourceLine" id="cb29-4" title="4">    <span class="dt">UF    =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>),</a>
-<a class="sourceLine" id="cb29-5" title="5">    <span class="dt">MUNIC =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">7</span>),</a>
-<a class="sourceLine" id="cb29-6" title="6">    <span class="dt">PESO  =</span> <span class="kw">c</span>(<span class="dv">29</span>, <span class="dv">44</span>)</a>
-<a class="sourceLine" id="cb29-7" title="7">  ),</a>
-<a class="sourceLine" id="cb29-8" title="8">  <span class="dt">col_types =</span> <span class="kw">cols_only</span>(</a>
-<a class="sourceLine" id="cb29-9" title="9">    <span class="dt">UF    =</span> <span class="kw">col_character</span>(),</a>
-<a class="sourceLine" id="cb29-10" title="10">    <span class="dt">MUNIC =</span> <span class="kw">col_character</span>(),</a>
-<a class="sourceLine" id="cb29-11" title="11">    <span class="dt">PESO  =</span> <span class="kw">col_double</span>()</a>
-<a class="sourceLine" id="cb29-12" title="12">  ),</a>
-<a class="sourceLine" id="cb29-13" title="13">  <span class="dt">n_max =</span> <span class="dv">1000</span>)</a>
-<a class="sourceLine" id="cb29-14" title="14"></a>
-<a class="sourceLine" id="cb29-15" title="15"><span class="kw">print</span>(dado, <span class="dt">max =</span> <span class="dv">25</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" title="1">dado &lt;-<span class="st"> </span><span class="kw">read_fwf</span>(</a>
+<a class="sourceLine" id="cb28-2" title="2">  <span class="dt">file =</span> <span class="st">&quot;Amostra_Pessoas_14.txt&quot;</span>,</a>
+<a class="sourceLine" id="cb28-3" title="3">  <span class="kw">fwf_cols</span>(</a>
+<a class="sourceLine" id="cb28-4" title="4">    <span class="dt">UF    =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>),</a>
+<a class="sourceLine" id="cb28-5" title="5">    <span class="dt">MUNIC =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">7</span>),</a>
+<a class="sourceLine" id="cb28-6" title="6">    <span class="dt">PESO  =</span> <span class="kw">c</span>(<span class="dv">29</span>, <span class="dv">44</span>)</a>
+<a class="sourceLine" id="cb28-7" title="7">  ),</a>
+<a class="sourceLine" id="cb28-8" title="8">  <span class="dt">col_types =</span> <span class="kw">cols_only</span>(</a>
+<a class="sourceLine" id="cb28-9" title="9">    <span class="dt">UF    =</span> <span class="kw">col_character</span>(),</a>
+<a class="sourceLine" id="cb28-10" title="10">    <span class="dt">MUNIC =</span> <span class="kw">col_character</span>(),</a>
+<a class="sourceLine" id="cb28-11" title="11">    <span class="dt">PESO  =</span> <span class="kw">col_double</span>()</a>
+<a class="sourceLine" id="cb28-12" title="12">  ),</a>
+<a class="sourceLine" id="cb28-13" title="13">  <span class="dt">n_max =</span> <span class="dv">1000</span>)</a>
+<a class="sourceLine" id="cb28-14" title="14"></a>
+<a class="sourceLine" id="cb28-15" title="15"><span class="kw">print</span>(dado, <span class="dt">max =</span> <span class="dv">25</span>)</a></code></pre></div>
 <pre><code>## # A tibble: 1,000 x 3
 ##    UF    MUNIC    PESO
 ##    &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt;
@@ -685,8 +681,8 @@ div.tocify {
 ## 10 14    00027 3.95e13
 ## # ... with 990 more rows</code></pre>
 <p>Note que além de especificar as posições das variáveis <code>fwf_cols(nome = c(início, fim))</code>, eu fiz questão de especificar também os tipos das colunas <code>col_types = cols_only(nome = col_tipo())</code>, porque não quero que ele interprete os valores de UF e MUNIC como números, já que são códigos de estados e municípios e também específico que peso é uma variável númerica. Porém, Isto é insuficiente, já que PESO não está com as suas casas decimas! Veja que PESO tem 3 casas antes da vírgula e 13 casas após. Então, precisamos fazer:</p>
-<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb31-1" title="1">dado<span class="op">$</span>PESO &lt;-<span class="st"> </span>dado<span class="op">$</span>PESO <span class="op">/</span><span class="st"> </span><span class="dv">10</span><span class="op">^</span><span class="dv">13</span></a>
-<a class="sourceLine" id="cb31-2" title="2"><span class="kw">print</span>(dado, <span class="dt">max =</span> <span class="dv">25</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb30-1" title="1">dado<span class="op">$</span>PESO &lt;-<span class="st"> </span>dado<span class="op">$</span>PESO <span class="op">/</span><span class="st"> </span><span class="dv">10</span><span class="op">^</span><span class="dv">13</span></a>
+<a class="sourceLine" id="cb30-2" title="2"><span class="kw">print</span>(dado, <span class="dt">max =</span> <span class="dv">25</span>)</a></code></pre></div>
 <pre><code>## # A tibble: 1,000 x 3
 ##    UF    MUNIC  PESO
 ##    &lt;chr&gt; &lt;chr&gt; &lt;dbl&gt;
@@ -707,7 +703,7 @@ div.tocify {
 <div id="escrevendo-bancos-de-dados" class="section level2">
 <h2>Escrevendo bancos de dados</h2>
 <p>Muitas vezes, este é nosso último passo, para salvar tabelas ou bancos de dados atualizados após concluirmos nossas análises, porém, vamos aproveitar que o <code>read.table</code> está fresco na nossa memória aprender a usar seu primo, <code>write.table</code>, já que eles são muito similares.</p>
-<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" title="1"><span class="kw">write.table</span>(<span class="dt">x =</span> dado, <span class="dt">file =</span> <span class="st">&quot;01_arquivo_teste.txt&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb32-1" title="1"><span class="kw">write.table</span>(<span class="dt">x =</span> dado, <span class="dt">file =</span> <span class="st">&quot;01_arquivo_teste.txt&quot;</span>)</a></code></pre></div>
 <p>Agora abra na sua pasta o arquivo que você criou e veja que formato ele assumiu.</p>
 </div>
 <div id="exercício-1" class="section level2">
@@ -720,40 +716,40 @@ div.tocify {
 <div id="visualizando-nosso-banco-direta-e-indiretamente" class="section level2">
 <h2>Visualizando nosso banco direta e indiretamente</h2>
 <p>Para visualizar os bancos de dados, vamos utilizar o nosso arquivo <code>"06_extrato_censo_2010.txt"</code>. Como já sabemos o formato do arquivo, podemos utilizar a função auxiliar <code>read.csv2</code>, que é uma versão de <code>read.table</code> com valores pré-definidos para <code>sep</code> e <code>dec</code>.</p>
-<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" title="1">dado &lt;-<span class="st"> </span><span class="kw">read.csv2</span>(</a>
-<a class="sourceLine" id="cb34-2" title="2">  <span class="dt">file =</span> <span class="st">&quot;06_extrato_censo_2010.txt&quot;</span>, </a>
-<a class="sourceLine" id="cb34-3" title="3">  <span class="dt">colClasses =</span> <span class="kw">c</span>(</a>
-<a class="sourceLine" id="cb34-4" title="4">    <span class="dt">UF    =</span> <span class="st">&quot;character&quot;</span>,</a>
-<a class="sourceLine" id="cb34-5" title="5">    <span class="dt">MUNIC =</span> <span class="st">&quot;character&quot;</span>,</a>
-<a class="sourceLine" id="cb34-6" title="6">    <span class="dt">SEXO  =</span> <span class="st">&quot;character&quot;</span>,</a>
-<a class="sourceLine" id="cb34-7" title="7">    <span class="dt">EDUC  =</span> <span class="st">&quot;character&quot;</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb33-1" title="1">dado &lt;-<span class="st"> </span><span class="kw">read.csv2</span>(</a>
+<a class="sourceLine" id="cb33-2" title="2">  <span class="dt">file =</span> <span class="st">&quot;06_extrato_censo_2010.txt&quot;</span>, </a>
+<a class="sourceLine" id="cb33-3" title="3">  <span class="dt">colClasses =</span> <span class="kw">c</span>(</a>
+<a class="sourceLine" id="cb33-4" title="4">    <span class="dt">UF    =</span> <span class="st">&quot;character&quot;</span>,</a>
+<a class="sourceLine" id="cb33-5" title="5">    <span class="dt">MUNIC =</span> <span class="st">&quot;character&quot;</span>,</a>
+<a class="sourceLine" id="cb33-6" title="6">    <span class="dt">SEXO  =</span> <span class="st">&quot;character&quot;</span>,</a>
+<a class="sourceLine" id="cb33-7" title="7">    <span class="dt">EDUC  =</span> <span class="st">&quot;character&quot;</span>))</a></code></pre></div>
 <p>Podemos visualizar nossos dados em R de várias formas. Podemos imprimí o objeto no console digitando o seu nome ou utilizando a função <code>print</code>.</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" title="1">dado</a>
-<a class="sourceLine" id="cb35-2" title="2"><span class="co"># ou</span></a>
-<a class="sourceLine" id="cb35-3" title="3"><span class="kw">print</span>(dado)</a></code></pre></div>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" title="1">dado</a>
+<a class="sourceLine" id="cb34-2" title="2"><span class="co"># ou</span></a>
+<a class="sourceLine" id="cb34-3" title="3"><span class="kw">print</span>(dado)</a></code></pre></div>
 <p>Também podemos abrir uma visualização ao estilo Excel, com algumas funcionalidades como filtros para as linhas e colunas com <code>View</code>, mas atenção, não é possível alterar manualmente os valores.</p>
-<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" title="1"><span class="kw">View</span>(dado)</a></code></pre></div>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb35-1" title="1"><span class="kw">View</span>(dado)</a></code></pre></div>
 <p>Outra forma de “visualizar” nossos dados é utilizar medidas resumo da distribuição das variáveis, como médias e variáveis de distribuição. Experimente as seguintes funções sobre a variável numérica de renda. Algumas dessas funções também tem métodos para variáveis não numéricas, como <code>summary</code>. Estamos trabalhando sem considerar a necessidade de ponderar os valores.</p>
-<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb37-1" title="1"><span class="kw">mean</span>(dado<span class="op">$</span>RENDA, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb36-1" title="1"><span class="kw">mean</span>(dado<span class="op">$</span>RENDA, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <pre><code>## [1] 2.348011</code></pre>
-<div class="sourceCode" id="cb39"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb39-1" title="1"><span class="kw">median</span>(dado<span class="op">$</span>RENDA, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb38-1" title="1"><span class="kw">median</span>(dado<span class="op">$</span>RENDA, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <pre><code>## [1] 1.37255</code></pre>
-<div class="sourceCode" id="cb41"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb41-1" title="1"><span class="kw">var</span>(dado<span class="op">$</span>RENDA, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb40-1" title="1"><span class="kw">var</span>(dado<span class="op">$</span>RENDA, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <pre><code>## [1] 39.438</code></pre>
-<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" title="1"><span class="kw">sd</span>(dado<span class="op">$</span>RENDA, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" title="1"><span class="kw">sd</span>(dado<span class="op">$</span>RENDA, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <pre><code>## [1] 6.279968</code></pre>
-<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" title="1"><span class="kw">range</span>(dado<span class="op">$</span>RENDA, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" title="1"><span class="kw">range</span>(dado<span class="op">$</span>RENDA, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <pre><code>## [1]    0.000 1085.294</code></pre>
-<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" title="1"><span class="kw">quantile</span>(dado<span class="op">$</span>RENDA, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" title="1"><span class="kw">quantile</span>(dado<span class="op">$</span>RENDA, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <pre><code>##         0%        25%        50%        75%       100% 
 ##    0.00000    0.00000    1.37255    2.54902 1085.29412</code></pre>
-<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" title="1"><span class="kw">summary</span>(dado<span class="op">$</span>RENDA, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" title="1"><span class="kw">summary</span>(dado<span class="op">$</span>RENDA, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <pre><code>##     Min.  1st Qu.   Median     Mean  3rd Qu.     Max.     NA&#39;s 
 ##    0.000    0.000    1.373    2.348    2.549 1085.294    29550</code></pre>
 <p>Outra forma é fazer isto graficamente. Trabalhar com gráficos em R requer um pouco mais de aprofundamento nos argumentos opcionais das funções, porém, os resultados são muito interessantes e informativos.</p>
-<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" title="1"><span class="kw">hist</span>(dado<span class="op">$</span>RENDA, <span class="dt">breaks =</span> <span class="dv">1000</span>, <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">20</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb50-1" title="1"><span class="kw">hist</span>(dado<span class="op">$</span>RENDA, <span class="dt">breaks =</span> <span class="dv">1000</span>, <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">20</span>))</a></code></pre></div>
 <p><img src="12_bancos-de-dados-em-r_files/figure-html/grafico-1.png" width="672" /></p>
-<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb52-1" title="1"><span class="kw">boxplot</span>(dado<span class="op">$</span>RENDA, <span class="dt">outline =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" title="1"><span class="kw">boxplot</span>(dado<span class="op">$</span>RENDA, <span class="dt">outline =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
 <p><img src="12_bancos-de-dados-em-r_files/figure-html/grafico-2.png" width="672" /></p>
 <p>Essencialmente, a visualização de dados em R não é muito distinta de outros softwares. Geralmente, é mais proveitoso analisar medidas resumo e representações gráficas do que inspecionar microdados individualmente.</p>
 </div>
@@ -761,161 +757,145 @@ div.tocify {
 <h2>Selecionando casos e variáveis</h2>
 <p>Frequentemente, trabalhamos com grandes bancos de dados que contém informações, lugares ou pessoas que não tem relevância para a nossa pergunta de pesquisa. Para operacionalizar nossas questões, é necessário então selecionar casos relevantes e descartar outros. Esta é uma operação tão básica e frequente, que há múltiplos pacotes em R que apresentam soluções para isto. Aqui, vou me ater ao jeito <code>[]</code>. O bom do jeito <code>[]</code> é que ele sempre funciona, independente do pacote que você está utilizando e ele oferece um conhecimento fundamental que você pode depois traduzir para outros pacotes de processamento de dados como o <code>data.table</code> e o <code>dplyr</code>.</p>
 <p><code>[]</code> É a função Extract. Ela serve para “pescar” elementos dentro de um objeto ou modificar partes dele. É ela que vamos utilizar para fazer nossas seleções, mas primeiro, vamos entender como ela funciona.</p>
-<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb53-1" title="1"><span class="co"># 1 Dimensão</span></a>
-<a class="sourceLine" id="cb53-2" title="2">vetor &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">10</span></a>
-<a class="sourceLine" id="cb53-3" title="3">vetor[<span class="dv">1</span>]</a></code></pre></div>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb52-1" title="1"><span class="co"># 1 Dimensão</span></a>
+<a class="sourceLine" id="cb52-2" title="2">vetor &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">10</span></a>
+<a class="sourceLine" id="cb52-3" title="3">vetor[<span class="dv">1</span>]</a></code></pre></div>
 <pre><code>## [1] 1</code></pre>
-<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb55-1" title="1">vetor[<span class="dv">5</span>]</a></code></pre></div>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb54-1" title="1">vetor[<span class="dv">5</span>]</a></code></pre></div>
 <pre><code>## [1] 5</code></pre>
-<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb57-1" title="1">vetor[<span class="op">-</span><span class="dv">1</span>]</a></code></pre></div>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb56-1" title="1">vetor[<span class="op">-</span><span class="dv">1</span>]</a></code></pre></div>
 <pre><code>## [1]  2  3  4  5  6  7  8  9 10</code></pre>
-<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb59-1" title="1">vetor[<span class="op">-</span><span class="dv">10</span>]</a></code></pre></div>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb58-1" title="1">vetor[<span class="op">-</span><span class="dv">10</span>]</a></code></pre></div>
 <pre><code>## [1] 1 2 3 4 5 6 7 8 9</code></pre>
-<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb61-1" title="1">vetor[vetor <span class="op">&gt;</span><span class="st"> </span><span class="dv">5</span>]</a></code></pre></div>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb60-1" title="1">vetor[vetor <span class="op">&gt;</span><span class="st"> </span><span class="dv">5</span>]</a></code></pre></div>
 <pre><code>## [1]  6  7  8  9 10</code></pre>
-<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb63-1" title="1">vetor[vetor <span class="op">!=</span><span class="st"> </span><span class="dv">8</span>]</a></code></pre></div>
+<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb62-1" title="1">vetor[vetor <span class="op">!=</span><span class="st"> </span><span class="dv">8</span>]</a></code></pre></div>
 <pre><code>## [1]  1  2  3  4  5  6  7  9 10</code></pre>
-<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb65-1" title="1">vetor[vetor <span class="op">&gt;</span><span class="st"> </span><span class="dv">5</span> <span class="op">&amp;</span><span class="st"> </span>vetor <span class="op">&lt;</span><span class="st"> </span><span class="dv">8</span>] <span class="co"># Várias condições ao mesmo tempo</span></a></code></pre></div>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb64-1" title="1">vetor[vetor <span class="op">&gt;</span><span class="st"> </span><span class="dv">5</span> <span class="op">&amp;</span><span class="st"> </span>vetor <span class="op">&lt;</span><span class="st"> </span><span class="dv">8</span>] <span class="co"># Várias condições ao mesmo tempo</span></a></code></pre></div>
 <pre><code>## [1] 6 7</code></pre>
-<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb67-1" title="1"><span class="co"># 2 Dimensões</span></a>
-<a class="sourceLine" id="cb67-2" title="2">df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">vetor1 =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>,</a>
-<a class="sourceLine" id="cb67-3" title="3">                 <span class="dt">vetor2 =</span> LETTERS[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>])</a>
-<a class="sourceLine" id="cb67-4" title="4">df[<span class="dv">1</span>]</a></code></pre></div>
-<pre><code>##    vetor1
-## 1       1
-## 2       2
-## 3       3
-## 4       4
-## 5       5
-## 6       6
-## 7       7
-## 8       8
-## 9       9
-## 10     10</code></pre>
-<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb69-1" title="1">df[<span class="dv">2</span>]</a></code></pre></div>
-<pre><code>##    vetor2
-## 1       A
-## 2       B
-## 3       C
-## 4       D
-## 5       E
-## 6       F
-## 7       G
-## 8       H
-## 9       I
-## 10      J</code></pre>
-<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb71-1" title="1">df[<span class="dv">1</span>, <span class="dv">1</span>]</a></code></pre></div>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb66-1" title="1"><span class="co"># 2 Dimensões</span></a>
+<a class="sourceLine" id="cb66-2" title="2">df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">vetor1 =</span> <span class="dv">1</span><span class="op">:</span><span class="dv">10</span>,</a>
+<a class="sourceLine" id="cb66-3" title="3">                 <span class="dt">vetor2 =</span> LETTERS[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>])</a>
+<a class="sourceLine" id="cb66-4" title="4">df[<span class="dv">1</span>]</a></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["vetor1"],"name":[1],"type":["int"],"align":["right"]}],"data":[{"1":"1"},{"1":"2"},{"1":"3"},{"1":"4"},{"1":"5"},{"1":"6"},{"1":"7"},{"1":"8"},{"1":"9"},{"1":"10"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb67-1" title="1">df[<span class="dv">2</span>]</a></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["vetor2"],"name":[1],"type":["chr"],"align":["left"]}],"data":[{"1":"A"},{"1":"B"},{"1":"C"},{"1":"D"},{"1":"E"},{"1":"F"},{"1":"G"},{"1":"H"},{"1":"I"},{"1":"J"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb68-1" title="1">df[<span class="dv">1</span>, <span class="dv">1</span>]</a></code></pre></div>
 <pre><code>## [1] 1</code></pre>
-<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb73-1" title="1">df[<span class="dv">10</span>, <span class="dv">2</span>]</a></code></pre></div>
+<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb70-1" title="1">df[<span class="dv">10</span>, <span class="dv">2</span>]</a></code></pre></div>
 <pre><code>## [1] &quot;J&quot;</code></pre>
-<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb75-1" title="1">df[<span class="dv">6</span><span class="op">:</span><span class="dv">10</span>, ] <span class="co"># Todas as colunas</span></a></code></pre></div>
-<pre><code>##    vetor1 vetor2
-## 6       6      F
-## 7       7      G
-## 8       8      H
-## 9       9      I
-## 10     10      J</code></pre>
-<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb77-1" title="1">df[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">2</span>]</a></code></pre></div>
+<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb72-1" title="1">df[<span class="dv">6</span><span class="op">:</span><span class="dv">10</span>, ] <span class="co"># Todas as colunas</span></a></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["vetor1"],"name":[1],"type":["int"],"align":["right"]},{"label":["vetor2"],"name":[2],"type":["chr"],"align":["left"]}],"data":[{"1":"6","2":"F","_rn_":"6"},{"1":"7","2":"G","_rn_":"7"},{"1":"8","2":"H","_rn_":"8"},{"1":"9","2":"I","_rn_":"9"},{"1":"10","2":"J","_rn_":"10"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb73-1" title="1">df[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">2</span>]</a></code></pre></div>
 <pre><code>## [1] &quot;A&quot; &quot;B&quot; &quot;C&quot; &quot;D&quot; &quot;E&quot;</code></pre>
-<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb79-1" title="1">df[df<span class="op">$</span>vetor1 <span class="op">&gt;</span><span class="st"> </span><span class="dv">5</span>, ] <span class="co"># Note o uso da vírgula</span></a></code></pre></div>
-<pre><code>##    vetor1 vetor2
-## 6       6      F
-## 7       7      G
-## 8       8      H
-## 9       9      I
-## 10     10      J</code></pre>
-<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb81-1" title="1">df[df<span class="op">$</span>vetor1 <span class="op">&gt;</span><span class="st"> </span><span class="dv">5</span> <span class="op">&amp;</span><span class="st"> </span>df<span class="op">$</span>vetor2 <span class="op">!=</span><span class="st"> &quot;G&quot;</span>, ]</a></code></pre></div>
-<pre><code>##    vetor1 vetor2
-## 6       6      F
-## 8       8      H
-## 9       9      I
-## 10     10      J</code></pre>
-<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb83-1" title="1">df[df<span class="op">$</span>vetor1 <span class="op">&lt;</span><span class="st"> </span><span class="dv">5</span> <span class="op">|</span><span class="st"> </span>df<span class="op">$</span>vetor1 <span class="op">&gt;</span><span class="st"> </span><span class="dv">8</span>, ]</a></code></pre></div>
-<pre><code>##    vetor1 vetor2
-## 1       1      A
-## 2       2      B
-## 3       3      C
-## 4       4      D
-## 9       9      I
-## 10     10      J</code></pre>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb75-1" title="1">df[df<span class="op">$</span>vetor1 <span class="op">&gt;</span><span class="st"> </span><span class="dv">5</span>, ] <span class="co"># Note o uso da vírgula</span></a></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["vetor1"],"name":[1],"type":["int"],"align":["right"]},{"label":["vetor2"],"name":[2],"type":["chr"],"align":["left"]}],"data":[{"1":"6","2":"F","_rn_":"6"},{"1":"7","2":"G","_rn_":"7"},{"1":"8","2":"H","_rn_":"8"},{"1":"9","2":"I","_rn_":"9"},{"1":"10","2":"J","_rn_":"10"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb76-1" title="1">df[df<span class="op">$</span>vetor1 <span class="op">&gt;</span><span class="st"> </span><span class="dv">5</span> <span class="op">&amp;</span><span class="st"> </span>df<span class="op">$</span>vetor2 <span class="op">!=</span><span class="st"> &quot;G&quot;</span>, ]</a></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["vetor1"],"name":[1],"type":["int"],"align":["right"]},{"label":["vetor2"],"name":[2],"type":["chr"],"align":["left"]}],"data":[{"1":"6","2":"F","_rn_":"6"},{"1":"8","2":"H","_rn_":"8"},{"1":"9","2":"I","_rn_":"9"},{"1":"10","2":"J","_rn_":"10"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb77-1" title="1">df[df<span class="op">$</span>vetor1 <span class="op">&lt;</span><span class="st"> </span><span class="dv">5</span> <span class="op">|</span><span class="st"> </span>df<span class="op">$</span>vetor1 <span class="op">&gt;</span><span class="st"> </span><span class="dv">8</span>, ]</a></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["vetor1"],"name":[1],"type":["int"],"align":["right"]},{"label":["vetor2"],"name":[2],"type":["chr"],"align":["left"]}],"data":[{"1":"1","2":"A","_rn_":"1"},{"1":"2","2":"B","_rn_":"2"},{"1":"3","2":"C","_rn_":"3"},{"1":"4","2":"D","_rn_":"4"},{"1":"9","2":"I","_rn_":"9"},{"1":"10","2":"J","_rn_":"10"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 <p>Basicamente, ela funciona na lógica <code>x[i, j, k, ...]</code>, onde x é o nosso objeto e i, j e as outras letras representam as dimensões desse objeto. Quando usamos números (índices), ele acessa as partes do objeto pela sua posição, mas quando utilizamos testes lógicos (&gt; &lt; &gt;= &lt;= &amp; | == !=, etc), ele extrai as partes do objeto cujo resultado do teste é <code>TRUE</code> e exclui os restantes. Lembrem-se que a chamada sempre deve respeitar as dimensões do objeto, por isso é obrigatório o uso da vírgula quando usar <code>[]</code>em <code>data.frames</code>, mesmo que queiramos utilizar todas as colunas. Vamos ver outro exemplo com nosso extrato do censo.</p>
-<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb85-1" title="1"><span class="co"># Selecionando casos</span></a>
-<a class="sourceLine" id="cb85-2" title="2">dado[dado<span class="op">$</span>MUNIC <span class="op">==</span><span class="st"> &quot;09502&quot;</span>, ] <span class="co"># Município de Campinas</span></a>
-<a class="sourceLine" id="cb85-3" title="3">dado[dado<span class="op">$</span>MUNIC <span class="op">==</span><span class="st"> &quot;09502&quot;</span> <span class="op">&amp;</span><span class="st"> </span>dado<span class="op">$</span>EDUC <span class="op">==</span><span class="st"> &quot;1&quot;</span>, ] <span class="co"># População sem instrução</span></a>
-<a class="sourceLine" id="cb85-4" title="4">dado[dado<span class="op">$</span>MUNIC <span class="op">==</span><span class="st"> &quot;09502&quot;</span> <span class="op">&amp;</span><span class="st"> </span>dado<span class="op">$</span>IDADE <span class="op">&gt;=</span><span class="st"> </span><span class="dv">18</span> <span class="op">&amp;</span><span class="st"> </span>dado<span class="op">$</span>IDADE <span class="op">&lt;=</span><span class="st"> </span><span class="dv">70</span>, ] <span class="co"># Eleitores obrigatórios</span></a>
-<a class="sourceLine" id="cb85-5" title="5"></a>
-<a class="sourceLine" id="cb85-6" title="6"><span class="co"># Selecionando variáveis</span></a>
-<a class="sourceLine" id="cb85-7" title="7">dado[, <span class="kw">c</span>(<span class="st">&quot;UF&quot;</span>, <span class="st">&quot;MUNIC&quot;</span>, <span class="st">&quot;PESO&quot;</span>, <span class="st">&quot;RENDA&quot;</span>)]</a>
-<a class="sourceLine" id="cb85-8" title="8">dado[, <span class="st">&quot;MUNIC&quot;</span>]</a>
-<a class="sourceLine" id="cb85-9" title="9"></a>
-<a class="sourceLine" id="cb85-10" title="10"><span class="co"># Selecionando casos e variáveis</span></a>
-<a class="sourceLine" id="cb85-11" title="11">dado[dado<span class="op">$</span>MUNIC <span class="op">==</span><span class="st"> &quot;09502&quot;</span> <span class="op">&amp;</span><span class="st"> </span>dado<span class="op">$</span>IDADE <span class="op">&gt;=</span><span class="st"> </span><span class="dv">15</span> <span class="op">&amp;</span><span class="st"> </span>dado<span class="op">$</span>IDADE <span class="op">&lt;</span><span class="st"> </span><span class="dv">65</span>, <span class="co"># Casos [i]</span></a>
-<a class="sourceLine" id="cb85-12" title="12">     <span class="kw">c</span>(<span class="st">&quot;PESO&quot;</span>, <span class="st">&quot;EDUC&quot;</span>, <span class="st">&quot;RENDA&quot;</span>)] <span class="co"># Variáveis [j]</span></a>
-<a class="sourceLine" id="cb85-13" title="13"></a>
-<a class="sourceLine" id="cb85-14" title="14"><span class="co"># Salva num outro objeto</span></a>
-<a class="sourceLine" id="cb85-15" title="15">campinas &lt;-<span class="st"> </span>dado[dado<span class="op">$</span>MUNIC <span class="op">==</span><span class="st"> &quot;09502&quot;</span>, ]</a>
-<a class="sourceLine" id="cb85-16" title="16">campinas</a></code></pre></div>
+<div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb78-1" title="1"><span class="co"># Selecionando casos</span></a>
+<a class="sourceLine" id="cb78-2" title="2">dado[dado<span class="op">$</span>MUNIC <span class="op">==</span><span class="st"> &quot;09502&quot;</span>, ] <span class="co"># Município de Campinas</span></a>
+<a class="sourceLine" id="cb78-3" title="3">dado[dado<span class="op">$</span>MUNIC <span class="op">==</span><span class="st"> &quot;09502&quot;</span> <span class="op">&amp;</span><span class="st"> </span>dado<span class="op">$</span>EDUC <span class="op">==</span><span class="st"> &quot;1&quot;</span>, ] <span class="co"># População sem instrução</span></a>
+<a class="sourceLine" id="cb78-4" title="4">dado[dado<span class="op">$</span>MUNIC <span class="op">==</span><span class="st"> &quot;09502&quot;</span> <span class="op">&amp;</span><span class="st"> </span>dado<span class="op">$</span>IDADE <span class="op">&gt;=</span><span class="st"> </span><span class="dv">18</span> <span class="op">&amp;</span><span class="st"> </span>dado<span class="op">$</span>IDADE <span class="op">&lt;=</span><span class="st"> </span><span class="dv">70</span>, ] <span class="co"># Eleitores obrigatórios</span></a>
+<a class="sourceLine" id="cb78-5" title="5"></a>
+<a class="sourceLine" id="cb78-6" title="6"><span class="co"># Selecionando variáveis</span></a>
+<a class="sourceLine" id="cb78-7" title="7">dado[, <span class="kw">c</span>(<span class="st">&quot;UF&quot;</span>, <span class="st">&quot;MUNIC&quot;</span>, <span class="st">&quot;PESO&quot;</span>, <span class="st">&quot;RENDA&quot;</span>)]</a>
+<a class="sourceLine" id="cb78-8" title="8">dado[, <span class="st">&quot;MUNIC&quot;</span>]</a>
+<a class="sourceLine" id="cb78-9" title="9"></a>
+<a class="sourceLine" id="cb78-10" title="10"><span class="co"># Selecionando casos e variáveis</span></a>
+<a class="sourceLine" id="cb78-11" title="11">dado[dado<span class="op">$</span>MUNIC <span class="op">==</span><span class="st"> &quot;09502&quot;</span> <span class="op">&amp;</span><span class="st"> </span>dado<span class="op">$</span>IDADE <span class="op">&gt;=</span><span class="st"> </span><span class="dv">15</span> <span class="op">&amp;</span><span class="st"> </span>dado<span class="op">$</span>IDADE <span class="op">&lt;</span><span class="st"> </span><span class="dv">65</span>, <span class="co"># Casos [i]</span></a>
+<a class="sourceLine" id="cb78-12" title="12">     <span class="kw">c</span>(<span class="st">&quot;PESO&quot;</span>, <span class="st">&quot;EDUC&quot;</span>, <span class="st">&quot;RENDA&quot;</span>)] <span class="co"># Variáveis [j]</span></a>
+<a class="sourceLine" id="cb78-13" title="13"></a>
+<a class="sourceLine" id="cb78-14" title="14"><span class="co"># Salva num outro objeto</span></a>
+<a class="sourceLine" id="cb78-15" title="15">campinas &lt;-<span class="st"> </span>dado[dado<span class="op">$</span>MUNIC <span class="op">==</span><span class="st"> &quot;09502&quot;</span>, ]</a>
+<a class="sourceLine" id="cb78-16" title="16">campinas</a></code></pre></div>
 <p>A utilização de variações do código acima nos permite selecionar casos e variáveis de praticamente qualquer tipo de banco de dado carregado em R. A lógica é a mesma. Os pacotes <code>data.table</code> e <code>dplyr</code> oferecem soluções alternativas para estas operações, ambos tem seus próprios méritos.</p>
 </div>
 <div id="criando-variáveis-derivadas-e-medidas-resumo" class="section level2">
 <h2>Criando variáveis derivadas e medidas resumo</h2>
 <p>A outra operação extremamente comum com bancos de dados é a criação de variáveis auxiliares a partir dos valores das variáveis originais. O salário mínimo vigente em 2010 era de R$ 510. Com isso, podemos fazer uma variável RENDA2.</p>
-<div class="sourceCode" id="cb86"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb86-1" title="1">dado<span class="op">$</span>RENDA2 &lt;-<span class="st"> </span>dado<span class="op">$</span>RENDA <span class="op">*</span><span class="st"> </span><span class="dv">510</span></a>
-<a class="sourceLine" id="cb86-2" title="2">dado</a></code></pre></div>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb79-1" title="1">dado<span class="op">$</span>RENDA2 &lt;-<span class="st"> </span>dado<span class="op">$</span>RENDA <span class="op">*</span><span class="st"> </span><span class="dv">510</span></a>
+<a class="sourceLine" id="cb79-2" title="2">dado</a></code></pre></div>
 <p>A mesma notação que utilizamos para referenciar variáveis <code>$</code> pode ser utilizada para criar novas variáveis também. Caso queiramos remover esta nova variável, podemos fazer:</p>
-<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb87-1" title="1">dado<span class="op">$</span>RENDA2 &lt;-<span class="st"> </span><span class="ot">NULL</span></a>
-<a class="sourceLine" id="cb87-2" title="2">dado</a></code></pre></div>
+<div class="sourceCode" id="cb80"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb80-1" title="1">dado<span class="op">$</span>RENDA2 &lt;-<span class="st"> </span><span class="ot">NULL</span></a>
+<a class="sourceLine" id="cb80-2" title="2">dado</a></code></pre></div>
 <p>Juntando um pouco esta seção a anterior, podemos calcular medidas resumo para casos selecionados. Por exemplo, podemos calcular a renda média para cada nível educacional distinto e por sexo (agora com pesos).</p>
-<div class="sourceCode" id="cb88"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb88-1" title="1"><span class="kw">library</span>(questionr)</a>
-<a class="sourceLine" id="cb88-2" title="2"></a>
-<a class="sourceLine" id="cb88-3" title="3"><span class="co"># Educação</span></a>
-<a class="sourceLine" id="cb88-4" title="4"></a>
-<a class="sourceLine" id="cb88-5" title="5">grupo1 &lt;-<span class="st"> </span>dado[dado<span class="op">$</span>EDUC <span class="op">==</span><span class="st"> &quot;1&quot;</span>, ]</a>
-<a class="sourceLine" id="cb88-6" title="6"><span class="kw">wtd.mean</span>(grupo1<span class="op">$</span>RENDA, <span class="dt">weights =</span> grupo1<span class="op">$</span>PESO, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb81-1" title="1"><span class="kw">library</span>(questionr)</a>
+<a class="sourceLine" id="cb81-2" title="2"></a>
+<a class="sourceLine" id="cb81-3" title="3"><span class="co"># Educação</span></a>
+<a class="sourceLine" id="cb81-4" title="4"></a>
+<a class="sourceLine" id="cb81-5" title="5">grupo1 &lt;-<span class="st"> </span>dado[dado<span class="op">$</span>EDUC <span class="op">==</span><span class="st"> &quot;1&quot;</span>, ]</a>
+<a class="sourceLine" id="cb81-6" title="6"><span class="kw">wtd.mean</span>(grupo1<span class="op">$</span>RENDA, <span class="dt">weights =</span> grupo1<span class="op">$</span>PESO, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <pre><code>## [1] 1.228536</code></pre>
-<div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb90-1" title="1">grupo2 &lt;-<span class="st"> </span>dado[dado<span class="op">$</span>EDUC <span class="op">==</span><span class="st"> &quot;2&quot;</span>, ]</a>
-<a class="sourceLine" id="cb90-2" title="2"><span class="kw">wtd.mean</span>(grupo2<span class="op">$</span>RENDA, <span class="dt">weights =</span> grupo2<span class="op">$</span>PESO, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb83-1" title="1">grupo2 &lt;-<span class="st"> </span>dado[dado<span class="op">$</span>EDUC <span class="op">==</span><span class="st"> &quot;2&quot;</span>, ]</a>
+<a class="sourceLine" id="cb83-2" title="2"><span class="kw">wtd.mean</span>(grupo2<span class="op">$</span>RENDA, <span class="dt">weights =</span> grupo2<span class="op">$</span>PESO, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <pre><code>## [1] 1.653794</code></pre>
-<div class="sourceCode" id="cb92"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb92-1" title="1">grupo3 &lt;-<span class="st"> </span>dado[dado<span class="op">$</span>EDUC <span class="op">==</span><span class="st"> &quot;3&quot;</span>, ]</a>
-<a class="sourceLine" id="cb92-2" title="2"><span class="kw">wtd.mean</span>(grupo3<span class="op">$</span>RENDA, <span class="dt">weights =</span> grupo3<span class="op">$</span>PESO, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb85-1" title="1">grupo3 &lt;-<span class="st"> </span>dado[dado<span class="op">$</span>EDUC <span class="op">==</span><span class="st"> &quot;3&quot;</span>, ]</a>
+<a class="sourceLine" id="cb85-2" title="2"><span class="kw">wtd.mean</span>(grupo3<span class="op">$</span>RENDA, <span class="dt">weights =</span> grupo3<span class="op">$</span>PESO, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <pre><code>## [1] 2.551411</code></pre>
-<div class="sourceCode" id="cb94"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb94-1" title="1">grupo4 &lt;-<span class="st"> </span>dado[dado<span class="op">$</span>EDUC <span class="op">==</span><span class="st"> &quot;4&quot;</span>, ]</a>
-<a class="sourceLine" id="cb94-2" title="2"><span class="kw">wtd.mean</span>(grupo4<span class="op">$</span>RENDA, <span class="dt">weights =</span> grupo4<span class="op">$</span>PESO, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb87-1" title="1">grupo4 &lt;-<span class="st"> </span>dado[dado<span class="op">$</span>EDUC <span class="op">==</span><span class="st"> &quot;4&quot;</span>, ]</a>
+<a class="sourceLine" id="cb87-2" title="2"><span class="kw">wtd.mean</span>(grupo4<span class="op">$</span>RENDA, <span class="dt">weights =</span> grupo4<span class="op">$</span>PESO, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <pre><code>## [1] 7.785246</code></pre>
-<div class="sourceCode" id="cb96"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb96-1" title="1">grupo5 &lt;-<span class="st"> </span>dado[dado<span class="op">$</span>EDUC <span class="op">==</span><span class="st"> &quot;5&quot;</span>, ]</a>
-<a class="sourceLine" id="cb96-2" title="2"><span class="kw">wtd.mean</span>(grupo5<span class="op">$</span>RENDA, <span class="dt">weights =</span> grupo5<span class="op">$</span>PESO, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb89-1" title="1">grupo5 &lt;-<span class="st"> </span>dado[dado<span class="op">$</span>EDUC <span class="op">==</span><span class="st"> &quot;5&quot;</span>, ]</a>
+<a class="sourceLine" id="cb89-2" title="2"><span class="kw">wtd.mean</span>(grupo5<span class="op">$</span>RENDA, <span class="dt">weights =</span> grupo5<span class="op">$</span>PESO, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <pre><code>## [1] 1.313933</code></pre>
-<div class="sourceCode" id="cb98"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb98-1" title="1"><span class="co"># Sexo e educação</span></a>
-<a class="sourceLine" id="cb98-2" title="2"></a>
-<a class="sourceLine" id="cb98-3" title="3">grupo1m &lt;-<span class="st"> </span>dado[dado<span class="op">$</span>EDUC <span class="op">==</span><span class="st"> &quot;1&quot;</span> <span class="op">&amp;</span><span class="st"> </span>dado<span class="op">$</span>SEXO <span class="op">==</span><span class="st"> &quot;1&quot;</span>, ]</a>
-<a class="sourceLine" id="cb98-4" title="4"><span class="kw">wtd.mean</span>(grupo1m<span class="op">$</span>RENDA, <span class="dt">weights =</span> grupo1m<span class="op">$</span>PESO, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb91-1" title="1"><span class="co"># Sexo e educação</span></a>
+<a class="sourceLine" id="cb91-2" title="2"></a>
+<a class="sourceLine" id="cb91-3" title="3">grupo1m &lt;-<span class="st"> </span>dado[dado<span class="op">$</span>EDUC <span class="op">==</span><span class="st"> &quot;1&quot;</span> <span class="op">&amp;</span><span class="st"> </span>dado<span class="op">$</span>SEXO <span class="op">==</span><span class="st"> &quot;1&quot;</span>, ]</a>
+<a class="sourceLine" id="cb91-4" title="4"><span class="kw">wtd.mean</span>(grupo1m<span class="op">$</span>RENDA, <span class="dt">weights =</span> grupo1m<span class="op">$</span>PESO, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <pre><code>## [1] 1.642161</code></pre>
-<div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb100-1" title="1">grupo1f &lt;-<span class="st"> </span>dado[dado<span class="op">$</span>EDUC <span class="op">==</span><span class="st"> &quot;1&quot;</span> <span class="op">&amp;</span><span class="st"> </span>dado<span class="op">$</span>SEXO <span class="op">==</span><span class="st"> &quot;2&quot;</span>, ]</a>
-<a class="sourceLine" id="cb100-2" title="2"><span class="kw">wtd.mean</span>(grupo1f<span class="op">$</span>RENDA, <span class="dt">weights =</span> grupo1f<span class="op">$</span>PESO, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb93-1" title="1">grupo1f &lt;-<span class="st"> </span>dado[dado<span class="op">$</span>EDUC <span class="op">==</span><span class="st"> &quot;1&quot;</span> <span class="op">&amp;</span><span class="st"> </span>dado<span class="op">$</span>SEXO <span class="op">==</span><span class="st"> &quot;2&quot;</span>, ]</a>
+<a class="sourceLine" id="cb93-2" title="2"><span class="kw">wtd.mean</span>(grupo1f<span class="op">$</span>RENDA, <span class="dt">weights =</span> grupo1f<span class="op">$</span>PESO, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <pre><code>## [1] 0.8336615</code></pre>
-<div class="sourceCode" id="cb102"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb102-1" title="1">grupo2m &lt;-<span class="st"> </span>dado[dado<span class="op">$</span>EDUC <span class="op">==</span><span class="st"> &quot;2&quot;</span> <span class="op">&amp;</span><span class="st"> </span>dado<span class="op">$</span>SEXO <span class="op">==</span><span class="st"> &quot;1&quot;</span>, ]</a>
-<a class="sourceLine" id="cb102-2" title="2"><span class="kw">wtd.mean</span>(grupo2m<span class="op">$</span>RENDA, <span class="dt">weights =</span> grupo2m<span class="op">$</span>PESO, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb95-1" title="1">grupo2m &lt;-<span class="st"> </span>dado[dado<span class="op">$</span>EDUC <span class="op">==</span><span class="st"> &quot;2&quot;</span> <span class="op">&amp;</span><span class="st"> </span>dado<span class="op">$</span>SEXO <span class="op">==</span><span class="st"> &quot;1&quot;</span>, ]</a>
+<a class="sourceLine" id="cb95-2" title="2"><span class="kw">wtd.mean</span>(grupo2m<span class="op">$</span>RENDA, <span class="dt">weights =</span> grupo2m<span class="op">$</span>PESO, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <pre><code>## [1] 2.233362</code></pre>
-<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb104-1" title="1">grupo2f &lt;-<span class="st"> </span>dado[dado<span class="op">$</span>EDUC <span class="op">==</span><span class="st"> &quot;2&quot;</span> <span class="op">&amp;</span><span class="st"> </span>dado<span class="op">$</span>SEXO <span class="op">==</span><span class="st"> &quot;2&quot;</span>, ]</a>
-<a class="sourceLine" id="cb104-2" title="2"><span class="kw">wtd.mean</span>(grupo2f<span class="op">$</span>RENDA, <span class="dt">weights =</span> grupo2f<span class="op">$</span>PESO, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb97-1" title="1">grupo2f &lt;-<span class="st"> </span>dado[dado<span class="op">$</span>EDUC <span class="op">==</span><span class="st"> &quot;2&quot;</span> <span class="op">&amp;</span><span class="st"> </span>dado<span class="op">$</span>SEXO <span class="op">==</span><span class="st"> &quot;2&quot;</span>, ]</a>
+<a class="sourceLine" id="cb97-2" title="2"><span class="kw">wtd.mean</span>(grupo2f<span class="op">$</span>RENDA, <span class="dt">weights =</span> grupo2f<span class="op">$</span>PESO, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <pre><code>## [1] 1.065546</code></pre>
-<div class="sourceCode" id="cb106"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb106-1" title="1">grupo3m &lt;-<span class="st"> </span>dado[dado<span class="op">$</span>EDUC <span class="op">==</span><span class="st"> &quot;3&quot;</span> <span class="op">&amp;</span><span class="st"> </span>dado<span class="op">$</span>SEXO <span class="op">==</span><span class="st"> &quot;1&quot;</span>, ]</a>
-<a class="sourceLine" id="cb106-2" title="2"><span class="kw">wtd.mean</span>(grupo3m<span class="op">$</span>RENDA, <span class="dt">weights =</span> grupo3m<span class="op">$</span>PESO, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb99-1" title="1">grupo3m &lt;-<span class="st"> </span>dado[dado<span class="op">$</span>EDUC <span class="op">==</span><span class="st"> &quot;3&quot;</span> <span class="op">&amp;</span><span class="st"> </span>dado<span class="op">$</span>SEXO <span class="op">==</span><span class="st"> &quot;1&quot;</span>, ]</a>
+<a class="sourceLine" id="cb99-2" title="2"><span class="kw">wtd.mean</span>(grupo3m<span class="op">$</span>RENDA, <span class="dt">weights =</span> grupo3m<span class="op">$</span>PESO, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <pre><code>## [1] 3.404042</code></pre>
-<div class="sourceCode" id="cb108"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb108-1" title="1">grupo3f &lt;-<span class="st"> </span>dado[dado<span class="op">$</span>EDUC <span class="op">==</span><span class="st"> &quot;3&quot;</span> <span class="op">&amp;</span><span class="st"> </span>dado<span class="op">$</span>SEXO <span class="op">==</span><span class="st"> &quot;2&quot;</span>, ]</a>
-<a class="sourceLine" id="cb108-2" title="2"><span class="kw">wtd.mean</span>(grupo3f<span class="op">$</span>RENDA, <span class="dt">weights =</span> grupo3f<span class="op">$</span>PESO, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb101-1" title="1">grupo3f &lt;-<span class="st"> </span>dado[dado<span class="op">$</span>EDUC <span class="op">==</span><span class="st"> &quot;3&quot;</span> <span class="op">&amp;</span><span class="st"> </span>dado<span class="op">$</span>SEXO <span class="op">==</span><span class="st"> &quot;2&quot;</span>, ]</a>
+<a class="sourceLine" id="cb101-2" title="2"><span class="kw">wtd.mean</span>(grupo3f<span class="op">$</span>RENDA, <span class="dt">weights =</span> grupo3f<span class="op">$</span>PESO, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <pre><code>## [1] 1.731201</code></pre>
-<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb110-1" title="1">grupo4m &lt;-<span class="st"> </span>dado[dado<span class="op">$</span>EDUC <span class="op">==</span><span class="st"> &quot;4&quot;</span> <span class="op">&amp;</span><span class="st"> </span>dado<span class="op">$</span>SEXO <span class="op">==</span><span class="st"> &quot;1&quot;</span>, ]</a>
-<a class="sourceLine" id="cb110-2" title="2"><span class="kw">wtd.mean</span>(grupo4m<span class="op">$</span>RENDA, <span class="dt">weights =</span> grupo4m<span class="op">$</span>PESO, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb103-1" title="1">grupo4m &lt;-<span class="st"> </span>dado[dado<span class="op">$</span>EDUC <span class="op">==</span><span class="st"> &quot;4&quot;</span> <span class="op">&amp;</span><span class="st"> </span>dado<span class="op">$</span>SEXO <span class="op">==</span><span class="st"> &quot;1&quot;</span>, ]</a>
+<a class="sourceLine" id="cb103-2" title="2"><span class="kw">wtd.mean</span>(grupo4m<span class="op">$</span>RENDA, <span class="dt">weights =</span> grupo4m<span class="op">$</span>PESO, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <pre><code>## [1] 10.42245</code></pre>
-<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb112-1" title="1">grupo4f &lt;-<span class="st"> </span>dado[dado<span class="op">$</span>EDUC <span class="op">==</span><span class="st"> &quot;4&quot;</span> <span class="op">&amp;</span><span class="st"> </span>dado<span class="op">$</span>SEXO <span class="op">==</span><span class="st"> &quot;2&quot;</span>, ]</a>
-<a class="sourceLine" id="cb112-2" title="2"><span class="kw">wtd.mean</span>(grupo4f<span class="op">$</span>RENDA, <span class="dt">weights =</span> grupo4f<span class="op">$</span>PESO, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb105-1" title="1">grupo4f &lt;-<span class="st"> </span>dado[dado<span class="op">$</span>EDUC <span class="op">==</span><span class="st"> &quot;4&quot;</span> <span class="op">&amp;</span><span class="st"> </span>dado<span class="op">$</span>SEXO <span class="op">==</span><span class="st"> &quot;2&quot;</span>, ]</a>
+<a class="sourceLine" id="cb105-2" title="2"><span class="kw">wtd.mean</span>(grupo4f<span class="op">$</span>RENDA, <span class="dt">weights =</span> grupo4f<span class="op">$</span>PESO, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <pre><code>## [1] 5.539519</code></pre>
-<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb114-1" title="1">grupo5m &lt;-<span class="st"> </span>dado[dado<span class="op">$</span>EDUC <span class="op">==</span><span class="st"> &quot;5&quot;</span> <span class="op">&amp;</span><span class="st"> </span>dado<span class="op">$</span>SEXO <span class="op">==</span><span class="st"> &quot;1&quot;</span>, ]</a>
-<a class="sourceLine" id="cb114-2" title="2"><span class="kw">wtd.mean</span>(grupo5m<span class="op">$</span>RENDA, <span class="dt">weights =</span> grupo5m<span class="op">$</span>PESO, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb107-1" title="1">grupo5m &lt;-<span class="st"> </span>dado[dado<span class="op">$</span>EDUC <span class="op">==</span><span class="st"> &quot;5&quot;</span> <span class="op">&amp;</span><span class="st"> </span>dado<span class="op">$</span>SEXO <span class="op">==</span><span class="st"> &quot;1&quot;</span>, ]</a>
+<a class="sourceLine" id="cb107-2" title="2"><span class="kw">wtd.mean</span>(grupo5m<span class="op">$</span>RENDA, <span class="dt">weights =</span> grupo5m<span class="op">$</span>PESO, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <pre><code>## [1] 1.670011</code></pre>
-<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb116-1" title="1">grupo5f &lt;-<span class="st"> </span>dado[dado<span class="op">$</span>EDUC <span class="op">==</span><span class="st"> &quot;5&quot;</span> <span class="op">&amp;</span><span class="st"> </span>dado<span class="op">$</span>SEXO <span class="op">==</span><span class="st"> &quot;2&quot;</span>, ]</a>
-<a class="sourceLine" id="cb116-2" title="2"><span class="kw">wtd.mean</span>(grupo5f<span class="op">$</span>RENDA, <span class="dt">weights =</span> grupo5f<span class="op">$</span>PESO, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb109-1" title="1">grupo5f &lt;-<span class="st"> </span>dado[dado<span class="op">$</span>EDUC <span class="op">==</span><span class="st"> &quot;5&quot;</span> <span class="op">&amp;</span><span class="st"> </span>dado<span class="op">$</span>SEXO <span class="op">==</span><span class="st"> &quot;2&quot;</span>, ]</a>
+<a class="sourceLine" id="cb109-2" title="2"><span class="kw">wtd.mean</span>(grupo5f<span class="op">$</span>RENDA, <span class="dt">weights =</span> grupo5f<span class="op">$</span>PESO, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <pre><code>## [1] 0.9509576</code></pre>
 <p>*** Caso você não tenha o pacote <code>questionr</code> basta instalar como indicado anteriormente ***</p>
 </div>

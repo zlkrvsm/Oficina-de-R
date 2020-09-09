@@ -83,17 +83,20 @@ Também é possível acessar/alterar sua pasta de trabalho através da interface
 ```{r, echo=FALSE}
 include_graphics("workingdir.png")
 ```
+
 ***
 
 Podemos usar `readLines()` pra ver "a cara" de um arquivo qualquer, especificando que leremos `n = 10` linhas. Como vocês podem ver, não dá pra ler esse arquivo "sozinho", precisamos saber onde começam e terminam as colunas. Nesse caso, o dicionário é o seguinte:
 
 ```{r}
+library(tibble)
+
 dicionario <- tribble(
   ~Variavel, ~PosIni, ~PosFim, ~Int, ~Dec, ~Tipo,
   "V0001", 1, 2, 2, NA, "A",
   "V0002", 3, 7, 5, NA, "A",
   "V0011", 8, 20, 13, NA, "A",
-  "V0300", 21, 27, 8, NA, "N",
+  "V0300", 21, 27, 7, NA, "N",
   "V0010", 28, 42, 3, 12, "N",
   "V0601", 43, 43, 1, NA, "C",
   "V6036", 44, 46, 3, NA, "N"
@@ -146,7 +149,7 @@ tipos
 
 E passamos pra `read.fwf()`
 
-```{r}
+```{r, cache=TRUE}
 censo_rn <- read.fwf(file = "censo_2010_rn.txt", 
                      widths = colunas, 
                      colClasses = tipos)
@@ -204,7 +207,7 @@ include_graphics("tutorial.png")
 
 Colas
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, fig.width=8}
 include_graphics("data-transformation.pdf")
 ```
 
@@ -521,7 +524,7 @@ Você vai criar uma data pipeline parecida com a que acabamos de fazer para outr
 
 ```{r banco-ex, include=FALSE, eval=FALSE}
 arq <- paste0("~/CONSULTORIA/2020/PROJETO MALARIA/malaria-git/dados/cd10/",
-              "SC/Amostra_Pessoas_42.txt")
+              "SC/Amostra_Pessoas_42.txt.xz")
 
 vars <- c("V0001", "V0002", "V0011", "V0300", "V0010", "V0601", "V6036", "V6400", "V6531")
 

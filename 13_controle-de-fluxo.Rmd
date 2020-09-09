@@ -54,7 +54,7 @@ if(is.character(dado$SEXO)) {
 
 Assim, podemos controlar qual "caminho" segue nosso programa utilizando algum tipo de teste lógico. Testes lógicos são tão importantes em R, que há uma família de funções `is.objeto`, que retorna verdadeiro/falso para praticamente todo tipo de objeto em R.
 
-```{r familia_is}
+```{r familia-is}
 with(dado, is.double(MUNIAT))
 with(dado, is.character(SEXO))
 with(dado, is.integer(IDADE))
@@ -70,7 +70,7 @@ O outro tipo de controle de fluxo bastante comum é o laço, ou *loop*. A idéia
 
 Este loop realiza uma operação um determinado número de vezes especificado pelo usuário. Um `for` loop tem a seguinte estrutura básica:
 
-```{r for_loop, eval = FALSE}
+```{r for-loop, eval = FALSE}
 ## Não roda
 for (contador in valores_a_serem_contados) {
   [operaçao_a_ser_repetida]
@@ -81,7 +81,7 @@ for (contador in valores_a_serem_contados) {
 
 Muitas vezes em R está estrutura está escondida e nem todos estes passos aparecem. Vejamos o loop a seguir:
 
-```{r for_loop_2}
+```{r for-loop-2}
 df <- data.frame(mes = 1:12,
                  salario = 1000)
 head(df)
@@ -103,7 +103,7 @@ within(df, {
 
 Podemos usar esse comportamento padrão do `for` loop de passar pra próxima posição automaticamente para repetir operações em que não existe uma **contagem** propriamente dita.
 
-```{r for_loop3}
+```{r for-loop3}
 df <- data.frame(estado = c("RN", "CE", "BA", "PE", "PB"),
                  pessoas_pistola = c(100, 200, 300, 400, 500))
 

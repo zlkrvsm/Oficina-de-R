@@ -24,6 +24,8 @@
 <link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
 <script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
+<link href="site_libs/pagedtable-1.1/css/pagedtable.css" rel="stylesheet" />
+<script src="site_libs/pagedtable-1.1/js/pagedtable.js"></script>
 
 
 <style type="text/css">code{white-space: pre;}</style>
@@ -458,6 +460,9 @@ div.tocify {
     <li>
       <a href="00_aula-1.html">Aula 1: Introdução</a>
     </li>
+    <li>
+      <a href="02_aula-2.html">Aula 2: Importação e cozinha</a>
+    </li>
   </ul>
 </li>
       </ul>
@@ -720,188 +725,187 @@ div.tocify {
 <a class="sourceLine" id="cb56-2" title="2"><span class="kw">data.frame</span>(<span class="dt">a =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>),</a>
 <a class="sourceLine" id="cb56-3" title="3">           <span class="dt">b =</span> <span class="kw">c</span>(<span class="st">&quot;a&quot;</span>, <span class="st">&quot;b&quot;</span>, <span class="st">&quot;c&quot;</span>, <span class="st">&quot;d&quot;</span>),</a>
 <a class="sourceLine" id="cb56-4" title="4">           <span class="dt">c =</span> <span class="kw">c</span>(<span class="ot">TRUE</span>, <span class="ot">FALSE</span>, <span class="ot">TRUE</span>, <span class="ot">TRUE</span>))</a></code></pre></div>
-<pre><code>##   a b     c
-## 1 1 a  TRUE
-## 2 2 b FALSE
-## 3 3 c  TRUE
-## 4 4 d  TRUE</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["a"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["b"],"name":[2],"type":["chr"],"align":["left"]},{"label":["c"],"name":[3],"type":["lgl"],"align":["right"]}],"data":[{"1":"1","2":"a","3":"TRUE"},{"1":"2","2":"b","3":"FALSE"},{"1":"3","2":"c","3":"TRUE"},{"1":"4","2":"d","3":"TRUE"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
 </div>
 <div id="tipos-de-dado" class="section level3">
 <h3>Tipos de dado</h3>
 <p>Voltando para nossa metáfora culinária, podemos encontrar diversos tipos de ingredientes. Alguns deles servem para formar a base de uma refeição, como o nosso feijão-com-arroz, enquanto outros oferecem mais sabor, como o sal e a pimenta. Outros estão entre uma coisa e outra, como o refogado de cebola, alho e cenoura.</p>
 <p>No R, nossos objetos tem tipos distintos, alguns são números, outros são letras e palavras, outros são valores lógicos e outros são objetos complexos, compostos de vários objetos menores de vários tipos. Podemos descobrir o tipo dos objetos assim:</p>
-<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb58-1" title="1"><span class="co"># class() revela o tipo do objeto</span></a>
-<a class="sourceLine" id="cb58-2" title="2">x &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">10</span></a>
-<a class="sourceLine" id="cb58-3" title="3"><span class="kw">class</span>(x) <span class="co"># Vetor de inteiros</span></a></code></pre></div>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb57-1" title="1"><span class="co"># class() revela o tipo do objeto</span></a>
+<a class="sourceLine" id="cb57-2" title="2">x &lt;-<span class="st"> </span><span class="dv">1</span><span class="op">:</span><span class="dv">10</span></a>
+<a class="sourceLine" id="cb57-3" title="3"><span class="kw">class</span>(x) <span class="co"># Vetor de inteiros</span></a></code></pre></div>
 <pre><code>## [1] &quot;integer&quot;</code></pre>
-<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb60-1" title="1">y &lt;-<span class="st"> </span>letters[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]</a>
-<a class="sourceLine" id="cb60-2" title="2"><span class="kw">class</span>(y) <span class="co"># Vetores de caracteres</span></a></code></pre></div>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb59-1" title="1">y &lt;-<span class="st"> </span>letters[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]</a>
+<a class="sourceLine" id="cb59-2" title="2"><span class="kw">class</span>(y) <span class="co"># Vetores de caracteres</span></a></code></pre></div>
 <pre><code>## [1] &quot;character&quot;</code></pre>
-<div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb62-1" title="1">df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(x, y)</a>
-<a class="sourceLine" id="cb62-2" title="2"><span class="kw">class</span>(df) <span class="co"># Tabela (data.frame)</span></a></code></pre></div>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb61-1" title="1">df &lt;-<span class="st"> </span><span class="kw">data.frame</span>(x, y)</a>
+<a class="sourceLine" id="cb61-2" title="2"><span class="kw">class</span>(df) <span class="co"># Tabela (data.frame)</span></a></code></pre></div>
 <pre><code>## [1] &quot;data.frame&quot;</code></pre>
 <p>Também podemos converter entre os tipos usando a família de funções <code>as.___</code></p>
-<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb64-1" title="1"><span class="co"># Convertendo números</span></a>
-<a class="sourceLine" id="cb64-2" title="2">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">1.1</span>, <span class="fl">2.2</span>, <span class="fl">3.3</span>, <span class="fl">4.4</span>)</a>
-<a class="sourceLine" id="cb64-3" title="3">x</a></code></pre></div>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb63-1" title="1"><span class="co"># Convertendo números</span></a>
+<a class="sourceLine" id="cb63-2" title="2">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="fl">1.1</span>, <span class="fl">2.2</span>, <span class="fl">3.3</span>, <span class="fl">4.4</span>)</a>
+<a class="sourceLine" id="cb63-3" title="3">x</a></code></pre></div>
 <pre><code>## [1] 1.1 2.2 3.3 4.4</code></pre>
-<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb66-1" title="1"><span class="kw">as.integer</span>(x)</a></code></pre></div>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb65-1" title="1"><span class="kw">as.integer</span>(x)</a></code></pre></div>
 <pre><code>## [1] 1 2 3 4</code></pre>
-<div class="sourceCode" id="cb68"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb68-1" title="1"><span class="kw">as.character</span>(x)</a></code></pre></div>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb67-1" title="1"><span class="kw">as.character</span>(x)</a></code></pre></div>
 <pre><code>## [1] &quot;1.1&quot; &quot;2.2&quot; &quot;3.3&quot; &quot;4.4&quot;</code></pre>
-<div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb70-1" title="1"><span class="co"># Convertendo valores lógicos</span></a>
-<a class="sourceLine" id="cb70-2" title="2">y &lt;-<span class="st"> </span><span class="kw">c</span>(T, F, T, F)</a>
-<a class="sourceLine" id="cb70-3" title="3"><span class="kw">as.numeric</span>(y)</a></code></pre></div>
+<div class="sourceCode" id="cb69"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb69-1" title="1"><span class="co"># Convertendo valores lógicos</span></a>
+<a class="sourceLine" id="cb69-2" title="2">y &lt;-<span class="st"> </span><span class="kw">c</span>(T, F, T, F)</a>
+<a class="sourceLine" id="cb69-3" title="3"><span class="kw">as.numeric</span>(y)</a></code></pre></div>
 <pre><code>## [1] 1 0 1 0</code></pre>
-<div class="sourceCode" id="cb72"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb72-1" title="1"><span class="kw">as.character</span>(y)</a></code></pre></div>
+<div class="sourceCode" id="cb71"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb71-1" title="1"><span class="kw">as.character</span>(y)</a></code></pre></div>
 <pre><code>## [1] &quot;TRUE&quot;  &quot;FALSE&quot; &quot;TRUE&quot;  &quot;FALSE&quot;</code></pre>
-<div class="sourceCode" id="cb74"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb74-1" title="1"><span class="co"># Nem todas as conversões são possíveis</span></a>
-<a class="sourceLine" id="cb74-2" title="2">z &lt;-<span class="st"> </span>letters[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]</a>
-<a class="sourceLine" id="cb74-3" title="3">z</a></code></pre></div>
+<div class="sourceCode" id="cb73"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb73-1" title="1"><span class="co"># Nem todas as conversões são possíveis</span></a>
+<a class="sourceLine" id="cb73-2" title="2">z &lt;-<span class="st"> </span>letters[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>]</a>
+<a class="sourceLine" id="cb73-3" title="3">z</a></code></pre></div>
 <pre><code>##  [1] &quot;a&quot; &quot;b&quot; &quot;c&quot; &quot;d&quot; &quot;e&quot; &quot;f&quot; &quot;g&quot; &quot;h&quot; &quot;i&quot; &quot;j&quot;</code></pre>
-<div class="sourceCode" id="cb76"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb76-1" title="1"><span class="kw">as.numeric</span>(z)</a></code></pre></div>
-<pre><code>## Warning: NAs introduced by coercion</code></pre>
+<div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb75-1" title="1"><span class="kw">as.numeric</span>(z)</a></code></pre></div>
 <pre><code>##  [1] NA NA NA NA NA NA NA NA NA NA</code></pre>
 </div>
 <div id="algumas-funções-básicas-muito-úteis." class="section level3">
 <h3>Algumas funções básicas muito úteis.</h3>
-<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb79-1" title="1"><span class="co"># Atribuição &#39;&lt;-&#39; ou &#39;=&#39;</span></a>
-<a class="sourceLine" id="cb79-2" title="2">x &lt;-<span class="st"> </span><span class="dv">1</span></a>
-<a class="sourceLine" id="cb79-3" title="3">y =<span class="st"> </span><span class="dv">2</span></a>
-<a class="sourceLine" id="cb79-4" title="4">x <span class="op">+</span><span class="st"> </span>y</a></code></pre></div>
+<div class="sourceCode" id="cb77"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb77-1" title="1"><span class="co"># Atribuição &#39;&lt;-&#39; ou &#39;=&#39;</span></a>
+<a class="sourceLine" id="cb77-2" title="2">x &lt;-<span class="st"> </span><span class="dv">1</span></a>
+<a class="sourceLine" id="cb77-3" title="3">y =<span class="st"> </span><span class="dv">2</span></a>
+<a class="sourceLine" id="cb77-4" title="4">x <span class="op">+</span><span class="st"> </span>y</a></code></pre></div>
 <pre><code>## [1] 3</code></pre>
-<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb81-1" title="1"><span class="co"># Concatenação &#39;c()&#39;</span></a>
-<a class="sourceLine" id="cb81-2" title="2">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</a>
-<a class="sourceLine" id="cb81-3" title="3">y &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb81-4" title="4">x <span class="op">+</span><span class="st"> </span>y</a></code></pre></div>
+<div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb79-1" title="1"><span class="co"># Concatenação &#39;c()&#39;</span></a>
+<a class="sourceLine" id="cb79-2" title="2">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>)</a>
+<a class="sourceLine" id="cb79-3" title="3">y &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">1</span>)</a>
+<a class="sourceLine" id="cb79-4" title="4">x <span class="op">+</span><span class="st"> </span>y</a></code></pre></div>
 <pre><code>## [1] 4 4 4</code></pre>
-<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb83-1" title="1"><span class="co"># Médias &#39;mean()&#39;</span></a>
-<a class="sourceLine" id="cb83-2" title="2"><span class="kw">mean</span>(x)</a></code></pre></div>
+<div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb81-1" title="1"><span class="co"># Médias &#39;mean()&#39;</span></a>
+<a class="sourceLine" id="cb81-2" title="2"><span class="kw">mean</span>(x)</a></code></pre></div>
 <pre><code>## [1] 2</code></pre>
-<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb85-1" title="1"><span class="kw">mean</span>(x <span class="op">+</span><span class="st"> </span>y)</a></code></pre></div>
+<div class="sourceCode" id="cb83"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb83-1" title="1"><span class="kw">mean</span>(x <span class="op">+</span><span class="st"> </span>y)</a></code></pre></div>
 <pre><code>## [1] 4</code></pre>
-<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb87-1" title="1"><span class="co"># Somas &#39;sum()&#39;</span></a>
-<a class="sourceLine" id="cb87-2" title="2"><span class="kw">sum</span>(x)</a></code></pre></div>
+<div class="sourceCode" id="cb85"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb85-1" title="1"><span class="co"># Somas &#39;sum()&#39;</span></a>
+<a class="sourceLine" id="cb85-2" title="2"><span class="kw">sum</span>(x)</a></code></pre></div>
 <pre><code>## [1] 6</code></pre>
-<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb89-1" title="1"><span class="kw">sum</span>(x <span class="op">-</span><span class="st"> </span>y)</a></code></pre></div>
+<div class="sourceCode" id="cb87"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb87-1" title="1"><span class="kw">sum</span>(x <span class="op">-</span><span class="st"> </span>y)</a></code></pre></div>
 <pre><code>## [1] 0</code></pre>
-<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb91-1" title="1"><span class="co"># Medianas &#39;median()&quot;</span></a>
-<a class="sourceLine" id="cb91-2" title="2"><span class="kw">median</span>(x)</a></code></pre></div>
+<div class="sourceCode" id="cb89"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb89-1" title="1"><span class="co"># Medianas &#39;median()&quot;</span></a>
+<a class="sourceLine" id="cb89-2" title="2"><span class="kw">median</span>(x)</a></code></pre></div>
 <pre><code>## [1] 2</code></pre>
-<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb93-1" title="1"><span class="co"># Quantis &#39;quantile()&#39;</span></a>
-<a class="sourceLine" id="cb93-2" title="2"><span class="kw">quantile</span>(x)</a></code></pre></div>
+<div class="sourceCode" id="cb91"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb91-1" title="1"><span class="co"># Quantis &#39;quantile()&#39;</span></a>
+<a class="sourceLine" id="cb91-2" title="2"><span class="kw">quantile</span>(x)</a></code></pre></div>
 <pre><code>##   0%  25%  50%  75% 100% 
 ##  1.0  1.5  2.0  2.5  3.0</code></pre>
-<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb95-1" title="1"><span class="co"># Desvio padrão &#39;sd()&#39;</span></a>
-<a class="sourceLine" id="cb95-2" title="2"><span class="kw">sd</span>(x)</a></code></pre></div>
+<div class="sourceCode" id="cb93"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb93-1" title="1"><span class="co"># Desvio padrão &#39;sd()&#39;</span></a>
+<a class="sourceLine" id="cb93-2" title="2"><span class="kw">sd</span>(x)</a></code></pre></div>
 <pre><code>## [1] 1</code></pre>
-<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb97-1" title="1"><span class="co"># Variância &#39;var()&#39;</span></a>
-<a class="sourceLine" id="cb97-2" title="2"><span class="kw">var</span>(x)</a></code></pre></div>
+<div class="sourceCode" id="cb95"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb95-1" title="1"><span class="co"># Variância &#39;var()&#39;</span></a>
+<a class="sourceLine" id="cb95-2" title="2"><span class="kw">var</span>(x)</a></code></pre></div>
 <pre><code>## [1] 1</code></pre>
-<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb99-1" title="1"><span class="co"># Intervalo &#39;range()&#39;</span></a>
-<a class="sourceLine" id="cb99-2" title="2"><span class="kw">range</span>(x)</a></code></pre></div>
+<div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb97-1" title="1"><span class="co"># Intervalo &#39;range()&#39;</span></a>
+<a class="sourceLine" id="cb97-2" title="2"><span class="kw">range</span>(x)</a></code></pre></div>
 <pre><code>## [1] 1 3</code></pre>
-<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb101-1" title="1"><span class="co"># Máximo e mínimo &#39;min()&#39;, &#39;max()&#39;</span></a>
-<a class="sourceLine" id="cb101-2" title="2"><span class="kw">min</span>(x)</a></code></pre></div>
+<div class="sourceCode" id="cb99"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb99-1" title="1"><span class="co"># Máximo e mínimo &#39;min()&#39;, &#39;max()&#39;</span></a>
+<a class="sourceLine" id="cb99-2" title="2"><span class="kw">min</span>(x)</a></code></pre></div>
 <pre><code>## [1] 1</code></pre>
-<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb103-1" title="1"><span class="kw">max</span>(x)</a></code></pre></div>
+<div class="sourceCode" id="cb101"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb101-1" title="1"><span class="kw">max</span>(x)</a></code></pre></div>
 <pre><code>## [1] 3</code></pre>
-<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb105-1" title="1"><span class="co"># Criação de data.frame()</span></a>
-<a class="sourceLine" id="cb105-2" title="2"><span class="co"># A partir de valores</span></a>
-<a class="sourceLine" id="cb105-3" title="3"><span class="kw">data.frame</span>(<span class="dt">a =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>),</a>
-<a class="sourceLine" id="cb105-4" title="4">           <span class="dt">b =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">1</span>))</a></code></pre></div>
-<pre><code>##   a b
-## 1 1 3
-## 2 2 2
-## 3 3 1</code></pre>
-<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb107-1" title="1"><span class="co"># A partir de vetores</span></a>
-<a class="sourceLine" id="cb107-2" title="2"><span class="kw">data.frame</span>(x, y)</a></code></pre></div>
-<pre><code>##   x y
-## 1 1 3
-## 2 2 2
-## 3 3 1</code></pre>
-<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb109-1" title="1"><span class="co"># Colagem de caracteres (strings)</span></a>
-<a class="sourceLine" id="cb109-2" title="2"><span class="co"># Strings individuais</span></a>
-<a class="sourceLine" id="cb109-3" title="3">a1 &lt;-<span class="st"> &quot;Eu&quot;</span></a>
-<a class="sourceLine" id="cb109-4" title="4">a2 &lt;-<span class="st"> &quot;Amo&quot;</span></a>
-<a class="sourceLine" id="cb109-5" title="5">a3 &lt;-<span class="st"> &quot;Pizza.&quot;</span></a>
-<a class="sourceLine" id="cb109-6" title="6"></a>
-<a class="sourceLine" id="cb109-7" title="7"><span class="kw">paste</span>(a1, a2, a3, <span class="dt">sep =</span> <span class="st">&quot; &quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb103-1" title="1"><span class="co"># Criação de data.frame()</span></a>
+<a class="sourceLine" id="cb103-2" title="2"><span class="co"># A partir de valores</span></a>
+<a class="sourceLine" id="cb103-3" title="3"><span class="kw">data.frame</span>(<span class="dt">a =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>),</a>
+<a class="sourceLine" id="cb103-4" title="4">           <span class="dt">b =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">2</span>, <span class="dv">1</span>))</a></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["a"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["b"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"3"},{"1":"2","2":"2"},{"1":"3","2":"1"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<div class="sourceCode" id="cb104"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb104-1" title="1"><span class="co"># A partir de vetores</span></a>
+<a class="sourceLine" id="cb104-2" title="2"><span class="kw">data.frame</span>(x, y)</a></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["x"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["y"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"1","2":"3"},{"1":"2","2":"2"},{"1":"3","2":"1"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<div class="sourceCode" id="cb105"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb105-1" title="1"><span class="co"># Colagem de caracteres (strings)</span></a>
+<a class="sourceLine" id="cb105-2" title="2"><span class="co"># Strings individuais</span></a>
+<a class="sourceLine" id="cb105-3" title="3">a1 &lt;-<span class="st"> &quot;Eu&quot;</span></a>
+<a class="sourceLine" id="cb105-4" title="4">a2 &lt;-<span class="st"> &quot;Amo&quot;</span></a>
+<a class="sourceLine" id="cb105-5" title="5">a3 &lt;-<span class="st"> &quot;Pizza.&quot;</span></a>
+<a class="sourceLine" id="cb105-6" title="6"></a>
+<a class="sourceLine" id="cb105-7" title="7"><span class="kw">paste</span>(a1, a2, a3, <span class="dt">sep =</span> <span class="st">&quot; &quot;</span>)</a></code></pre></div>
 <pre><code>## [1] &quot;Eu Amo Pizza.&quot;</code></pre>
-<div class="sourceCode" id="cb111"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb111-1" title="1"><span class="co"># Vetores de strings</span></a>
-<a class="sourceLine" id="cb111-2" title="2">z &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Eu&quot;</span>, <span class="st">&quot;Amo&quot;</span>, <span class="st">&quot;Pizza.&quot;</span>)</a>
-<a class="sourceLine" id="cb111-3" title="3"></a>
-<a class="sourceLine" id="cb111-4" title="4"><span class="kw">paste</span>(z, <span class="dt">collapse =</span> <span class="st">&quot; &quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb107-1" title="1"><span class="co"># Vetores de strings</span></a>
+<a class="sourceLine" id="cb107-2" title="2">z &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;Eu&quot;</span>, <span class="st">&quot;Amo&quot;</span>, <span class="st">&quot;Pizza.&quot;</span>)</a>
+<a class="sourceLine" id="cb107-3" title="3"></a>
+<a class="sourceLine" id="cb107-4" title="4"><span class="kw">paste</span>(z, <span class="dt">collapse =</span> <span class="st">&quot; &quot;</span>)</a></code></pre></div>
 <pre><code>## [1] &quot;Eu Amo Pizza.&quot;</code></pre>
 </div>
 </div>
 <div id="errando" class="section level2">
 <h2>Errando</h2>
 <p>Invariavelmente, ao desenvolver seus programas, você cometerá ou encontrará erros. Não entre em pânico! Procure se informar sobre o seu erro. Localize o ponto ele ocorreu e tente ler as mensagens de erro, procure mais informações até que você consiga solucionar seu problema. Vale postar dúvidas em fóruns e ligar pro seu coleguinha que já tem mais experiência, só não vale desistir!</p>
-<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb113-1" title="1"><span class="co"># Errado</span></a>
-<a class="sourceLine" id="cb113-2" title="2"><span class="kw">c</span>(Palavra)</a></code></pre></div>
-<div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb114-1" title="1"><span class="co"># Certo</span></a>
-<a class="sourceLine" id="cb114-2" title="2"><span class="kw">c</span>(<span class="st">&quot;Palavra&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb109-1" title="1"><span class="co"># Errado</span></a>
+<a class="sourceLine" id="cb109-2" title="2"><span class="kw">c</span>(Palavra)</a></code></pre></div>
+<div class="sourceCode" id="cb110"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb110-1" title="1"><span class="co"># Certo</span></a>
+<a class="sourceLine" id="cb110-2" title="2"><span class="kw">c</span>(<span class="st">&quot;Palavra&quot;</span>)</a></code></pre></div>
 <pre><code>## [1] &quot;Palavra&quot;</code></pre>
-<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb116-1" title="1"><span class="co"># Errado</span></a>
-<a class="sourceLine" id="cb116-2" title="2">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="ot">NA</span>)</a>
-<a class="sourceLine" id="cb116-3" title="3"><span class="kw">sum</span>(x)</a></code></pre></div>
-<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb117-1" title="1"><span class="co"># Certo</span></a>
-<a class="sourceLine" id="cb117-2" title="2">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="ot">NA</span>)</a>
-<a class="sourceLine" id="cb117-3" title="3"><span class="kw">sum</span>(x, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb112-1" title="1"><span class="co"># Errado</span></a>
+<a class="sourceLine" id="cb112-2" title="2">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="ot">NA</span>)</a>
+<a class="sourceLine" id="cb112-3" title="3"><span class="kw">sum</span>(x)</a></code></pre></div>
+<div class="sourceCode" id="cb113"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb113-1" title="1"><span class="co"># Certo</span></a>
+<a class="sourceLine" id="cb113-2" title="2">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="ot">NA</span>)</a>
+<a class="sourceLine" id="cb113-3" title="3"><span class="kw">sum</span>(x, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <pre><code>## [1] 6</code></pre>
-<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb119-1" title="1"><span class="co"># Errado</span></a>
-<a class="sourceLine" id="cb119-2" title="2">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span> <span class="dv">4</span>)</a></code></pre></div>
-<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb120-1" title="1"><span class="co"># Certo</span></a>
-<a class="sourceLine" id="cb120-2" title="2">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb115"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb115-1" title="1"><span class="co"># Errado</span></a>
+<a class="sourceLine" id="cb115-2" title="2">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span> <span class="dv">4</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb116"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb116-1" title="1"><span class="co"># Certo</span></a>
+<a class="sourceLine" id="cb116-2" title="2">x &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>)</a></code></pre></div>
 <p>No começo, pode ser difícil interpretar as mensagens de erro, mas elas geralmente oferecem pelo menos uma ideia de onde procurar o problema. Eu mesmo já resolvi vários problemas copiando e colando a mensagem no google e lendo as respostas das pessoas. Algumas são bem óbvias e tranquilas, outras são mais técnicas e complexas, mas você sempre aprende algo pelo caminho.</p>
 </div>
 <div id="gráficos" class="section level2">
 <h2>Gráficos</h2>
 <p>Uma das melhores funcionalidades do R é a sua suite de visualizações. Aqui, não vamos nos deter numa explicação detalhada do funcionamento de cada parâmetro gráfico das funções, apenas demonstrar algumas funcionalidades e exemplos interessantes. Voltaremos a esse assunto no futuro. Os exemplos são adaptados do excelente <a href="https://www.packtpub.com/big-data-and-business-intelligence/r-data-visualization-cookbook">R Data Visualization Cookbook</a>. Os dados utilizados foram retirados do <a href="https://data.worldbank.org/">World Bank Data</a>.</p>
 <p>Para que os scripts a seguir funcionem, vocês vão precisar que os arquivos de dados estejam localizados em sua pasta de trabalho, que vocês podem alterar como quiserem, basta especificar o caminho desejado de pasta.</p>
-<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb121-1" title="1"><span class="kw">setwd</span>(<span class="st">&quot;C:/Users/vinic/Documents/R&quot;</span>) <span class="co"># Substitua pela sua pasta desejada</span></a>
-<a class="sourceLine" id="cb121-2" title="2"></a>
-<a class="sourceLine" id="cb121-3" title="3"><span class="co"># OU</span></a>
-<a class="sourceLine" id="cb121-4" title="4"><span class="kw">setwd</span>(<span class="st">&quot;C:</span><span class="ch">\\</span><span class="st">Users</span><span class="ch">\\</span><span class="st">vinic</span><span class="ch">\\</span><span class="st">Documents</span><span class="ch">\\</span><span class="st">R&quot;</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb117-1" title="1"><span class="kw">setwd</span>(<span class="st">&quot;C:/Users/vinic/Documents/R&quot;</span>) <span class="co"># Substitua pela sua pasta desejada</span></a>
+<a class="sourceLine" id="cb117-2" title="2"></a>
+<a class="sourceLine" id="cb117-3" title="3"><span class="co"># OU</span></a>
+<a class="sourceLine" id="cb117-4" title="4"><span class="kw">setwd</span>(<span class="st">&quot;C:</span><span class="ch">\\</span><span class="st">Users</span><span class="ch">\\</span><span class="st">vinic</span><span class="ch">\\</span><span class="st">Documents</span><span class="ch">\\</span><span class="st">R&quot;</span>)</a></code></pre></div>
 <p>Atenção às contrabarras se você copiar o caminho do arquivo direto do Windows!</p>
 <div id="um-scatterplot" class="section level3">
 <h3>Um scatterplot</h3>
-<div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb122-1" title="1"><span class="cf">if</span> ((<span class="op">!</span><span class="st">&quot;grDevices&quot;</span> <span class="op">%in%</span><span class="st"> </span><span class="kw">installed.packages</span>())) {</a>
-<a class="sourceLine" id="cb122-2" title="2">  <span class="kw">install.packages</span>(<span class="st">&quot;ISLR&quot;</span>)</a>
-<a class="sourceLine" id="cb122-3" title="3">}</a>
-<a class="sourceLine" id="cb122-4" title="4"><span class="kw">library</span>(ISLR)</a>
-<a class="sourceLine" id="cb122-5" title="5"></a>
-<a class="sourceLine" id="cb122-6" title="6"><span class="kw">attach</span>(Carseats)</a>
-<a class="sourceLine" id="cb122-7" title="7"></a>
-<a class="sourceLine" id="cb122-8" title="8"><span class="kw">head</span>(Carseats)</a></code></pre></div>
-<pre><code>##   Sales CompPrice Income Advertising Population Price ShelveLoc Age Education Urban  US
-## 1  9.50       138     73          11        276   120       Bad  42        17   Yes Yes
-## 2 11.22       111     48          16        260    83      Good  65        10   Yes Yes
-## 3 10.06       113     35          10        269    80    Medium  59        12   Yes Yes
-## 4  7.40       117    100           4        466    97    Medium  55        14   Yes Yes
-## 5  4.15       141     64           3        340   128       Bad  38        13   Yes  No
-## 6 10.81       124    113          13        501    72       Bad  78        16    No Yes</code></pre>
-<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb124-1" title="1"><span class="kw">plot</span>(Income, Sales,</a>
-<a class="sourceLine" id="cb124-2" title="2">     <span class="dt">col =</span> <span class="kw">c</span>(Urban),</a>
-<a class="sourceLine" id="cb124-3" title="3">     <span class="dt">pch =</span> <span class="dv">20</span>,</a>
-<a class="sourceLine" id="cb124-4" title="4">     <span class="dt">main =</span> <span class="st">&quot;Vendas de Cadeirinhas Infantis para automóveis&quot;,</span></a>
-<a class="sourceLine" id="cb124-5" title="5"><span class="st">     xlab = &quot;</span><span class="kw">Renda</span> (milhares de Dólares)<span class="st">&quot;,</span></a>
-<a class="sourceLine" id="cb124-6" title="6"><span class="st">     ylab = &quot;</span>Unidades <span class="kw">vendidas</span> (milhares)<span class="st">&quot;</span></a>
-<a class="sourceLine" id="cb124-7" title="7"><span class="st">)</span></a>
-<a class="sourceLine" id="cb124-8" title="8"></a>
-<a class="sourceLine" id="cb124-9" title="9"><span class="st">legend(&quot;</span>topright<span class="st">&quot;, </span></a>
-<a class="sourceLine" id="cb124-10" title="10"><span class="st">       cex = 0.6,</span></a>
-<a class="sourceLine" id="cb124-11" title="11"><span class="st">       fill = c(&quot;</span>red<span class="st">&quot;, &quot;</span>black<span class="st">&quot;), </span></a>
-<a class="sourceLine" id="cb124-12" title="12"><span class="st">       legend = c(&quot;</span>Urbana<span class="st">&quot;, &quot;</span>Não<span class="op">-</span>urbana<span class="st">&quot;))</span></a></code></pre></div>
+<div class="sourceCode" id="cb118"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb118-1" title="1"><span class="cf">if</span> ((<span class="op">!</span><span class="st">&quot;grDevices&quot;</span> <span class="op">%in%</span><span class="st"> </span><span class="kw">installed.packages</span>())) {</a>
+<a class="sourceLine" id="cb118-2" title="2">  <span class="kw">install.packages</span>(<span class="st">&quot;ISLR&quot;</span>)</a>
+<a class="sourceLine" id="cb118-3" title="3">}</a>
+<a class="sourceLine" id="cb118-4" title="4"><span class="kw">library</span>(ISLR)</a>
+<a class="sourceLine" id="cb118-5" title="5"></a>
+<a class="sourceLine" id="cb118-6" title="6"><span class="kw">attach</span>(Carseats)</a>
+<a class="sourceLine" id="cb118-7" title="7"></a>
+<a class="sourceLine" id="cb118-8" title="8"><span class="kw">head</span>(Carseats)</a></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Sales"],"name":[1],"type":["dbl"],"align":["right"]},{"label":["CompPrice"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["Income"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["Advertising"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["Population"],"name":[5],"type":["dbl"],"align":["right"]},{"label":["Price"],"name":[6],"type":["dbl"],"align":["right"]},{"label":["ShelveLoc"],"name":[7],"type":["fctr"],"align":["left"]},{"label":["Age"],"name":[8],"type":["dbl"],"align":["right"]},{"label":["Education"],"name":[9],"type":["dbl"],"align":["right"]},{"label":["Urban"],"name":[10],"type":["fctr"],"align":["left"]},{"label":["US"],"name":[11],"type":["fctr"],"align":["left"]}],"data":[{"1":"9.50","2":"138","3":"73","4":"11","5":"276","6":"120","7":"Bad","8":"42","9":"17","10":"Yes","11":"Yes","_rn_":"1"},{"1":"11.22","2":"111","3":"48","4":"16","5":"260","6":"83","7":"Good","8":"65","9":"10","10":"Yes","11":"Yes","_rn_":"2"},{"1":"10.06","2":"113","3":"35","4":"10","5":"269","6":"80","7":"Medium","8":"59","9":"12","10":"Yes","11":"Yes","_rn_":"3"},{"1":"7.40","2":"117","3":"100","4":"4","5":"466","6":"97","7":"Medium","8":"55","9":"14","10":"Yes","11":"Yes","_rn_":"4"},{"1":"4.15","2":"141","3":"64","4":"3","5":"340","6":"128","7":"Bad","8":"38","9":"13","10":"Yes","11":"No","_rn_":"5"},{"1":"10.81","2":"124","3":"113","4":"13","5":"501","6":"72","7":"Bad","8":"78","9":"16","10":"No","11":"Yes","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<div class="sourceCode" id="cb119"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb119-1" title="1"><span class="kw">plot</span>(Income, Sales,</a>
+<a class="sourceLine" id="cb119-2" title="2">     <span class="dt">col =</span> <span class="kw">c</span>(Urban),</a>
+<a class="sourceLine" id="cb119-3" title="3">     <span class="dt">pch =</span> <span class="dv">20</span>,</a>
+<a class="sourceLine" id="cb119-4" title="4">     <span class="dt">main =</span> <span class="st">&quot;Vendas de Cadeirinhas Infantis para automóveis&quot;,</span></a>
+<a class="sourceLine" id="cb119-5" title="5"><span class="st">     xlab = &quot;</span><span class="kw">Renda</span> (milhares de Dólares)<span class="st">&quot;,</span></a>
+<a class="sourceLine" id="cb119-6" title="6"><span class="st">     ylab = &quot;</span>Unidades <span class="kw">vendidas</span> (milhares)<span class="st">&quot;</span></a>
+<a class="sourceLine" id="cb119-7" title="7"><span class="st">)</span></a>
+<a class="sourceLine" id="cb119-8" title="8"></a>
+<a class="sourceLine" id="cb119-9" title="9"><span class="st">legend(&quot;</span>topright<span class="st">&quot;, </span></a>
+<a class="sourceLine" id="cb119-10" title="10"><span class="st">       cex = 0.6,</span></a>
+<a class="sourceLine" id="cb119-11" title="11"><span class="st">       fill = c(&quot;</span>red<span class="st">&quot;, &quot;</span>black<span class="st">&quot;), </span></a>
+<a class="sourceLine" id="cb119-12" title="12"><span class="st">       legend = c(&quot;</span>Urbana<span class="st">&quot;, &quot;</span>Não<span class="op">-</span>urbana<span class="st">&quot;))</span></a></code></pre></div>
 <p><img src="11_lingua-r_files/figure-html/unnamed-chunk-26-1.png" width="672" /></p>
-<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb125-1" title="1"><span class="kw">detach</span>(Carseats)</a></code></pre></div>
+<div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb120-1" title="1"><span class="kw">detach</span>(Carseats)</a></code></pre></div>
 </div>
 <div id="um-scatterplot-com-alguns-detalhes-a-mais" class="section level3">
 <h3>Um scatterplot com alguns detalhes a mais</h3>
-<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb126-1" title="1">child =<span class="st"> </span><span class="kw">read.csv2</span>(<span class="st">&quot;banco_mundial2018.csv&quot;</span>)</a>
-<a class="sourceLine" id="cb126-2" title="2"></a>
-<a class="sourceLine" id="cb126-3" title="3"><span class="kw">summary</span>(child)</a></code></pre></div>
+<div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb121-1" title="1">child =<span class="st"> </span><span class="kw">read.csv2</span>(<span class="st">&quot;banco_mundial2018.csv&quot;</span>)</a>
+<a class="sourceLine" id="cb121-2" title="2"></a>
+<a class="sourceLine" id="cb121-3" title="3"><span class="kw">summary</span>(child)</a></code></pre></div>
 <pre><code>##  Country.Name           chmort            gdp                    gdp_bil         
 ##  Length:195         Min.   : 1.400   Min.   :      42587780   Min.   :    0.043  
 ##  Class :character   1st Qu.: 6.025   1st Qu.:    7353896000   1st Qu.:    7.354  
@@ -910,109 +914,103 @@ div.tocify {
 ##                     3rd Qu.:32.850   3rd Qu.:  220038400000   3rd Qu.:  220.038  
 ##                     Max.   :84.500   Max.   :20544340000000   Max.   :20544.340  
 ##                     NA&#39;s   :9</code></pre>
-<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb128-1" title="1"><span class="kw">head</span>(child)</a></code></pre></div>
-<pre><code>##           Country.Name chmort          gdp    gdp_bil
-## 1          Afghanistan   47.9  19362970000  19.362970
-## 2               Angola   51.6 105751000000 105.751000
-## 3              Albania    7.8  15102500000  15.102500
-## 4              Andorra    2.7   3236544000   3.236544
-## 5 United Arab Emirates    6.5 414178900000 414.178900
-## 6            Argentina    8.8 519871500000 519.871500</code></pre>
-<div class="sourceCode" id="cb130"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb130-1" title="1"><span class="co"># Esqueleto</span></a>
-<a class="sourceLine" id="cb130-2" title="2"><span class="kw">plot</span>(child<span class="op">$</span>gdp_bil, child<span class="op">$</span>chmort, </a>
-<a class="sourceLine" id="cb130-3" title="3">     <span class="dt">pch =</span> <span class="dv">20</span>, </a>
-<a class="sourceLine" id="cb130-4" title="4">     <span class="dt">col =</span> <span class="st">&quot;#756bb1&quot;</span>,</a>
-<a class="sourceLine" id="cb130-5" title="5">     <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="kw">max</span>(child<span class="op">$</span>gdp_bil, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)), </a>
-<a class="sourceLine" id="cb130-6" title="6">     <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">90</span>), </a>
-<a class="sourceLine" id="cb130-7" title="7">     <span class="dt">xlab =</span> <span class="st">&quot;PIB em Bilhões de dólares atuais&quot;</span>, </a>
-<a class="sourceLine" id="cb130-8" title="8">     <span class="dt">ylab =</span> <span class="st">&quot;Taxa de mortalidade infantil&quot;</span>, </a>
-<a class="sourceLine" id="cb130-9" title="9">     <span class="dt">main =</span> <span class="st">&quot;Taxa de mortalidade infantil em alguns países em 2018&quot;</span>)</a>
-<a class="sourceLine" id="cb130-10" title="10"></a>
-<a class="sourceLine" id="cb130-11" title="11"><span class="co"># Detalhes</span></a>
-<a class="sourceLine" id="cb130-12" title="12"></a>
-<a class="sourceLine" id="cb130-13" title="13"><span class="kw">abline</span>(<span class="dt">h =</span> <span class="kw">mean</span>(child<span class="op">$</span>chmort, <span class="dt">na.rm =</span> T), <span class="dt">lwd =</span> <span class="dv">1</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)</a>
-<a class="sourceLine" id="cb130-14" title="14"><span class="kw">text</span>(<span class="dv">19600</span>,<span class="dv">9</span>,<span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Estados Unidos&quot;</span>), <span class="dt">cex =</span> <span class="fl">0.75</span>)</a>
-<a class="sourceLine" id="cb130-15" title="15"><span class="kw">text</span>(<span class="dv">2000</span>, <span class="dv">88</span>, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;República Centroafricana&quot;</span>), <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">cex =</span> <span class="fl">0.75</span>)</a>
-<a class="sourceLine" id="cb130-16" title="16"><span class="kw">text</span>(<span class="dv">10000</span>, <span class="dv">25</span>,<span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Mortalidade infantil média&quot;</span>), <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">cex =</span> <span class="fl">0.75</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb123-1" title="1"><span class="kw">head</span>(child)</a></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Country.Name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["chmort"],"name":[2],"type":["dbl"],"align":["right"]},{"label":["gdp"],"name":[3],"type":["dbl"],"align":["right"]},{"label":["gdp_bil"],"name":[4],"type":["dbl"],"align":["right"]}],"data":[{"1":"Afghanistan","2":"47.9","3":"19362970000","4":"19.362970","_rn_":"1"},{"1":"Angola","2":"51.6","3":"105751000000","4":"105.751000","_rn_":"2"},{"1":"Albania","2":"7.8","3":"15102500000","4":"15.102500","_rn_":"3"},{"1":"Andorra","2":"2.7","3":"3236544000","4":"3.236544","_rn_":"4"},{"1":"United Arab Emirates","2":"6.5","3":"414178900000","4":"414.178900","_rn_":"5"},{"1":"Argentina","2":"8.8","3":"519871500000","4":"519.871500","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<div class="sourceCode" id="cb124"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb124-1" title="1"><span class="co"># Esqueleto</span></a>
+<a class="sourceLine" id="cb124-2" title="2"><span class="kw">plot</span>(child<span class="op">$</span>gdp_bil, child<span class="op">$</span>chmort, </a>
+<a class="sourceLine" id="cb124-3" title="3">     <span class="dt">pch =</span> <span class="dv">20</span>, </a>
+<a class="sourceLine" id="cb124-4" title="4">     <span class="dt">col =</span> <span class="st">&quot;#756bb1&quot;</span>,</a>
+<a class="sourceLine" id="cb124-5" title="5">     <span class="dt">xlim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="kw">max</span>(child<span class="op">$</span>gdp_bil, <span class="dt">na.rm =</span> <span class="ot">TRUE</span>)), </a>
+<a class="sourceLine" id="cb124-6" title="6">     <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">90</span>), </a>
+<a class="sourceLine" id="cb124-7" title="7">     <span class="dt">xlab =</span> <span class="st">&quot;PIB em Bilhões de dólares atuais&quot;</span>, </a>
+<a class="sourceLine" id="cb124-8" title="8">     <span class="dt">ylab =</span> <span class="st">&quot;Taxa de mortalidade infantil&quot;</span>, </a>
+<a class="sourceLine" id="cb124-9" title="9">     <span class="dt">main =</span> <span class="st">&quot;Taxa de mortalidade infantil em alguns países em 2018&quot;</span>)</a>
+<a class="sourceLine" id="cb124-10" title="10"></a>
+<a class="sourceLine" id="cb124-11" title="11"><span class="co"># Detalhes</span></a>
+<a class="sourceLine" id="cb124-12" title="12"></a>
+<a class="sourceLine" id="cb124-13" title="13"><span class="kw">abline</span>(<span class="dt">h =</span> <span class="kw">mean</span>(child<span class="op">$</span>chmort, <span class="dt">na.rm =</span> T), <span class="dt">lwd =</span> <span class="dv">1</span>, <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>)</a>
+<a class="sourceLine" id="cb124-14" title="14"><span class="kw">text</span>(<span class="dv">19600</span>,<span class="dv">9</span>,<span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Estados Unidos&quot;</span>), <span class="dt">cex =</span> <span class="fl">0.75</span>)</a>
+<a class="sourceLine" id="cb124-15" title="15"><span class="kw">text</span>(<span class="dv">2000</span>, <span class="dv">88</span>, <span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;República Centroafricana&quot;</span>), <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">cex =</span> <span class="fl">0.75</span>)</a>
+<a class="sourceLine" id="cb124-16" title="16"><span class="kw">text</span>(<span class="dv">10000</span>, <span class="dv">25</span>,<span class="dt">labels =</span> <span class="kw">c</span>(<span class="st">&quot;Mortalidade infantil média&quot;</span>), <span class="dt">col =</span> <span class="st">&quot;red&quot;</span>, <span class="dt">cex =</span> <span class="fl">0.75</span>)</a></code></pre></div>
 <p><img src="11_lingua-r_files/figure-html/unnamed-chunk-27-1.png" width="672" /></p>
 <p>Outra versão do mesmo gráfico, com linha de tendência:</p>
-<div class="sourceCode" id="cb131"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb131-1" title="1"><span class="co"># Linha de tendência</span></a>
-<a class="sourceLine" id="cb131-2" title="2"><span class="kw">scatter.smooth</span>(</a>
-<a class="sourceLine" id="cb131-3" title="3">  child<span class="op">$</span>gdp_bil,</a>
-<a class="sourceLine" id="cb131-4" title="4">  child<span class="op">$</span>chmort,</a>
-<a class="sourceLine" id="cb131-5" title="5">  <span class="dt">span =</span> <span class="dv">1</span><span class="op">/</span><span class="dv">2</span>,</a>
-<a class="sourceLine" id="cb131-6" title="6">  <span class="dt">pch =</span> <span class="dv">20</span>,</a>
-<a class="sourceLine" id="cb131-7" title="7">  <span class="dt">lwd =</span> <span class="fl">0.75</span>,</a>
-<a class="sourceLine" id="cb131-8" title="8">  <span class="dt">col =</span> <span class="st">&quot;Blue&quot;</span>,</a>
-<a class="sourceLine" id="cb131-9" title="9">  <span class="dt">lpars =</span> <span class="kw">list</span>(<span class="dt">lty =</span> <span class="dv">3</span>, <span class="dt">col =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>),</a>
-<a class="sourceLine" id="cb131-10" title="10">  <span class="dt">xlab =</span> <span class="st">&quot;PIB em Bilhões de dólares atuais&quot;</span>,</a>
-<a class="sourceLine" id="cb131-11" title="11">  <span class="dt">ylab =</span> <span class="st">&quot;Taxa de mortalidade infantil&quot;</span>,</a>
-<a class="sourceLine" id="cb131-12" title="12">  <span class="dt">main =</span> <span class="st">&quot;Taxa de mortalidade infantil em alguns países em 2018&quot;</span></a>
-<a class="sourceLine" id="cb131-13" title="13">)</a></code></pre></div>
+<div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb125-1" title="1"><span class="co"># Linha de tendência</span></a>
+<a class="sourceLine" id="cb125-2" title="2"><span class="kw">scatter.smooth</span>(</a>
+<a class="sourceLine" id="cb125-3" title="3">  child<span class="op">$</span>gdp_bil,</a>
+<a class="sourceLine" id="cb125-4" title="4">  child<span class="op">$</span>chmort,</a>
+<a class="sourceLine" id="cb125-5" title="5">  <span class="dt">span =</span> <span class="dv">1</span><span class="op">/</span><span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb125-6" title="6">  <span class="dt">pch =</span> <span class="dv">20</span>,</a>
+<a class="sourceLine" id="cb125-7" title="7">  <span class="dt">lwd =</span> <span class="fl">0.75</span>,</a>
+<a class="sourceLine" id="cb125-8" title="8">  <span class="dt">col =</span> <span class="st">&quot;Blue&quot;</span>,</a>
+<a class="sourceLine" id="cb125-9" title="9">  <span class="dt">lpars =</span> <span class="kw">list</span>(<span class="dt">lty =</span> <span class="dv">3</span>, <span class="dt">col =</span> <span class="st">&quot;black&quot;</span>, <span class="dt">lwd =</span> <span class="dv">2</span>),</a>
+<a class="sourceLine" id="cb125-10" title="10">  <span class="dt">xlab =</span> <span class="st">&quot;PIB em Bilhões de dólares atuais&quot;</span>,</a>
+<a class="sourceLine" id="cb125-11" title="11">  <span class="dt">ylab =</span> <span class="st">&quot;Taxa de mortalidade infantil&quot;</span>,</a>
+<a class="sourceLine" id="cb125-12" title="12">  <span class="dt">main =</span> <span class="st">&quot;Taxa de mortalidade infantil em alguns países em 2018&quot;</span></a>
+<a class="sourceLine" id="cb125-13" title="13">)</a></code></pre></div>
 <p><img src="11_lingua-r_files/figure-html/unnamed-chunk-28-1.png" width="672" /></p>
 </div>
 <div id="evolução-temporal-da-desigualdade---gráfico-de-linha" class="section level3">
 <h3>Evolução temporal da desigualdade - gráfico de linha</h3>
-<div class="sourceCode" id="cb132"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb132-1" title="1">income &lt;-<span class="st"> </span><span class="kw">read.csv2</span>(<span class="st">&quot;banco_mundial_desigualdade.csv&quot;</span>)</a>
-<a class="sourceLine" id="cb132-2" title="2"></a>
-<a class="sourceLine" id="cb132-3" title="3">income<span class="op">$</span>Year &lt;-<span class="st"> </span><span class="kw">factor</span>(income<span class="op">$</span>Year, <span class="dt">ordered =</span> <span class="ot">TRUE</span>)</a>
-<a class="sourceLine" id="cb132-4" title="4"></a>
-<a class="sourceLine" id="cb132-5" title="5"><span class="kw">head</span>(income)</a></code></pre></div>
-<pre><code>##    Country.Name Year President  GDP_bil gini_coef
-## 1 United States 1974      Ford 1545.243      35.3
-## 2 United States 1979    Carter 2627.334      34.6
-## 3 United States 1986    Reagan 4579.631      37.5
-## 4 United States 1991  Bush Sr. 6158.129      38.2
-## 5 United States 1994   Clinton 7287.236      40.2
-## 6 United States 1997   Clinton 8577.554      40.7</code></pre>
-<div class="sourceCode" id="cb134"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb134-1" title="1"><span class="kw">plot</span>(</a>
-<a class="sourceLine" id="cb134-2" title="2">  income<span class="op">$</span>GDP_bil,</a>
-<a class="sourceLine" id="cb134-3" title="3">  income<span class="op">$</span>gini_coef,</a>
-<a class="sourceLine" id="cb134-4" title="4">  <span class="dt">pch =</span> <span class="dv">20</span>,</a>
-<a class="sourceLine" id="cb134-5" title="5">  <span class="dt">col =</span> <span class="kw">factor</span>(income<span class="op">$</span>President),</a>
-<a class="sourceLine" id="cb134-6" title="6">  <span class="dt">type =</span> <span class="st">&quot;o&quot;</span>,</a>
-<a class="sourceLine" id="cb134-7" title="7">  <span class="dt">xlab =</span> <span class="st">&quot;PIB dos EUA (em bilhões de USD)&quot;</span>,</a>
-<a class="sourceLine" id="cb134-8" title="8">  <span class="dt">ylab =</span> <span class="st">&quot;Coeficiente de Gini&quot;</span>,</a>
-<a class="sourceLine" id="cb134-9" title="9">  <span class="dt">main =</span> <span class="st">&quot;Desigualdade nos EUA&quot;</span>,</a>
-<a class="sourceLine" id="cb134-10" title="10">  <span class="dt">xaxp =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">18000</span>, <span class="dv">8</span>)</a>
-<a class="sourceLine" id="cb134-11" title="11">)</a>
-<a class="sourceLine" id="cb134-12" title="12"></a>
-<a class="sourceLine" id="cb134-13" title="13"><span class="kw">legend</span>(</a>
-<a class="sourceLine" id="cb134-14" title="14">  <span class="st">&quot;bottomright&quot;</span>,</a>
-<a class="sourceLine" id="cb134-15" title="15">  <span class="dt">fill =</span> <span class="kw">c</span>(<span class="dv">6</span>, <span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">7</span>, <span class="dv">3</span>, <span class="dv">13</span>),</a>
-<a class="sourceLine" id="cb134-16" title="16">  <span class="dt">legend =</span> <span class="kw">c</span>(<span class="st">&quot;Obama&quot;</span>, <span class="st">&quot;Bush Jr.&quot;</span>, <span class="st">&quot;Clinton&quot;</span>, <span class="st">&quot;Bush Sr.&quot;</span>, <span class="st">&quot;Reagan&quot;</span>, </a>
-<a class="sourceLine" id="cb134-17" title="17">             <span class="st">&quot;Carter&quot;</span>, <span class="st">&quot;Ford&quot;</span>),</a>
-<a class="sourceLine" id="cb134-18" title="18">  <span class="dt">bty =</span> <span class="st">&quot;n&quot;</span>,</a>
-<a class="sourceLine" id="cb134-19" title="19">  <span class="dt">cex =</span> <span class="fl">0.7</span></a>
-<a class="sourceLine" id="cb134-20" title="20">)</a></code></pre></div>
+<div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb126-1" title="1">income &lt;-<span class="st"> </span><span class="kw">read.csv2</span>(<span class="st">&quot;banco_mundial_desigualdade.csv&quot;</span>)</a>
+<a class="sourceLine" id="cb126-2" title="2"></a>
+<a class="sourceLine" id="cb126-3" title="3">income<span class="op">$</span>Year &lt;-<span class="st"> </span><span class="kw">factor</span>(income<span class="op">$</span>Year, <span class="dt">ordered =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb126-4" title="4"></a>
+<a class="sourceLine" id="cb126-5" title="5"><span class="kw">head</span>(income)</a></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Country.Name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["Year"],"name":[2],"type":["ord"],"align":["right"]},{"label":["President"],"name":[3],"type":["chr"],"align":["left"]},{"label":["GDP_bil"],"name":[4],"type":["dbl"],"align":["right"]},{"label":["gini_coef"],"name":[5],"type":["dbl"],"align":["right"]}],"data":[{"1":"United States","2":"1974","3":"Ford","4":"1545.243","5":"35.3","_rn_":"1"},{"1":"United States","2":"1979","3":"Carter","4":"2627.334","5":"34.6","_rn_":"2"},{"1":"United States","2":"1986","3":"Reagan","4":"4579.631","5":"37.5","_rn_":"3"},{"1":"United States","2":"1991","3":"Bush Sr.","4":"6158.129","5":"38.2","_rn_":"4"},{"1":"United States","2":"1994","3":"Clinton","4":"7287.236","5":"40.2","_rn_":"5"},{"1":"United States","2":"1997","3":"Clinton","4":"8577.554","5":"40.7","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb127-1" title="1"><span class="kw">plot</span>(</a>
+<a class="sourceLine" id="cb127-2" title="2">  income<span class="op">$</span>GDP_bil,</a>
+<a class="sourceLine" id="cb127-3" title="3">  income<span class="op">$</span>gini_coef,</a>
+<a class="sourceLine" id="cb127-4" title="4">  <span class="dt">pch =</span> <span class="dv">20</span>,</a>
+<a class="sourceLine" id="cb127-5" title="5">  <span class="dt">col =</span> <span class="kw">factor</span>(income<span class="op">$</span>President),</a>
+<a class="sourceLine" id="cb127-6" title="6">  <span class="dt">type =</span> <span class="st">&quot;o&quot;</span>,</a>
+<a class="sourceLine" id="cb127-7" title="7">  <span class="dt">xlab =</span> <span class="st">&quot;PIB dos EUA (em bilhões de USD)&quot;</span>,</a>
+<a class="sourceLine" id="cb127-8" title="8">  <span class="dt">ylab =</span> <span class="st">&quot;Coeficiente de Gini&quot;</span>,</a>
+<a class="sourceLine" id="cb127-9" title="9">  <span class="dt">main =</span> <span class="st">&quot;Desigualdade nos EUA&quot;</span>,</a>
+<a class="sourceLine" id="cb127-10" title="10">  <span class="dt">xaxp =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">18000</span>, <span class="dv">8</span>)</a>
+<a class="sourceLine" id="cb127-11" title="11">)</a>
+<a class="sourceLine" id="cb127-12" title="12"></a>
+<a class="sourceLine" id="cb127-13" title="13"><span class="kw">legend</span>(</a>
+<a class="sourceLine" id="cb127-14" title="14">  <span class="st">&quot;bottomright&quot;</span>,</a>
+<a class="sourceLine" id="cb127-15" title="15">  <span class="dt">fill =</span> <span class="kw">c</span>(<span class="dv">6</span>, <span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">7</span>, <span class="dv">3</span>, <span class="dv">13</span>),</a>
+<a class="sourceLine" id="cb127-16" title="16">  <span class="dt">legend =</span> <span class="kw">c</span>(<span class="st">&quot;Obama&quot;</span>, <span class="st">&quot;Bush Jr.&quot;</span>, <span class="st">&quot;Clinton&quot;</span>, <span class="st">&quot;Bush Sr.&quot;</span>, <span class="st">&quot;Reagan&quot;</span>, </a>
+<a class="sourceLine" id="cb127-17" title="17">             <span class="st">&quot;Carter&quot;</span>, <span class="st">&quot;Ford&quot;</span>),</a>
+<a class="sourceLine" id="cb127-18" title="18">  <span class="dt">bty =</span> <span class="st">&quot;n&quot;</span>,</a>
+<a class="sourceLine" id="cb127-19" title="19">  <span class="dt">cex =</span> <span class="fl">0.7</span></a>
+<a class="sourceLine" id="cb127-20" title="20">)</a></code></pre></div>
 <p><img src="11_lingua-r_files/figure-html/unnamed-chunk-29-1.png" width="672" /></p>
 </div>
 <div id="gráfico-de-barras-comparando-valores-de-variáveis-categóricas" class="section level3">
 <h3>Gráfico de barras comparando valores de variáveis categóricas</h3>
-<div class="sourceCode" id="cb135"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb135-1" title="1">imr &lt;-<span class="st"> </span><span class="kw">read.csv2</span>(<span class="st">&quot;imr_sea_2011.csv&quot;</span>)</a>
-<a class="sourceLine" id="cb135-2" title="2"></a>
-<a class="sourceLine" id="cb135-3" title="3"><span class="kw">head</span>(imr)</a></code></pre></div>
-<pre><code>##       Country  IMR
-## 1    Pakistan 68.7
-## 2 Afghanistan 61.9
-## 3     Lao PDR 49.5
-## 4     Myanmar 46.8
-## 5       India 43.0
-## 6  Bangladesh 36.8</code></pre>
-<div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb137-1" title="1"><span class="kw">par</span>(<span class="dt">mar =</span> <span class="kw">c</span>(<span class="dv">8</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">2</span>))</a>
-<a class="sourceLine" id="cb137-2" title="2"><span class="kw">barplot</span>(</a>
-<a class="sourceLine" id="cb137-3" title="3">  imr<span class="op">$</span>IMR,</a>
-<a class="sourceLine" id="cb137-4" title="4">  <span class="dt">las =</span> <span class="dv">2</span>,</a>
-<a class="sourceLine" id="cb137-5" title="5">  <span class="dt">names.arg =</span> imr<span class="op">$</span>Country,</a>
-<a class="sourceLine" id="cb137-6" title="6">  <span class="dt">border =</span> <span class="ot">NA</span>,</a>
-<a class="sourceLine" id="cb137-7" title="7">  <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">70</span>),</a>
-<a class="sourceLine" id="cb137-8" title="8">  <span class="dt">col =</span> <span class="st">&quot;#e34a33&quot;</span>,</a>
-<a class="sourceLine" id="cb137-9" title="9">  <span class="dt">main =</span> <span class="st">&quot;Taxas de mortalidade infantil na Ásia Meridional, 2011&quot;</span></a>
-<a class="sourceLine" id="cb137-10" title="10">)</a>
-<a class="sourceLine" id="cb137-11" title="11"><span class="kw">abline</span>(<span class="dt">h =</span> <span class="kw">mean</span>(imr<span class="op">$</span>IMR),</a>
-<a class="sourceLine" id="cb137-12" title="12">       <span class="dt">lwd =</span> <span class="dv">2</span>,</a>
-<a class="sourceLine" id="cb137-13" title="13">       <span class="dt">col =</span> <span class="st">&quot;white&quot;</span>,</a>
-<a class="sourceLine" id="cb137-14" title="14">       <span class="dt">lty =</span> <span class="dv">2</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb128"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb128-1" title="1">imr &lt;-<span class="st"> </span><span class="kw">read.csv2</span>(<span class="st">&quot;imr_sea_2011.csv&quot;</span>)</a>
+<a class="sourceLine" id="cb128-2" title="2"></a>
+<a class="sourceLine" id="cb128-3" title="3"><span class="kw">head</span>(imr)</a></code></pre></div>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":[""],"name":["_rn_"],"type":[""],"align":["left"]},{"label":["Country"],"name":[1],"type":["chr"],"align":["left"]},{"label":["IMR"],"name":[2],"type":["dbl"],"align":["right"]}],"data":[{"1":"Pakistan","2":"68.7","_rn_":"1"},{"1":"Afghanistan","2":"61.9","_rn_":"2"},{"1":"Lao PDR","2":"49.5","_rn_":"3"},{"1":"Myanmar","2":"46.8","_rn_":"4"},{"1":"India","2":"43.0","_rn_":"5"},{"1":"Bangladesh","2":"36.8","_rn_":"6"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb129-1" title="1"><span class="kw">par</span>(<span class="dt">mar =</span> <span class="kw">c</span>(<span class="dv">8</span>,<span class="dv">4</span>,<span class="dv">5</span>,<span class="dv">2</span>))</a>
+<a class="sourceLine" id="cb129-2" title="2"><span class="kw">barplot</span>(</a>
+<a class="sourceLine" id="cb129-3" title="3">  imr<span class="op">$</span>IMR,</a>
+<a class="sourceLine" id="cb129-4" title="4">  <span class="dt">las =</span> <span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb129-5" title="5">  <span class="dt">names.arg =</span> imr<span class="op">$</span>Country,</a>
+<a class="sourceLine" id="cb129-6" title="6">  <span class="dt">border =</span> <span class="ot">NA</span>,</a>
+<a class="sourceLine" id="cb129-7" title="7">  <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">70</span>),</a>
+<a class="sourceLine" id="cb129-8" title="8">  <span class="dt">col =</span> <span class="st">&quot;#e34a33&quot;</span>,</a>
+<a class="sourceLine" id="cb129-9" title="9">  <span class="dt">main =</span> <span class="st">&quot;Taxas de mortalidade infantil na Ásia Meridional, 2011&quot;</span></a>
+<a class="sourceLine" id="cb129-10" title="10">)</a>
+<a class="sourceLine" id="cb129-11" title="11"><span class="kw">abline</span>(<span class="dt">h =</span> <span class="kw">mean</span>(imr<span class="op">$</span>IMR),</a>
+<a class="sourceLine" id="cb129-12" title="12">       <span class="dt">lwd =</span> <span class="dv">2</span>,</a>
+<a class="sourceLine" id="cb129-13" title="13">       <span class="dt">col =</span> <span class="st">&quot;white&quot;</span>,</a>
+<a class="sourceLine" id="cb129-14" title="14">       <span class="dt">lty =</span> <span class="dv">2</span>)</a></code></pre></div>
 <p><img src="11_lingua-r_files/figure-html/unnamed-chunk-30-1.png" width="672" /></p>
 <p>Essas são apenas algumas das possibilidades colocadas pelas funções gráficas do R, mas elas servem para demonstrar o quanto você pode conseguir de customização na visualização de dados e, quem sabe, estimular a curiosidade de vocês para se envolver mais com a linguagem.</p>
 </div>

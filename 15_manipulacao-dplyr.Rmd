@@ -23,7 +23,7 @@ install.packages(c("nycflights13", "dplyr"))
 
 Agora carregue os dois pacotes e vamos dar uma olhada no formato do banco de dados `flights`.
 
-```{r nycflights_2}
+```{r nycflights-2}
 library(nycflights13)
 library(dplyr)
 ```
@@ -76,13 +76,13 @@ filter(flights, month == 1, day == 1)
 
 Ao realizar o filtro, dplyr gera um novo data.frame que contém apenas as observações filtradas. O novo data.frame não modifica o anterior, se você quiser salvar o resultado, é necessário fazê-lo separadamente:
 
-```{r filter_2}
+```{r filter-2}
 jan1 <- filter(flights, month == 1, day == 1)
 ```
 
 Uma dica para o caso de você querer tanto salvar um resultado numa variável quanto imprimí-lo no console, é colocar parenteses em torno de toda a operação. Veja este segundo exemplo para os voos no dia do Natal.
 
-```{r filter_3}
+```{r filter-3}
 (dec25 <- filter(flights, month == 12, day == 25))
 ```
 
@@ -94,7 +94,7 @@ filter(flights, month = 1)
 
 Outro problema pode acontecer quando você usa números quebrados. Os valores abaixo tecnicamente seriam verdadeiros...
 
-```{r erro_2}
+```{r erro-2}
 sqrt(2) ^ 2 == 2
 1 / 49 * 49 == 1
 ```
@@ -114,7 +114,7 @@ O comportamento padrão de `filter()` quando você passa mais um teste é tratá
 
 Veja por exemplo os voos que saem em novembro OU dezembro.
 
-```{r nov_dez}
+```{r nov-dez}
 filter(flights, month == 11 | month == 12)
 ```
 
@@ -149,10 +149,10 @@ NA == NA
 Fica mais fácil se você entender isso com um exemplo:
 
 ```{r exemplo}
-# X é a data de aniversário de Mário, que é desconhecida
+# X é a idade de Mário, que é desconhecida
 x <- NA
 
-# Y é o aniversário de João, que também é desconhecido
+# Y é idade de João, que também é desconhecida
 y <- NA
 
 # João e Màrio tem a mesma idade?
@@ -281,17 +281,8 @@ transmute(flights,
 
 A criação de variáveis com `mutate()` pode partir de muitas formas de cálculo diferentes. A única restrição é que a função tem que ser "vetorizada", ou seja, calcular os valores de tal forma que cada caso receba seu próprio valor. Vejamos alguns exemplos de funções úteis para criar novas variáveis:
 
-    - Operadores aritméticos `+`, `-`, `*`, `/`, `^`. Estes são vetorizados e
-    seguem a "regra da reciclagem", se um dos lados for menor que o outro, ele
-    será repetido para que os dois fiquem do mesmo tamanho. Isso é especialmente
-    útil quando você multiplica uma variável por um número: `air_time / 60`,
-    `hours * 60 + minute`.
-    Estes operadores também são úteis quando junta eles com funções agregadoras
-    (média, soma). Exemplo: x / sum(x) calcula a proporção do total, y - mean(x)
-    calcula a diferença da média.
-    - Aritmética modular `%/%` (divisão de inteiro) e `%%` (resto). Assim você
-    pode separar o resultado de uma divisão em sua parte inteira (%/%) e seu
-    resto (%%). `38 %/% 7 == 5, 38 %% 7 == 3`.
+  - Operadores aritméticos `+`, `-`, `*`, `/`, `^`. Estes são vetorizados e seguem a "regra da reciclagem", se um dos lados for menor que o outro, ele será repetido para que os dois fiquem do mesmo tamanho. Isso é especialmente útil quando você multiplica uma variável por um número: `air_time / 60`, `hours * 60 + minute`. Estes operadores também são úteis quando junta eles com funções agregadoras (média, soma). Exemplo: x / sum(x) calcula a proporção do total, y - mean(x) calcula a diferença da média.
+  - Aritmética modular `%/%` (divisão de inteiro) e `%%` (resto). Assim você pode separar o resultado de uma divisão em sua parte inteira (%/%) e seu resto (%%). `38 %/% 7 == 5, 38 %% 7 == 3`.
     
 ```{r}
 transmute(flights,
@@ -301,11 +292,8 @@ transmute(flights,
 )
 ```
     
-    - Logaritmos: `log()`, `log2()`, `log10()`, para trabalhar com dados cujo
-    valor varia muito.
-    - Offsets: `lead()` e `lag()` permitem trabalhar com os valores anteriores
-    e próximos. Exemplo: diferença do atual pro anterior `x - lag(x)` e saber
-    quando uma variável muda de valor `x != lag(x)`.
+  - Logaritmos: `log()`, `log2()`, `log10()`, para trabalhar com dados cujo valor varia muito.
+  - Offsets: `lead()` e `lag()` permitem trabalhar com os valores anteriores e próximos. Exemplo: diferença do atual pro anterior `x - lag(x)` e saber quando uma variável muda de valor `x != lag(x)`.
     
 ```{r}
 (x <- 1:10)
@@ -313,8 +301,7 @@ lag(x)
 lead(x)
 ```
     
-    - Funções de agregação e valores acumulados: `cumsum()`, `cumprod()`, 
-    `cummin()`, `cummax()`, `cummean()`.
+  - Funções de agregação e valores acumulados: `cumsum()`, `cumprod()`, `cummin()`, `cummax()`, `cummean()`.
     
 ```{r}
 x
@@ -322,9 +309,8 @@ cumsum(x)
 cummean(x)
 ```
     
-    - Operadores lógicos: `<`, `<=`, `>`, `>=`, `!=` e `==`.
-    - Ranqueamento das informações: há muitas opções, a principal é
-    `min_rank()`.
+  - Operadores lógicos: `<`, `<=`, `>`, `>=`, `!=` e `==`.
+  - Ranqueamento das informações: há muitas opções, a principal é     `min_rank()`.
     
 ```{r}
 y <- c(1, 2, 2, NA, 3, 4)
@@ -332,8 +318,7 @@ min_rank(y)
 min_rank(desc(y))
 ```
 
-    - Se ela não servir, tente `row_number()`, `dense_rank()`, 
-    `percent_rank()`, `cume_dist()` ou `ntile()`.
+  - Se ela não servir, tente `row_number()`, `dense_rank()`, `percent_rank()`, `cume_dist()` ou `ntile()`.
     
 ```{r}
 row_number(y)
@@ -387,10 +372,9 @@ ggplot(data = delay, mapping = aes(x = dist, y = delay)) +
 
 Para chegar a essa conclusão, o autor executou 3 passos:
 
-    1. Agrupou os voos por destino
-    2. Resumiu o banco para calcular médias das distâncias, 
-    atrasos e número de voos
-    3. Filtrou outliers
+  1. Agrupou os voos por destino
+  2. Resumiu o banco para calcular médias das distâncias, atrasos e número de voos
+  3. Filtrou outliers
     
 O código é ineficiente porque você precisa dar a cada passo um nome separado, mesmo que você não vá utilizá-lo em seguida. Existe uma solução elegante para este problema, que é colocar o banco de dados no cano `%>%`.
 
@@ -513,14 +497,10 @@ batters %>%
 
 Quando você plota as duas variáveis, acontece algo similar:
 
-    1. A variação no agregado diminui bastante a medida que o número de chances
-    de rebater aumenta.
-    2. Existe uma correlação positiva entre a habilidade do rebatedor e a
-    quantidade de chances que ele tem de rebater. Isto não é concidência, 
-    é que os times escolhem que rebate e portanto tendem a colocar seus 
-    melhores jogadores em campo com mais frequência.
-    3. Assim, as pessoas com o maior valor da variável "habilidade" não são 
-    necessariamente os melhores jogadores, são apenas "sortudos".
+  1. A variação no agregado diminui bastante a medida que o número de chances de rebater aumenta.
+  2. Existe uma correlação positiva entre a habilidade do rebatedor e a  quantidade de chances que ele tem de rebater. Isto não é concidência, 
+é que os times escolhem que rebate e portanto tendem a colocar seus melhores jogadores em campo com mais frequência.
+  3. Assim, as pessoas com o maior valor da variável "habilidade" não são necessariamente os melhores jogadores, são apenas "sortudos".
     
 Isso tem implicações inclusive pra quando você quer colocar essas variáveis em ordem. Por exemplo, como você criaria um ranking dos melhores jogadores? Você poderia simplesmente ranquear pela variável "habilidade(`ba`)", por exemplo.
 
@@ -535,10 +515,7 @@ O problema é que, como você pode ver, essas pessoas só jogaram 1 ou 2 vezes, 
 
 Já falamos de contagens (`n()`) e médias (`mean()`), que são extremamente úteis, mas há outras funções para medidas resumo que são interessantes.
 
-    - Medidas de "localização": `median()` para mediana, ou o valor
-    correspondente a probabilidade de 50%. Neste exemplo, o autor calcula a
-    média e também calcula a média apenas dos valores positivos. Ou seja, é 
-    uma agregação e um filtro ao mesmo tempo.
+  - Medidas de "localização": `median()` para mediana, ou o valor correspondente a probabilidade de 50%. Neste exemplo, o autor calcula a média e também calcula a média apenas dos valores positivos. Ou seja, é uma agregação e um filtro ao mesmo tempo.
     
 ```{r}
 not_cancelled %>% 
@@ -549,10 +526,7 @@ not_cancelled %>%
   )
 ```
     
-    - Medidas de dispersão: `sd()`, `IQR()`, `mad()`. A primeira é o desvio
-    padrão, ou a raíz da média do desvio ao quadrado. A segunda é a distância
-    interquartis e a terceira é desvio absoluto da mediana. Essas medidas são
-    úteis quando você tem dados com valores muito discrepantes (outliers).
+  - Medidas de dispersão: `sd()`, `IQR()`, `mad()`. A primeira é o desvio padrão, ou a raíz da média do desvio ao quadrado. A segunda é a distância interquartis e a terceira é desvio absoluto da mediana. Essas medidas são úteis quando você tem dados com valores muito discrepantes (outliers).
     
 ```{r}
 # Porque a distância para alguns destinos é mais variável que para outros?
@@ -562,9 +536,7 @@ not_cancelled %>%
   arrange(desc(distance_sd))
 ```
 
-    - Medidas de ranking: `min()`, `quantile()`, `max()`. Quantile é uma
-    generalização da mediana. `quantile(x, 0.25)` encontra x que são maiores
-    que 25% e menores que 75% dos valores.
+  - Medidas de ranking: `min()`, `quantile()`, `max()`. Quantile é uma generalização da mediana. `quantile(x, 0.25)` encontra x que são maiores que 25% e menores que 75% dos valores.
     
 ```{r}
 # Quando saem os primeiros e últimos voos de cada dia?
@@ -576,11 +548,7 @@ not_cancelled %>%
   )
 ```
     
-    - Medidas de posição: `first()`, `nth()`, `last()`. "Primeiro", "enésimo"
-    e "último" valor. Eles são similares utilizar `x[1]`, `x[n]` ou
-    `x[length(x)]`, a vantagem é que você pode colocar um valor padrão caso
-    essa posição não exista/esteja vazia. Novamente, podemos ver a primeira
-    a última decolagem em cada dia.
+  - Medidas de posição: `first()`, `nth()`, `last()`. "Primeiro", "enésimo" e "último" valor. Eles são similares utilizar `x[1]`, `x[n]` ou `x[length(x)]`, a vantagem é que você pode colocar um valor padrão caso essa posição não exista/esteja vazia. Novamente, podemos ver a primeira a última decolagem em cada dia.
     
 ```{r}
 not_cancelled %>% 
@@ -591,10 +559,7 @@ not_cancelled %>%
   )
 ```
     
-    Isso é corresponde a você fazer um filtro a partir de uma variável de
-    ranking. A diferença é que no filtro, vão aparecer todas as variáveis do
-    banco, com cada observação em uma linha, no `summarise()`, você vai ficar
-    só com as variáveis que você criou.
+  - Isso é corresponde a você fazer um filtro a partir de uma variável de ranking. A diferença é que no filtro, vão aparecer todas as variáveis do banco, com cada observação em uma linha, no `summarise()`, você vai ficar só com as variáveis que você criou.
     
 ```{r}
 not_cancelled %>% 
@@ -603,9 +568,7 @@ not_cancelled %>%
   filter(r %in% range(r)) # range(r) retorna o maior e o menor valor de r
 ```
     
-    - Contagens: `n()` conta o número de observaçõs no grupo atual, não recebe
-    nenhum argumento, se você quiser contar só os missings, use `sum(is.na(x))`,
-    para contar o número de valores únicos/distintos, use `n_distinct(x)`.
+  - Contagens: `n()` conta o número de observaçõs no grupo atual, não recebe nenhum argumento, se você quiser contar só os missings, use `sum(is.na(x))`, para contar o número de valores únicos/distintos, use `n_distinct(x)`.
     
 ```{r}
 # Que destinos tem mais companhias aéreas operando?
@@ -615,25 +578,21 @@ not_cancelled %>%
   arrange(desc(carriers))
 ```
     
-    Contagens são tão comuns que tem uma função só pra isso no dplyr...
+  - Contagens são tão comuns que tem uma função só pra isso no dplyr...
     
 ```{r}
 not_cancelled %>% 
   count(dest)
 ```
     
-    `count()` aceita um argumento opcional peso (`wt`), 
-    para ponderar as contagens.
+  - `count()` aceita um argumento opcional peso (`wt`), para ponderar as contagens.
     
 ```{r}
 not_cancelled %>% 
   count(dest, wt = distance)
 ```
     
-    - Contagens e proporções de valores lógicos: `sum(x > 10)`, `mean(y == 0)`.
-    Quando operadores lógicos são passados a funções numéricas, `TRUE` vira `1`
-    e `FALSE` vira `0`. Assim, `sum` dá o número de `TRUE`s
-    e `mean` dá a proporção.
+  - Contagens e proporções de valores lógicos: `sum(x > 10)`, `mean(y == 0)`. Quando operadores lógicos são passados a funções numéricas, `TRUE` vira `1` e `FALSE` vira `0`. Assim, `sum` dá o número de `TRUE`s e `mean` dá a proporção.
     
 ```{r}
 # Quantos voos sairam antes das 5 da manhã? (estes costumam indicar
@@ -676,7 +635,7 @@ daily %>%
 
 `group_by()` geralmente é utilizado com `summarise()`, mas também pode ser útil com `mutate()` e `filter()`. 
 
-    - Encontre os piores membros do grupo:
+  - Encontre os piores membros do grupo:
 
 ```{r}
 flights_sml %>% 
@@ -684,7 +643,7 @@ flights_sml %>%
   filter(rank(desc(arr_delay)) < 10) # 10 mais atrasados de cada dia
 ```
 
-    - Encontre os grupos que são maiores que um limite dado
+  - Encontre os grupos que são maiores que um limite dado
     
 ```{r}
 (popular_dests <- flights %>% 
@@ -692,7 +651,7 @@ flights_sml %>%
   filter(n() > 365)) # destinos com mais de 365 voos
 ```
     
-    - Padronização para computar uma medida para cada grupo
+  - Padronização para computar uma medida para cada grupo
     
 ```{r}
 # Lembre que popular_dests está agrupado por dest!
@@ -708,7 +667,7 @@ Funções que vão bem em `mutate()` agrupados são chamadas de "janelas" (windo
 
 ## Resumão
 
-Expandir e esclarecer o que foi apresentado e o que o participante deveria ser capaz de fazer a partir de agora. Também reiterar que atividades devem ser realizadas, exercícios, tarefas...
+O mais importante é lembrar dos cinco verbos do dplyr: `select, filter, arrange, mutate e summarise`. Menções honrosas vão para `rename e group_by`. Os exercícios abaixo são uma forma de colocar em prática os conhecimentos adquiridos na aula.
 
 # Exercícios
 

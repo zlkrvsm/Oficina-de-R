@@ -62,7 +62,7 @@ variaveis <- c("V0001", "V0002", "V0011", "V0300", "V0010", "V1006", "V2011", "V
 nomes <- c("uf", "municipio", "areap", "controle", "peso", "sit_ru",  "v_alug", "esgoto", "agua", "n_mora")
 
 censo_dom_rn <- read_CENSO(ft = "domicilios", i =  2010,
-                           file = "Amostra_Domicilios_24.txt",
+                           file = "Amostra_Domicilios_24.txt.xz",
                            vars_subset = variaveis)
 
 head(censo_dom_rn)
@@ -83,7 +83,7 @@ pes <- read_PNAD(ft = "pessoas", i = 2015, file = "<seu arquivo pessoas>")
 Não é um arquivo pequeno, mas ele cabe na memória do R sem problemas. Para fins didáticos, vamos ler só o arquivo de domicílios da PNAD de 2015.
 
 ```{r import-pnad-rn}
-pnad_d <- read_PNAD(ft = "domicilios", i = 2015, file = "pnad2015/Dados/DOM2015.gz")
+pnad_d <- read_PNAD(ft = "domicilios", i = 2015, file = "_pnad2015/Dados/DOM2015.gz")
 ```
 
 Por causa da bruxaria amostral empregada na produção das estimativas da PNAD, não podemos simplesmente calcular nossas medidas, como médias, totais, proporções. Precisamos ponderar essas medidas pelo desenho amostral e muitos de vocês vão precisar de medidas estatísticas como desvio padrão, erro, etc. Mas não temam, pois a solução está aqui [(graças ao A. J. Damico)][2]:
@@ -130,17 +130,17 @@ install.packages("PNADcIBGE")
 library(PNADcIBGE)
 ```
 
-```{r}
+```{r import-pnadc, eval=FALSE}
 # Leitura offline
 pnadc <- read_pnadc(microdata = "PNADC_2018_visita1.txt.xz",
                     input_txt = "input_PNADC_2018_visita1.txt")
 
-pnadc <- pnadc_labeller(data_pnadc = pnadc, 
-                        dictionary.file = "dicionario_PNADC_microdados_2018_visita1.xls")
+pnadc <- pnadc_labeller(
+  data_pnadc = pnadc, 
+  dictionary.file = "dicionario_PNADC_microdados_2018_visita1.xls"
+)
 
 pnadc <- pnadc_design(pnadc)
-
-pnadc
 ```
 
 O PNADcIBGE já deixa o objeto praticamente pronto pra análise, bom seria se a gente tivesse um desses pra outras pesquisas!
@@ -185,14 +185,14 @@ A tabela é meio longa, com muitas e muitas variáveis que agente acaba não uti
 
 A UN Data já tem uma API, mas ainda não existe interface pro R, então a solução é baixar os CSVs do site. 
 
-```{r, echo=FALSE}
+```{r injury-png, echo=FALSE}
 include_graphics("injury.png")
 ```
 
 
 O bom é que ele já vem estruturado e a importação é tão simples quanto:
 
-```{r}
+```{r import-undata}
 injury <- read_csv2("UNdata-injury.txt")
 head(injury)
 ```
@@ -653,6 +653,16 @@ include_graphics("project-name.png")
 
 Os objetos survey tem uma família de funções específicas pra trabalhar com eles, que começam com `svy`. São bem tranquilas de usar uma vez que você conhece a síntaxe, mas em geral, elas são muito mais lentas que funções comuns, porque calculam as fontes de erro amostral junto com os resultados.
 
+```{r svy-example, eval=FALSE}
+# Média do rendimento bruto mensal (V403312)
+svymean(formula = ~V403312, design = pnadc, na.rm = TRUE)
+
+# Média do rendimento bruto mensal por sexo (V403312, V2007)
+svyby(formula = ~V403312, by = ~V2007, design = pnadc, FUN = svymean, na.rm = TRUE)
+```
+
+Outras funções do pacote são `svyboxplot(), svytotal(), svychisq(), svyglm(), svyplot(), svyvar()` etc, com uma lógica similar.
+
 O pacote survey foi inventado por Thomas Lumley, que escreveu um [livro apenas sobre cálculo amostral][5], que eu entendi uns 5% quando li. É um assunto sôfrego, acho que até quem sabe fica triste só de pensar nisso. De todo jeito, a referência que usei pra aula é o script do [Damico][2].
 
 ## Listas
@@ -665,11 +675,23 @@ Listas são uma forma de armazenar dados com estruturas não retangulares em R. 
 
 ## Uma crítica ao modelo de ciência de dados e o ofício de um cientista de dados
 
-(desenvolver)
+Na primeira aula antecipei que o modelo de ciência de dados apresentado tinha duas lacunas:
+
+> Um processo de reflexão crítica sobre a produção de dados
+
+e
+
+> Um enfoque teórico bem definido
+
+Quero elaborar melhor esses dois pontos.
+
+Qualquer pessoa que abra um banco de dados grande, como o censo demográfico, vai encontrar ali dezenas de informações sobre uma dúzia de temas. Sem um processo de reflexão crítica sobre a produção dos dados, você pode rapidamente produzir uma série de análises vazias de sentido, com um viés preconceituoso, mas muito esteticamente bonitas e aparentemente "corretas", afinal, como gostam de dizer alguns criminosos por aí: "os dados não mentem". Por isso, é essencial que o analista procure alicerçar suas análises de dados sobre o trabalho de seus pares, sobre a literatura e sobre as pesquisas que vão além dos dados. Se não, na melhor das hipóteses você fica perdido nos dados, e, na pior, você produz pseudociência e desinformação.
+
+O segundo ponto é uma exigência para avançar o nosso entendimento das questões sociais. Mesmo com um processo de reflexão crítica sobre as informações presentes nos dados, ainda estamos no nível da descrição da realidade. Qual o valor de dizer que um número subiu ou desceu, que existe um número n de uma categoria x? Provavelmente, muito pouco. Os dados exigem perguntas de pesquisa bem fundamentadas em um paradigma teórico, que faz previsões sobre os eventos que serão medidos e permite interpretar os resultados dentro de uma chave. Por isso, os pesquisadores do NEPO costumam chamar atenção para o aspecto **teórico-metodológico** do trabalho com os dados, algo que frequentemente está ausente entre alguns cientistas de dados. Para uma reflexão interessante sobre os perigos e possibilidades dessa era de "revolução dos dados", [leiam esse artigo aqui.][10]
 
 # Exercício
 
-Utilizando a PNAD contínua
+Utilizando a PNAD contínua (`PNADC_2018_visita1.txt.xz`) e seus arquivos de apoio, crie uma rotina para importar dados demográficos (idade e sexo da população), e socioeconômicos (anos de estudo e rendimento mensal domiciliar per capita).
 
 - Importação e tratamento inicial dos dados
 - Criação do objeto survey
@@ -686,3 +708,4 @@ Utilizando a PNAD contínua
 [7]: https://zlkrvsm.github.io/Oficina-de-R/14_visualizacoes-em-R.html
 [8]: https://zlkrvsm.github.io/Oficina-de-R/15_manipulacao-dplyr.html
 [9]: https://zlkrvsm.github.io/Oficina-de-R/16_tidy_data.html
+[10]: https://link.springer.com/article/10.1007/s13524-018-0715-2#Tab1
