@@ -130,7 +130,7 @@ install.packages("PNADcIBGE")
 library(PNADcIBGE)
 ```
 
-```{r import-pnadc, eval=FALSE}
+```{r import-pnadc}
 # Leitura offline
 pnadc <- read_pnadc(microdata = "PNADC_2018_visita1.txt.xz",
                     input_txt = "input_PNADC_2018_visita1.txt")

@@ -464,6 +464,9 @@ div.tocify {
     <li>
       <a href="02_aula-2.html">Aula 2: Importação e cozinha</a>
     </li>
+    <li>
+      <a href="03_aula-3.html">Aula 3: Transformação e visualização</a>
+    </li>
   </ul>
 </li>
       </ul>
@@ -562,7 +565,9 @@ div.tocify {
 <p>Os tipos das colunas.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1">tipos &lt;-<span class="st"> </span><span class="kw">c</span>(<span class="st">&quot;character&quot;</span>, <span class="st">&quot;character&quot;</span>, <span class="st">&quot;character&quot;</span>, <span class="st">&quot;numeric&quot;</span>, <span class="st">&quot;numeric&quot;</span>, <span class="st">&quot;character&quot;</span>, <span class="st">&quot;numeric&quot;</span>)</a>
 <a class="sourceLine" id="cb9-2" title="2">tipos</a></code></pre></div>
-<pre><code>## [1] &quot;character&quot; &quot;character&quot; &quot;character&quot; &quot;numeric&quot;   &quot;numeric&quot;   &quot;character&quot; &quot;numeric&quot;</code></pre>
+<pre><code>## [1] &quot;character&quot; &quot;character&quot; &quot;character&quot;
+## [4] &quot;numeric&quot;   &quot;numeric&quot;   &quot;character&quot;
+## [7] &quot;numeric&quot;</code></pre>
 <p>E passamos pra <code>read.fwf()</code></p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" title="1">censo_rn &lt;-<span class="st"> </span><span class="kw">read.fwf</span>(<span class="dt">file =</span> <span class="st">&quot;censo_2010_rn.txt&quot;</span>, </a>
 <a class="sourceLine" id="cb11-2" title="2">                     <span class="dt">widths =</span> colunas, </a>
@@ -824,41 +829,42 @@ div.tocify {
 <p>Outro aspecto crucial do trabalho com grandes bancos de dados é a visualização desses dados. Em geral, visualizações são mais eficazes que tabelas para comunicar características importantes dos dados. Podemos fazer diversos tipos de gráficos. Vamos ver alguns.</p>
 <div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb45-1" title="1"><span class="co"># histograma</span></a>
 <a class="sourceLine" id="cb45-2" title="2"><span class="kw">hist</span>(censo_rn<span class="op">$</span>V6036, <span class="dt">main =</span> <span class="st">&quot;Idade&quot;</span>) <span class="co"># base</span></a></code></pre></div>
-<p><img src="00_aula-1_files/figure-html/unnamed-chunk-35-1.png" width="672" /></p>
+<p><img src="00_aula-1_files/figure-html/unnamed-chunk-33-1.png" width="672" /></p>
 <div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" title="1">h_ggplot &lt;-<span class="st"> </span><span class="kw">ggplot</span>(censo_rn2) <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb46-2" title="2"><span class="st">  </span><span class="kw">geom_histogram</span>(<span class="kw">aes</span>(<span class="dt">x =</span> idade)) <span class="op">+</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb46-3" title="3"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Idade&quot;</span>) <span class="co"># ggplot</span></a>
 <a class="sourceLine" id="cb46-4" title="4">h_ggplot</a></code></pre></div>
-<pre><code>## `stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-<p><img src="00_aula-1_files/figure-html/unnamed-chunk-35-2.png" width="672" /></p>
+<pre><code>## `stat_bin()` using `bins = 30`. Pick better
+## value with `binwidth`.</code></pre>
+<p><img src="00_aula-1_files/figure-html/unnamed-chunk-33-2.png" width="672" /></p>
 <div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb48-1" title="1"><span class="co"># boxplot</span></a>
 <a class="sourceLine" id="cb48-2" title="2"><span class="kw">boxplot</span>(censo_rn<span class="op">$</span>V6036, <span class="dt">main =</span> <span class="st">&quot;Idade&quot;</span>)</a></code></pre></div>
-<p><img src="00_aula-1_files/figure-html/unnamed-chunk-35-3.png" width="672" /></p>
+<p><img src="00_aula-1_files/figure-html/unnamed-chunk-33-3.png" width="672" /></p>
 <div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb49-1" title="1">b_ggplot &lt;-<span class="st"> </span><span class="kw">ggplot</span>(censo_rn2) <span class="op">+</span></a>
 <a class="sourceLine" id="cb49-2" title="2"><span class="st">  </span><span class="kw">geom_boxplot</span>(<span class="kw">aes</span>(<span class="dt">y =</span> idade)) <span class="op">+</span></a>
 <a class="sourceLine" id="cb49-3" title="3"><span class="st">  </span><span class="kw">ggtitle</span>(<span class="st">&quot;Idade&quot;</span>)</a>
 <a class="sourceLine" id="cb49-4" title="4"></a>
 <a class="sourceLine" id="cb49-5" title="5">b_ggplot</a></code></pre></div>
-<p><img src="00_aula-1_files/figure-html/unnamed-chunk-35-4.png" width="672" /></p>
+<p><img src="00_aula-1_files/figure-html/unnamed-chunk-33-4.png" width="672" /></p>
 <div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb50-1" title="1"><span class="co"># pie</span></a>
 <a class="sourceLine" id="cb50-2" title="2">x &lt;-<span class="st"> </span><span class="kw">table</span>(censo_rn<span class="op">$</span>V0601f)</a>
 <a class="sourceLine" id="cb50-3" title="3"><span class="kw">pie</span>(x)</a></code></pre></div>
-<p><img src="00_aula-1_files/figure-html/unnamed-chunk-35-5.png" width="672" /></p>
+<p><img src="00_aula-1_files/figure-html/unnamed-chunk-33-5.png" width="672" /></p>
 <div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb51-1" title="1">p_ggplot &lt;-<span class="st"> </span><span class="kw">ggplot</span>(censo_rn2) <span class="op">+</span></a>
 <a class="sourceLine" id="cb51-2" title="2"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="kw">aes</span>(<span class="dt">x =</span> sexof, <span class="dt">fill =</span> sexof), <span class="dt">stat =</span> <span class="st">&quot;count&quot;</span>, <span class="dt">width =</span> <span class="dv">1</span>) <span class="op">+</span></a>
 <a class="sourceLine" id="cb51-3" title="3"><span class="st">  </span><span class="kw">coord_polar</span>()</a>
 <a class="sourceLine" id="cb51-4" title="4"></a>
 <a class="sourceLine" id="cb51-5" title="5">p_ggplot</a></code></pre></div>
-<p><img src="00_aula-1_files/figure-html/unnamed-chunk-35-6.png" width="672" /></p>
+<p><img src="00_aula-1_files/figure-html/unnamed-chunk-33-6.png" width="672" /></p>
 <div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb52-1" title="1"><span class="co"># barras</span></a>
 <a class="sourceLine" id="cb52-2" title="2">x &lt;-<span class="st"> </span><span class="kw">table</span>(censo_rn<span class="op">$</span>V0601f)</a>
 <a class="sourceLine" id="cb52-3" title="3"><span class="kw">barplot</span>(x)</a></code></pre></div>
-<p><img src="00_aula-1_files/figure-html/unnamed-chunk-35-7.png" width="672" /></p>
+<p><img src="00_aula-1_files/figure-html/unnamed-chunk-33-7.png" width="672" /></p>
 <div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb53-1" title="1">bar_ggplot &lt;-<span class="st"> </span><span class="kw">ggplot</span>(censo_rn2) <span class="op">+</span></a>
 <a class="sourceLine" id="cb53-2" title="2"><span class="st">  </span><span class="kw">geom_bar</span>(<span class="kw">aes</span>(<span class="dt">x =</span> sexof, <span class="dt">fill =</span> sexof), <span class="dt">stat =</span> <span class="st">&quot;count&quot;</span>, <span class="dt">width =</span> <span class="dv">1</span>)</a>
 <a class="sourceLine" id="cb53-3" title="3"></a>
 <a class="sourceLine" id="cb53-4" title="4">bar_ggplot</a></code></pre></div>
-<p><img src="00_aula-1_files/figure-html/unnamed-chunk-35-8.png" width="672" /></p>
+<p><img src="00_aula-1_files/figure-html/unnamed-chunk-33-8.png" width="672" /></p>
 <p>Podemos construir gráficos para comparar a situação do estado com a situação da capital.</p>
 <div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb54-1" title="1"><span class="co"># r base</span></a>
 <a class="sourceLine" id="cb54-2" title="2">pia_estadual &lt;-<span class="st"> </span><span class="kw">prop.table</span>(<span class="kw">table</span>(censo_rn<span class="op">$</span>ge_pia))</a>
@@ -873,14 +879,14 @@ div.tocify {
 ##    [0,15)   [15,65)  [65,140) 
 ## 0.2199449 0.7096717 0.0703834</code></pre>
 <div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb58-1" title="1"><span class="kw">barplot</span>(<span class="kw">cbind</span>(pia_estadual, pia_capital), <span class="dt">legend.text =</span> <span class="kw">c</span>(<span class="st">&quot;0 a 14 anos&quot;</span>, <span class="st">&quot;15 a 64 anos&quot;</span>, <span class="st">&quot;65 anos e mais&quot;</span>), <span class="dt">beside =</span> <span class="ot">TRUE</span>, <span class="dt">args.legend =</span> <span class="kw">list</span>(<span class="dt">x =</span> <span class="st">&quot;top&quot;</span>))</a></code></pre></div>
-<p><img src="00_aula-1_files/figure-html/unnamed-chunk-36-1.png" width="672" /></p>
+<p><img src="00_aula-1_files/figure-html/unnamed-chunk-34-1.png" width="672" /></p>
 <div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb59-1" title="1"><span class="co"># ggplot</span></a>
 <a class="sourceLine" id="cb59-2" title="2">x &lt;-<span class="st"> </span><span class="kw">count</span>(natal2, ge_pia) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">group =</span> <span class="st">&quot;Natal&quot;</span>, <span class="dt">n =</span> n<span class="op">/</span><span class="kw">sum</span>(n))</a>
 <a class="sourceLine" id="cb59-3" title="3">y &lt;-<span class="st"> </span><span class="kw">count</span>(censo_rn2, ge_pia) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">mutate</span>(<span class="dt">group =</span> <span class="st">&quot;Estado&quot;</span>, <span class="dt">n =</span> n<span class="op">/</span><span class="kw">sum</span>(n))</a>
 <a class="sourceLine" id="cb59-4" title="4">grafico &lt;-<span class="st"> </span><span class="kw">bind_rows</span>(x, y)</a>
 <a class="sourceLine" id="cb59-5" title="5"></a>
 <a class="sourceLine" id="cb59-6" title="6"><span class="kw">ggplot</span>(grafico) <span class="op">+</span><span class="st"> </span><span class="kw">geom_col</span>(<span class="kw">aes</span>(<span class="dt">x =</span> group, <span class="dt">y =</span> n, <span class="dt">fill =</span> ge_pia), <span class="dt">position =</span> <span class="st">&quot;dodge&quot;</span>)</a></code></pre></div>
-<p><img src="00_aula-1_files/figure-html/unnamed-chunk-36-2.png" width="672" /></p>
+<p><img src="00_aula-1_files/figure-html/unnamed-chunk-34-2.png" width="672" /></p>
 <p>A parte de <strong>modelagem</strong> e <strong>comunicação</strong> será trabalhada em outra aula.</p>
 </div>
 <div id="salvando-nossos-resultados" class="section level2">

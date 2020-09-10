@@ -41,10 +41,11 @@ colunas <- fwf_cols(
   idade = c(27, 29),
   peso = c(791, 795)
 )
+
 tipos <- cols(
-  ano = col_factor(),
-  uf = col_factor(),
-  sexo = col_factor(),
+  ano = col_character(),
+  uf = col_character(),
+  sexo = col_character(),
   idade = col_integer(),
   peso = col_double()
 )
