@@ -1,0 +1,635 @@
+---
+title: "Readr, Tibbles e Tidyr"
+date: "r Sys.Date()"
+editor_options: 
+  chunk_output_type: inline
+---
+
+```{r setup, include=FALSE}
+library(knitr)
+opts_chunk$set(echo = TRUE)
+```
+
+# Um modelo de ciência de dados
+
+Uma forma esquemática, mas útil de encarar o processo de análise de dados e de produção de conhecimento a partir de informações secundárias é esta figura:
+
+```{r, echo=FALSE}
+include_graphics("data-science-explore.png")
+```
+
+Ela acaba sendo um ponto de partida interessante porque contextualiza a maioria dos pacotes que vamos utilizar. O `readr` é uma maneira de facilitar e tornar mais rápida a importação de dados em formatos comuns, como o texto delimitado por separadores e o formato colunado com larguras-fixas utilizado pelo IBGE.
+
+A `tibble` é uma proposta de modernização para o `data.frame`, aproveitando a estrutura flexível e poderosa, mas mudando certas convenções, como a conversão de strings para fatores, permitindo a criação de colunas de listas, utilização de nomes mais complexos para colunas, etc.
+
+O `tidyr` é uma forma de reformatar (*reshape*) bancos de dados que vêm em formatos que dificultam seu processamento, permitindo que o analista facilmente reconfigure a informação para o formato mais adequado.
+
+O mesmo pode ser dito para os outros pacotes que veremos nos próximos dias. Cada um deles foi pensado para resolver um problema ou facilitar uma rotina de trabalho relacionada com um dos passos descritos acima.
+
+## Uma nota sobre programação literária
+
+Vários dos conceitos que guiam o design do `tidyverse` são orientados por uma certa filosofia. Esta filosofia dita que a principal preocupação por trás de um programa não é que ele funcione. Eventualmente e com um pouco de persistência, é quase sempre possível chegar a uma solução técnica adequada. A principal questão é que o programa é uma ferramenta de comunicação com outras pessoas que o lerão, seja seus colegas, colaboradores, alunos ou você mesmo, daqui a 2 anos, quando lembrar que você já escreveu um programa para aquela tarefa. Trago aqui alguns trechos de *Literate Programming*, de Donald Knuth (1984), traduzidos livremente por este que vos fala:
+
+> Creio que chegou a hora de melhorar significativamente a documentação dos programas, e que podemos atingir este objetivo tratando programas como obras literárias. Por isso o título: "Programação Literária". Abandonemos os velhos hábitos de construir programas: ao invés de imaginar que nossa tarefa principal é instruir um computador sobre o que deve ser feito, concentremo-nos em explicar aos seres humanos o que queremos que o computador faça. O praticante da programação literária pode ser visto como um ensaísta, cuja principal preocupação é com a clareza da exposição e a excelência no estilo. Tal autor, com um dicionário na mão, escolhe os nomes das variáveis com cuidado e explica claramente seu significado. Ele ou ela esmera por um programa que é compreensível porque seus conceitos foram introduzidos na melhor ordem possível para o entendimento humano, utilizando uma mistura de métodos formais e informais que se complementam. 
+
+Assim, várias das escolhas feitas na construção de `tidyverse` procuram reforçar essa característica de interpretabilidade dos programas, como a ordem lógica das operações com o pipe (`%>%`), funções com nomes mais longos e semânticos, a utilização de uma função específica para cada tarefa, ao invés da adaptação de funções genéricas para uma grande variedade de tarefas. O propósito de um código escrito como `tidyverse` é que, no limite, a própria síntaxe do código funcione como parte da documentação do programa.
+
+## O mistério do pipe: `%>%`
+
+Usuários de longa data do R já podem ter encontrado no mato esse animal estranho e podem ter ficado confusos com seu significado. O pipe é de origem humilde e nasceu nos sistemas Unix há muitas décadas atrás. Seu objetivo é muito simples: e se você tiver uma sequência de computações em que cada uma recebe o resultado daquela feita anteriormente? Claro que você poderia fazer:
+
+```{r}
+x <- 1:10
+y <- diff(x)
+mean(y)
+```
+Mas não seria interessante pular os objetos intermediários e ir direto ao ponto? O pipe vem do pacote `magrittr`, mas ele vêm carregado em quase todos os pacotes do tidyverse. Vamos carregar logo o tibble.
+
+```{r}
+# Para ter acesso ao pipe, basta carregar um pacote do tidyverse, como tibble, dplyr, tidyr, etc.
+library(tibble)
+x %>% diff() %>% mean()
+```
+Vejamos um exemplo mais real, quantos artistas existem no dataset `billboard`? Podemos usar `unique` e `length` para descobrir. 
+
+```{r}
+x <- unique(tidyr::billboard$artist)
+length(x)
+```
+Mas com ` %>% ` fica bem melhor:
+
+```{r}
+
+tidyr::billboard %>% .$artist %>% unique() %>% length()
+```
+
+Ok, mas como ele funciona? É simples, o pipe carrega o objeto a sua esquerda num ponto `.` invisível que é automaticamente passado como o primeiro argumento da função à direita.
+
+```{r}
+x <- 1:10
+mean(x)
+x %>% mean()
+```
+
+OK, mas e se meu argumento não for o primeiro, ainda posso usar pipe? Pode! É só usar explicitamente um ponto no lugar onde você quer aproveitar o efeito:
+
+```{r}
+iris %>% boxplot(Sepal.Length ~ Species, data = .)
+```
+
+O ponto `.` depois de `data` indica indica que ali deve ser colocado o `iris`. O pipe é uma peça chave de muitas funções do `tidyverse`, não porque ele seja obrigatório, mas sim porque ele permite expressar sequências de operações numa ordem mais lógica, do tipo: "Primeiro faça a, então b, então c, ... ", ao contrário da forma como isto é geralmente feito usando parênteses para precedência.
+
+```{r}
+# Compare
+mean(diff(1:10))
+1:10 %>% diff %>% mean
+```
+
+E assim fica desmistificado o mistério do pipe! Um último pulo do gato: pelo amor de deus ninguém digita `Shift + %, >, Shift + %`, basta usar o atalho: `Ctrl + Shift + M` que ele põe um pipe separado por espaços ` %>% `.
+
+# Readr
+
+Usuários do R provavelmente vão estar familiarizados com os nossos leitores de arquivos mais comuns: `read.table` e `read.csv`. Talvez muitos de vocês já até memorizaram alguns dos argumentos mais comuns. Não é o caso aqui de revisitar esta função, mas o `readr` tem muitos paralelos com elas, porque é pensado como uma nova versão da mesma coisa.
+
+```{r}
+# Comecemos carregando o readr
+library(readr)
+```
+
+
+## Debaixo do capô
+
+O readr, como as funções de leitura do `base` é uma coleção de *parsers*, que transformam texto em objetos R com o tipo desejado.
+
+```{r}
+parse_number(c("1", "20", "38"))
+
+parse_character(c("banana", "maçã", "pêra"))
+
+# Note os acentos e caracteres especiais
+parse_character(c("banana", "maçã", "pêra"), locale = locale(encoding = "Windows-1252"))
+
+parse_logical(c("true", "false", "true"))
+```
+
+Em geral, a gente não precisa descer tanto o nível, a gente vai trabalhar mesmo é com os leitores de dados "retangulares". Como os do `base`, eles são `read_csv`, `read_table`, etc. Vamos trabalhar com bancos de dados que já vêm no pacote, para facilitar o processo.
+
+```{r}
+# Lista os datasets que vem no pacote
+readr_example()
+```
+
+Uma coisa que gosto de fazer é olhar como o arquivo está organizado antes de tentar abrí-lo. Muitos de vocês podem fazer isso com `readLines`. Ela ganhou sua versão no pacote com `read_lines`.
+
+```{r}
+# Vamos tentar abrir massey-rating.txt
+read_lines(readr_example("massey-rating.txt"), n_max = 10)
+
+# Identificando o separador, escolho a função adequada
+read_table(readr_example("massey-rating.txt"))
+```
+
+Como identifiquei que as colunas estavam separadas por espaços, utilizei `read_table` cujo delimitador é o espaço `" "`.
+
+A segunda feature mais interessante do readr, é uma interface para selecionar os tipos de colunas que serão importadas. Vejamos o seguinte exemplo.
+
+```{r}
+# Vamos abrir mtcars.csv
+read_lines(readr_example("mtcars.csv"), n_max = 10)
+
+# Identificamos o separador de colunas, selecionamos a função adequada
+read_csv(readr_example("mtcars.csv"))
+```
+
+O console nos mostra que a leitura do banco foi completada, mas também mostra `Column Specification`. Isto indica qual o tipo de dado que foi identificado automaticamente numa análise feita pela função  `guess_parser`. Em diversos casos, nós podemos querer identificar manualmente as colunas. Vejamos um exemplo:
+
+```{r}
+# Vamos identificar as colunas com spec
+spec_csv(readr_example("mtcars.csv"))
+
+# Copia e cola, modifica as colunas que queremos alterar
+
+spec_cols <- cols(
+  mpg = col_double(),
+  cyl = col_factor(), # N de cilindros do automóvel
+  disp = col_double(),
+  hp = col_double(),
+  drat = col_double(),
+  wt = col_double(),
+  qsec = col_double(),
+  vs = col_double(),
+  am = col_factor(c("0", "1")), # Transmissão automática ou manual
+  gear = col_double(),
+  carb = col_double()
+)
+
+df <- read_csv(readr_example("mtcars.csv"), col_types = spec_cols)
+df
+
+# Para importar apenas colunas selecionadas, utilize 'cols_only()'
+spec_cols2 <- cols_only(
+  mpg = col_double(),
+  cyl = col_factor(), # N de cilindros do automóvel
+  am = col_factor(c("0", "1")), # Transmissão automática ou manual
+  gear = col_double(),
+  carb = col_double()
+)
+
+df2 <- read_csv(readr_example("mtcars.csv"), col_types = spec_cols2)
+df2
+
+# Para indicar os tipos de colunas de um jeito mais sucinto, utilize uma string:
+
+df <- read_csv(readr_example("mtcars.csv"), col_types = "dfddddddfdd")
+
+# Só cuidado pra não perder a conta dos ds!
+df
+
+
+```
+Você também pode querer definir características de localização, como a codificação de caracteres, os separadores de decimal e de milhar e etc. A melhor forma de fazer isso é definir um `locale`.
+
+```{r}
+meu_locale <- locale(encoding = "UTF-8", decimal_mark = ",", grouping_mark = ".")
+```
+
+Aí é só passar isso pra uma das funções do pacote sob o argumento `locale`
+
+```{r}
+read_csv(readr_example("mtcars.csv"), locale = meu_locale)
+```
+
+Existe ainda a possibilidade de ler dados colunados com largura-fixa. `readr` implementa quatro funções diferentes para ajudar na construção do dicionário:
+
+```{r}
+# Nossos dados
+x <- readr_example("fwf-sample.txt")
+read_lines(x, n_max = 10)
+
+# separados por espaço
+
+dic1 <- fwf_empty(x)
+dic1
+
+df <- read_fwf(file = x, col_positions = dic1)
+df
+
+# indicando a largura da coluna
+larguras <- c(20, 10, 12)
+
+dic2 <- fwf_widths(larguras)
+dic2
+
+df <- read_fwf(file = x, col_positions = dic2)
+df
+
+# indicando onde cada coluna começa e termina
+comeca <- c(1, 21, 30)
+termina <- c(20, 29, 42)
+
+dic3 <- fwf_positions(comeca, termina)
+dic3
+
+df <- read_fwf(file = x, col_positions = dic3)
+df
+
+# indicando pares nome-valor
+dic4 <- fwf_cols(
+  nome = c(1, 20),
+  uf = c(21, 29),
+  numero = c(30, 42))
+dic4
+
+df <- read_fwf(file = x, col_positions = dic4)
+df
+```
+
+Especificar dicionários para arquivos colunados é um pé-no-saco, por sorte, existem pacotes que já fizeram parte desse trabalho por nós. O `readr` não melhora muita o serviço manual de construção de dicionários, o que ele oferece é um ganho de performance tremendo. `read_fwf` é centenas de vezes mais rápido que o base `read.fwf`.
+
+Em termos do que o pacote faz, é basicamente isso. A única coisa que falta mencionar é que ele importa os dados como `tibbles` ao invés do `data.frame` padrão, mas isso já é um ótimo gancho pra nossa próxima parte.
+
+# Tibbles
+
+```{r}
+library(tibble)
+```
+
+
+Tibbles são basicamente data.frames com um método mais bonitinho de `print`. Elas automaticamente se ajustam a largura da sua tela, omitindo as colunas que estouram, e por padrão imprimem só as 10 primeiras observações. Outras características que pessoalmente gosto, é que elas informam o tipo de variável junto com o nome, arrendondam digitos significativos, destacam números grandes, negativos, NAs e etc.
+
+```{r}
+df <- read_csv(readr_example("mtcars.csv"), col_types = cols()) # omitir a especificação
+df
+```
+
+Do ponto de vista prático, elas funcionam exatamente igual a data.frames, tudo que você pode fazer com um data.frame, você faz com tibbles. O que elas trazem de novidade é:
+
+* Elas nunca mudam o tipo de dado inputado.
+
+```{r}
+df1 <- data.frame(x = list(1:5, 1:10, 1:20))
+df1
+
+df2 <- tibble(x = list(1:5, 1:10, 1:20))
+df2
+```
+
+* Elas nunca ajustam os nomes das variáveis
+
+```{r}
+names(data.frame(`nome hipster` = 1))
+
+names(tibble(`nome hipster` = 1))
+```
+* Ela avalia cada argumento de forma "preguiçosa" e sequencial
+
+```{r, error=TRUE}
+# erro
+data.frame(x = 1:5, y = x ^ 2)
+
+# funciona
+tibble(x = 1:5, y = x ^ 2)
+
+```
+* Ela nunca utiliza row.names
+
+```{r}
+data.frame(state.x77)
+
+as_tibble(state.x77)
+
+```
+
+* Ela muda a "regra da reciclagem": apenas são aceitos vetores unitários ou vetores de tamanho igual aos demais
+
+```{r, error=TRUE}
+data.frame(x = 1:10, y = 1:5)
+
+# erro
+tibble(x = 1:10, y = 1:5)
+
+tibble(x = 1:10, y = 1)
+tibble(x = 1:10, y = c(1:5, 1:5))
+```
+
+* Tibbles são estritas com relação as operações de subsetting com `[`
+
+```{r}
+df1 <- data.frame(x = 1:3, y = 3:1)
+class(df1[,1:2])
+class(df1[,1])
+
+df2 <- tibble(x = 1:3, y = 3:1)
+class(df2[, 1:2])
+class(df2[, 1])
+
+# Se quiser extrair só uma coluna, utilize '[[' ou '$'
+class(df2[[1]])
+class(df2$x)
+```
+Elas também não aceitam 'partial matching' de nomes de variáveis.
+
+```{r}
+df <- data.frame(nome_de_cavalo = 1)
+df$nome
+
+df2 <- tibble(nome_de_cavalo = 1)
+df2$nome
+```
+
+
+# Tidyr
+
+Ok, nossos dados estão no R, mas, muitas vezes, não estão no formato adequado. De maneira geral, analistas de dados vão dar preferência a um formato parecido com este:
+
+```{r}
+include_graphics("tidy-1.png")
+```
+Isto tem uma razão de ser que deve tornar-se óbvia quando tentarmos realizar as operações de transformação de variáveis, visualização, modelos, etc. Porém, muitas vezes outras considerações são feitas na hora registrar os dados, armazená-los, apresentá-los ao público, por isso, frequentemente nossos dados não estão no formato tidy e precisam ser reformatados. Essa é uma das principais tarefas do tidyr e é nela que vamos nos concentrar.
+
+Atente que reformatação, como muitos outros aspectos da análise de dados, não é receita de bolo. Muitas vezes o formato desejado não é óbvio, muito menos os passos necessários para chegar lá. Porém, vou apresentar as ferramentas e alguns exemplos simples que cobrem muitos dos nossos casos de uso.
+
+```{r}
+library(tidyr)
+who
+```
+
+Esse é um banco de dados difícil de analisar, ele tem 60 colunas, indicando o número de casos de tuberculose em diversos estágios da doença, por país e ano. O problema é que ao invés de termos algo como:
+
+```{r}
+tribble(
+  ~pais, ~ano, ~tipo, ~idade, ~casos,
+  "brasil", 1980, "extrapulmonar", "15-24", 10,
+  "brasil", 1990, "relapso", "15-24", 10
+)
+```
+
+As informações de tipo de tuberculose e idade dos pacientes estão espalhadas pelas colunas. Pra encurtar a história, precisamos "tombar" esse banco para que essas colunas se tornem um novo conjunto de variáveis. Vamos passo a passo.
+
+```{r}
+# Primeiro, vamos excluir as colunas iso2 e iso3, porque elas são a mesma informação redundante
+who$iso2 <- NULL
+who$iso3 <- NULL
+
+who1 <- pivot_longer(who,
+                     cols = c(new_sp_m014:newrel_f65),
+                     names_to = "tipo_tb",
+                     values_to = "casos",
+                     values_drop_na = TRUE)
+who1
+```
+
+Nosso primeiro passo é transformar todas as colunas de novos casos em um par de colunas:
+
+* `cols` indica quais colunas serão tombadas e quais serão mantidas.
+* Uma coluna `names_to` recebe as categorias da variável.
+* Uma coluna `values_to` recebe os valores das células.
+* `values_drop_na` é uma opção para eliminar células vazias.
+
+Essa primeira transformação já nos dá um banco de dados um pouco mais amigável, porém, ainda temos variáveis "presas" na coluna `tipo_tb`. Vamos tentar soltá-las.
+
+```{r}
+# primeiro, corrigir uma pequena inconsistencia:
+unique(who1$tipo_tb)
+
+# Notem que newrel deveria ser new_rel
+# Alguns de vocês devem conhecer 'gsub'
+who1$tipo_tb <- gsub("newrel", "new_rel", who1$tipo_tb)
+
+# Agora, podemos usar outra função chave do tidyr, 'separate'
+who2 <- who1 %>%  separate(col = tipo_tb,
+                           into = c(NA, "tipo_tb", "sexo_idade"),
+                           sep = "_")
+who2
+
+# E outra passagem de separate para separar a idade do sexo
+who3 <- who2 %>% separate(col = sexo_idade,
+                          into = c("sexo", "idade"),
+                          sep = 1)
+who3
+```
+
+Bem melhor, não acham? Estamos agora com um banco de dados muito mais adequado para uma análise de dados em R. Cada linha é uma observação, cada coluna é uma informação sobre ela.
+
+Alguns de vocês podem ter reparado que fizemos um caminho em que nosso banco de dados passou de ter muitas colunas para muitas linhas (ficou mais "longo") e depois precisamos separar algumas das colunas que criamos em outras (o que fizemos com separate). Podemos facilmente imaginar situações em que queremos fazer o caminho inverso: transformar um banco do formato longo para o formato com mais colunas e unir colunas separadas em uma nova. Vamos ver um exemplo.
+
+```{r}
+# Exemplo adaptado de https://en.wikipedia.org/wiki/List_of_countries_and_dependencies_by_population
+populacao <- tribble(
+  ~Rank, ~Country, ~Population,	~'% of world', ~Day, ~Month, ~Year, ~Source,
+  1L,         "China",    1411778724, "17.9%",  "1", "Nov", "2020",       "Seventh Census on 2020",
+  2L,         "India",    1377123716, "17.5%", "19", "May", "2021", "National population clock[3]",
+  3L, "United States",     331695937, "4.22%", "19", "May", "2021", "National population clock[4]",
+  4L,     "Indonesia",     271350000, "3.45%", "31", "Dec", "2020",  "National annual estimate[5]",
+  5L,      "Pakistan",     225200000, "2.86%",  "1", "Jul", "2021",             "UN projection[2]",
+  6L,        "Brazil",     213154869, "2.71%", "19", "May", "2021", "National population clock[6]",
+  7L,       "Nigeria",     211401000, "2.69%",  "1", "Jul", "2021",             "UN projection[2]",
+  8L,    "Bangladesh",     170689832, "2.17%", "19", "May", "2021", "National population clock[7]",
+  9L,        "Russia",     146171015, "1.86%",  "1", "Jan", "2021",  "National annual estimate[8]",
+  10L,       "Mexico",     126014024, "1.60%",  "2", "Mar", "2020",        "2020 census result[9]"
+)
+populacao
+
+
+```
+
+Imagine que, por qualquer motivo, você prefira trabalhar com uma variável "Data" ao invés de dia, mês e ano. Podemos usar `unite`:
+
+```{r}
+populacao2 <- populacao %>% unite(col = Data, Day, Month, Year, sep = " ")
+populacao2
+```
+
+O outro problema que precisamos resolver frequentemente, é separar um par de variáveis em diversas colunas, fazendo o caminho inverso que fizemos no caso do dataset da OMS.
+
+```{r}
+us_rent_income
+```
+
+No exemplo acima, queremos separar em colunas os valores das variáveis de renda e valor do aluguel. Esse tipo de operação tem um certo grau de abstração que me deu bastante dor de cabeça para entender inicialmente, então vamos olhar com carinho para o que queremos ter depois da transformação.
+
+```{r}
+us_rent_income2 <- tribble(
+  ~GEOID, ~NAME, ~income_estimate, ~rent_estimate, ~income_moe, ~rent_moe,
+  "01", "Alabama", 24476,  747, 136, 3,
+  "02", "Alaska", 32940, 1200, 508, 13
+)
+us_rent_income2
+```
+
+O banco que queremos tem uma cara assim. Ele tem mais colunas novas e menos linhas, já que eu tinha no formato tidy uma variável chamada "variable" que guardava os valores renda e aluguel e duas colunas que guardavam os valores da estimativa e do moe. Agora, eu vou ter 4 colunas, duas para as estimativas de renda e aluguel e duas para os moes das mesmas variáveis. Como especificar isso para o banco todo? Usando `pivot_wider`.
+
+```{r}
+us_rent_income %>% pivot_wider(names_from = variable, values_from = c(estimate, moe))
+```
+
+As funções `pivot_` tem diversos outros argumentos e cobrem diversos casos de uso. Vejam este exemplo da documentação de `pivot_longer`:
+
+```{r}
+anscombe
+```
+
+Podemos transformar esse banco de dados rapidamente usando um dos argumentos de `pivot_longer`, chamado `names_pattern`.
+
+```{r}
+anscombe %>% pivot_longer(everything(),
+                          names_to = c(".value", "set"),
+                          names_pattern = "(.)(.)")
+```
+
+Esse exemplo é interessante, porque ele se aproveita de uma "regular expression", tema da parte do nosso curso em que falaremos sobre manipulação de strings com o `stringr`. Resumidas as contas, as colunas se chamam "x1, x2, x3 ..." e a string "(.)(.)" indica que há dois "grupos" formados por um caractere cada. A string ".value" que vai no argumento de cima é um atalho da função para dizer "pegue o valor de todas as células das variáveis selecionadas", aqui, todas. Ou seja, ele indica para a função que o primeiro caractere "x" ou "y" definirá uma nova variável e armazenará os valores das celulas, enquanto o segundo grupo "1", "2", "3" ou "4" formará uma segunda variável chamada "set" que contém apenas os nomes das colunas. Deu um nó na cabeça?
+
+Uma última preocupação ao utilizar a reformatação de dados é o que ocorre com os valores `NA`. Vejamos este exemplo:
+
+```{r}
+acoes <- tibble(
+  ano   = c(2015, 2015, 2015, 2015, 2016, 2016, 2016),
+  qdr   = c(   1,    2,    3,    4,    2,    3,    4),
+  lucro = c(1.88, 0.59, 0.35,   NA, 0.92, 0.17, 2.66)
+)
+```
+
+Existem dois tipos de valor nulo, **explícito** se diz de um valor nulo como aquele NA que aparece na variável lucro. **Implícito** é o valor que ocorre no primeiro quadrimestre de 2016, onde sequer foi adicionada uma linha no banco de dados. Os valores implícitos são muito sacanas, porque eles não são imediatamente visíveis.
+
+```{r}
+acoes %>% 
+  pivot_wider(names_from = ano, values_from = lucro)
+```
+Ao transformar o banco, o valor implícito ficou explícito. Caso você não esteja interessado neste valor, você pode passar o `values_drop_na` durante a transformação de volta ao formato original.
+
+```{r}
+acoes %>% 
+  pivot_wider(names_from = ano, values_from = lucro) %>% 
+  pivot_longer(c(`2015`, `2016`),
+               names_to = "ano",
+               values_to = "lucro",
+               values_drop_na = TRUE)
+```
+
+Que faz os valores missing desaparecem.
+
+`complete` pode ser usada pra tornar valores implícitos, explícitos! A função toma todas as colunas pedidas e verifica todas as combinações possíveis de valores, preenchendo as lacunas com `NA`. Cuidado ao utilizar complete com valores numéricos ou bancos de dados muito grandes, pois o número de combinações pode ser infinitamente grande e travar sua sessão.
+
+```{r}
+acoes %>% complete(ano, qdr)
+```
+
+Pra encerrar, `fill` serve para aqueles casos em que um valor missing indica que a última observação deve ser repetida. Pesquisadores brasileiros das antigas podem lembrar-se do Censo de 1991, em que o IBGE registrava os arquivos de domícilio e pessoas com esse sistema. Em inglês, isso se chama LOCF, ou "last observation carried forward".
+
+```{r}
+treatment <- tribble(
+  ~ person,           ~ treatment, ~response,
+  "Derrick Whitmore", 1,           7,
+  NA,                 2,           10,
+  NA,                 3,           9,
+  "Katherine Burke",  1,           4
+)
+treatment
+
+treatment %>% fill(person)
+```
+
+Tidyr tem também outras funcionalidades relevantes para modelagem estatística, mas acho que isso sai um pouco do escopo do curso. Quem sabe a gente não faz um curso posterior só sobre modelagem no tidyverse?
+
+# Revisão
+
+## readr
+
+O pacote `readr` apresenta uma família de funções para substituir as funções do `base` relacionadas a importação de arquivos em formato texto, seja delimitado ou largura-fixa. São elas,
+
+* `read_delim`
+* `read_csv`
+* `read_csv2`
+* `read_tsv`
+* `read_table`
+* `read_fwf`
+
+E assim sucessivamente. Durante o processo de importação, você pode querer especificar o tipo de coluna com `cols` ou `cols_only`, usando o argumento `col_types`. Ou use uma string do tipo "ddcdiDT" em que cada letra é um tipo de variável.
+
+* `col_integer`
+* `col_double`
+* `col_factor`
+* `col_character`
+
+Etc. Você também pode querer definir características de localização, como a codificação de caracteres, os separadores de decimal e de milhar e etc. A melhor forma de fazer isso é definir um `locale`.
+
+Ah, e você sempre pode salvar com `write_`, inclusive salvando/lendo compactado para `bzip`, `gzip` ou `xzip`.
+
+## `tibble`
+
+Tibbles são uma versão do data.frame com algumas regrinhas novas. Vou apenas repetí-las aqui de forma resumida.
+
+* tibbles tem um método print mais bonito e amigável, especialmente para bancos com muitas observações e variáveis.
+* elas são estritas com operações de subsetting com `[` e `$`.
+* elas não aceita a reciclagem de argumento de tamanho diferente de 1.
+
+## `tidyr`
+
+Tidyr é um pacote de reformatação de bancos, criando novas linhas e colunas a partir da reorganização das variáveis e valores existentes. Suas principais operações são:
+
+* `pivot_longer` para converter colunas em linhas
+* `pivot_wider` para converter linhas em colunas
+* `separate` para separar uma coluna em várias com base em caracteres
+* `unite` para unir diversas colunas em uma com base em caracteres
+
+Ufa. Acabou né? Posso ir dormir já? Claro, só fazer uns exercícios!
+
+# Exercícios
+
+1. Como você importaria o banco "epa78.csv"
+
+```{r}
+file <- readr_example("epa78.txt")
+```
+
+
+2. Importe o banco "challenge.csv" e resolva os problemas com o tipo da coluna.
+
+```{r}
+file <- readr_example("challenge.csv")
+```
+
+3. Com o banco sala_aula dado a seguir, transforme-o para que ele contenha as variáveis nome, avaliação e nota.
+
+```{r}
+sala_aula <- tribble(
+ ~name,    ~teste1,  ~teste2,  ~prova1,
+ "Billy",  "<NA>",   "D"   ,   "C",
+ "Suzy",   "F",      "<NA>",   "<NA>",
+ "Lionel", "B",      "C"   ,   "B",
+ "Jenny",  "A",      "A"   ,   "B"
+)
+```
+
+4. Transforme o banco `relig_income` para que ele contenha as colunas religião, renda e frequência.
+
+```{r}
+relig_income
+```
+
+5. Transforme o banco `billboard` para que ele contenha apenas uma coluna "semana" e uma coluna com a posição da música no ranking.
+
+```{r}
+# Dica, você pode selecionar várias colunas usando o atalho wk1:wk76
+billboard 
+```
+
+6. Experimente fazer o caminho inverso dos exercícios 3 a 5, devolvendo os datasets ao seu formato original. O que você observou?
+
+7. O que os argumentos `extra` e `fill` em separate fazem? Utilize o exemplo a seguir como guia.
+
+```{r}
+tibble(x = c("a,b,c", "d,e,f,g", "h,i,j")) %>% 
+  separate(x, c("um", "dois", "tres"))
+
+tibble(x = c("a,b,c", "d,e", "f,g,i")) %>% 
+  separate(x, c("um", "dois", "tres"))
+```
+
+8. Tanto `unite` como `separate` possuem um argumento `remove`. Pra que ele serve e quando você o utilizaria no valor `FALSE`?
+
+9. Compare o argumento `values_fill` em `pivot_wider` e `fill` em `complete`. Qual é a diferença?
+
+## Agradecimentos
+
+Esse material é uma adaptação livre das vinhetas dos pacotes `tidyr`, `readr` e `tibble` e do capítulo Tidy Data do [R for Data Science](https://r4ds.had.co.nz/tidy-data.html), de Wickham & Grolemund.

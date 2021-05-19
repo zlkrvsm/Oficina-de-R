@@ -19,7 +19,7 @@ navbar:
           href: 15_manipulacao-dplyr.html
         - text: "Reformatando com tidyr"
           href: 16_tidy_data.html
-    - text: "Curso"
+    - text: "Curso 2020"
       menu:
         - text: "Aula 1: Introdução"
           href: 00_aula-1.html
@@ -27,6 +27,11 @@ navbar:
           href: 02_aula-2.html
         - text: "Aula 3: Transformação e visualização"
           href: 03_aula-3.html
+    - text: "Curso 2021"
+      menu:
+        - text: "1. Readr, Tibbles e Tidyr"
+          href: 21_aula-1.html
+
 output:
   html_document:
     df_print: paged
